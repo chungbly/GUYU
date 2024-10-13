@@ -1,4 +1,5 @@
 "use server";
+import { ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +27,11 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
     };
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log("database connected");
@@ -41,5 +47,6 @@ async function dbConnect() {
 
   return cached.conn;
 }
+
 
 export default dbConnect;

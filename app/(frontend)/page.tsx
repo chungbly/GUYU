@@ -40,6 +40,7 @@ const data = [
 
 export default function Home() {
   const words = "Tra cứu và luyện tập mọi lúc, mọi nơi";
+
   return (
     <div>
       <BackgroundBeamsWithCollision>

@@ -1,4 +1,5 @@
 "use client";
+import { callAPI } from "@/clients/API";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,14 +8,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useCreateResource from "@/hooks/createResource";
 import { cn } from "@/lib/utils";
+import { API_STATUS } from "@/models/API";
+import { User } from "@/models/User";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
+import { SignInDialog } from "../Login";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { HoveredLink, Menu, MenuItem } from "../ui/navbar-menu";
 
+const fetchUser = async () => {
+  const response = await callAPI<User>("/api/auth/user");
+  if (response.status === API_STATUS.OK) return response.data;
+  return null;
+};
+
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
+  const user = useCreateResource<User>(fetchUser);
+
   return (
     <div className="bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
       <div className={cn(" container flex mx-auto items-center ", className)}>
@@ -25,6 +39,7 @@ function Navbar({ className }: { className?: string }) {
           alt="logo"
           className="bg-cyan-600 mr-2"
         />
+
         <Menu setActive={setActive} className="hidden sm:flex">
           <MenuItem setActive={setActive} active={active} item="Tra cứu" />
           <MenuItem setActive={setActive} active={active} item="Luyện tập">
@@ -45,29 +60,41 @@ function Navbar({ className }: { className?: string }) {
             </div>
           </MenuItem>
         </Menu>
+
         <div className="flex-1 flex justify-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className=" flex items-center gap-2 border rounded-md h-fit py-1 px-3 shadow-sm">
-                <p className="text-foreground/80">Chung</p>
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>user name</AvatarFallback>
-                </Avatar>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {user.data ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className=" flex items-center gap-2 border rounded-md h-fit py-1 px-3 shadow-sm">
+                  <p className="text-foreground/80">{user?.data?.name}</p>
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>{user?.data?.name}</AvatarFallback>
+                  </Avatar>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => signOut()}>
+                  Đăng xuất
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <div className="flex gap-4">
+              <SignInDialog />
+              <HoveredLink href="/register" className="text-foreground/60">
+                Đăng ký
+              </HoveredLink>
+            </div>
+          )}
         </div>
       </div>
     </div>
