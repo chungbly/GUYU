@@ -1,21 +1,56 @@
-import dbConnect from "@/lib/db-connect";
-
-export const dynamic = "force-dynamic"; // defaults to auto
-export async function GET(request: Request) {
-  await dbConnect();
-  return Response.json({
-    data: {
-      success: true,
-    },
-  });
-}
+export const dynamic = 'force-dynamic'; // defaults to auto
+import dbConnect from '@/lib/db-connect';
+import { API_STATUS } from '@/models/API';
+import User from '@/models/User';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   await dbConnect();
-  return Response.json({
-    data: {
-      success: true,
+  const { email, password } = await request.json();
+  const user = await User.findOne({ email });
+  if (!user) {
+    return Response.json(
+      {
+        status: API_STATUS.ERROR,
+        message: 'Email không đúng',
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return Response.json(
+      {
+        status: API_STATUS.ERROR,
+        message: 'Mật khẩu không đúng',
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+  const newToken = jwt.sign(
+    {
+      id: user._id,
+      email: user.email,
     },
+    process.env.PRIVATE_KEY!,
+    { algorithm: 'HS256' }
+  );
+  cookies().set({
+    name: 'session-token',
+    value: newToken,
+    maxAge: 60 * 60 * 24 * 7,
+    secure: true,
+    httpOnly: true,
+  });
+  return Response.json({
+    status: API_STATUS.OK,
+    message: 'Đăng nhập thành công',
+    data: user,
   });
 }
-

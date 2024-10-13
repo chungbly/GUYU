@@ -1,5 +1,5 @@
-import { API_METHOD, API_STATUS, ApiResponse } from "@/models/API";
-import { ofetch } from "ofetch";
+import { API_METHOD, API_STATUS, ApiResponse } from '@/models/API';
+import { ofetch } from 'ofetch';
 
 interface Options {
   headers: {
@@ -11,16 +11,17 @@ interface Options {
 export const callAPI = async <T>(
   url: string,
   method: API_METHOD = API_METHOD.GET,
-  options?: Options
+  options?: Partial<Options>
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await ofetch(url, {
       method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...options?.headers,
       },
       body: JSON.stringify(options?.body),
+      ignoreResponseError: true,
     });
 
     return response;

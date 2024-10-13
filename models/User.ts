@@ -1,26 +1,41 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-export interface User {
+export interface UserModel {
   name: string;
   email: string;
   password: string;
   image: string;
+  isEmailVerified: boolean;
+  activationLinkExpiresAt: number;
 }
 
 /* User will correspond to a collection in your MongoDB database. */
-const User = new mongoose.Schema<User>({
-  name: {
-    type: String,
-    required: [true, "Please provide a name for this user."],
-    maxlength: [60, "Name cannot be more than 60 characters"],
+const UserSchema = new mongoose.Schema<UserModel>(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please provide a name for this user.'],
+      maxlength: [60, 'Name cannot be more than 60 characters'],
+    },
+    password: { type: String, min: 6, max: 50 },
+    email: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    activationLinkExpiresAt: {
+      type: Number,
+    },
   },
-  password: { type: String, min: 6, max: 50 },
-  email: {
-    type: String,
-  },
-  image: {
-    type: String,
-  },
-});
+  {
+    collection: 'users',
+    timestamps: true,
+  }
+);
 
-export default mongoose.models.Users || mongoose.model<User>("users", User);
+export default mongoose.models.users || mongoose.model<UserModel>('users', UserSchema);

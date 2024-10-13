@@ -1,5 +1,5 @@
-"use client";
-import { callAPI } from "@/clients/API";
+'use client';
+import { callAPI } from '@/clients/API';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,20 +7,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import useCreateResource from "@/hooks/createResource";
-import { cn } from "@/lib/utils";
-import { API_STATUS } from "@/models/API";
-import { User } from "@/models/User";
-import { signOut } from "next-auth/react";
-import Image from "next/image";
-import { useState } from "react";
-import { SignInDialog } from "../Login";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { HoveredLink, Menu, MenuItem } from "../ui/navbar-menu";
+} from '@/components/ui/dropdown-menu';
+import useCreateResource from '@/hooks/createResource';
+import { cn } from '@/lib/utils';
+import { API_STATUS } from '@/models/API';
+import { User } from '@/models/User';
+import { signOut } from 'next-auth/react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { SignInDialog, SignUpForm } from '../Login';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { HoveredLink, Menu, MenuItem } from '../ui/navbar-menu';
+import { removeCookie } from '@/lib/cookie';
 
 const fetchUser = async () => {
-  const response = await callAPI<User>("/api/auth/user");
+  const response = await callAPI<User>('/api/auth/user');
   if (response.status === API_STATUS.OK) return response.data;
   return null;
 };
@@ -31,14 +32,8 @@ function Navbar({ className }: { className?: string }) {
 
   return (
     <div className="bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
-      <div className={cn(" container flex mx-auto items-center ", className)}>
-        <Image
-          src={"/images/logo.png"}
-          width={180}
-          height={60}
-          alt="logo"
-          className="bg-cyan-600 mr-2"
-        />
+      <div className={cn(' container flex mx-auto items-center ', className)}>
+        <Image src={'/images/logo.png'} width={180} height={60} alt="logo" className="bg-cyan-600 mr-2" />
 
         <Menu setActive={setActive} className="hidden sm:flex">
           <MenuItem setActive={setActive} active={active} item="Tra cứu" />
@@ -68,10 +63,7 @@ function Navbar({ className }: { className?: string }) {
                 <div className=" flex items-center gap-2 border rounded-md h-fit py-1 px-3 shadow-sm">
                   <p className="text-foreground/80">{user?.data?.name}</p>
                   <Avatar className="h-8 w-8">
-                    <AvatarImage
-                      src="https://github.com/shadcn.png"
-                      alt="@shadcn"
-                    />
+                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                     <AvatarFallback>{user?.data?.name}</AvatarFallback>
                   </Avatar>
                 </div>
@@ -82,17 +74,16 @@ function Navbar({ className }: { className?: string }) {
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Billing</DropdownMenuItem>
                 <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => signOut()}>
-                  Đăng xuất
-                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => {
+                  signOut();
+                  removeCookie('session-token');
+                }}>Đăng xuất</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <div className="flex gap-4">
               <SignInDialog />
-              <HoveredLink href="/register" className="text-foreground/60">
-                Đăng ký
-              </HoveredLink>
+              <SignUpForm />
             </div>
           )}
         </div>
