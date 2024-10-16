@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import { useEffect, useState } from 'react';
 import {
   closestCenter,
   DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -113,13 +115,13 @@ export default function IdiomWordOrderGameDnD() {
     }
   };
 
-  function handleDragEnd(event) {
+  function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (active.id !== over?.id) {
       setSelectedWords((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
+        const newIndex = items.findIndex((item) => item.id === over?.id);
 
         return arrayMove(items, oldIndex, newIndex);
       });

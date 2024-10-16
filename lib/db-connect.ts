@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 "use server";
 import { ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";

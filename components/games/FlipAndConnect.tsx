@@ -88,7 +88,7 @@ export default function FlipAndConnect() {
       <div className="grid grid-cols-4 gap-4">
         {cards.map((card, index) => (
           <Card
-            key={card.uniqueId}
+            key={index}
             className={`cursor-pointer transition-all duration-300 transform ${
               selectedCards.includes(index) || matchedPairs.includes(card.id)
                 ? 'bg-blue-100'
@@ -126,7 +126,7 @@ export default function FlipAndConnect() {
       {isGameComplete && (
         <div className="mt-4 p-4 rounded-md bg-green-100 text-green-700">
           <h2 className="text-xl font-bold">Congratulations!</h2>
-          <p>You've completed the game. Great job!</p>
+          <p>You&apos;ve completed the game. Great job!</p>
         </div>
       )}
     </div>

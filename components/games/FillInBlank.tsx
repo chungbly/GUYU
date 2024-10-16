@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -32,7 +33,7 @@ const UserInput = ({
   disabled: boolean;
 }) => {
   const [userInput, setUserInput] = useState(value);
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
     onChange(e);
   };
@@ -61,13 +62,13 @@ export default function EnhancedFillInTheBlank() {
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [answeredSentences, setAnsweredSentences] = useState<
-    {
+  const [answeredSentences, setAnsweredSentences] = useState<{
+    [key: string]: {
       userInput: string;
       isCorrect: boolean;
       remainingTime: number;
-    }[]
-  >({});
+    };
+  }>({});
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
 
   const sentence = sentences[currentSentence].text;
@@ -84,16 +85,13 @@ export default function EnhancedFillInTheBlank() {
       setScore(score + 1);
     }
     setAnsweredSentences((prev) => {
-      const updated = {
-        ...prev,
-        [currentSentence.toString()]: {
-          userInput,
-          isCorrect: correct,
-          remainingTime: isTimeout ? 0 : timeLeft,
-        },
+      prev[currentSentence.toString()] = {
+        userInput,
+        isCorrect: correct,
+        remainingTime: isTimeout ? 0 : timeLeft,
       };
-      handleSaveAnswers(updated, correct ? score + 1 : score);
-      return updated;
+      handleSaveAnswers(prev, correct ? score + 1 : score);
+      return prev;
     });
   };
 
@@ -157,9 +155,12 @@ export default function EnhancedFillInTheBlank() {
 
   const handleSaveAnswers = (
     answeredSentences: {
-      userInput: string;
-      isCorrect: boolean;
-    }[],
+      [key: string]: {
+        userInput: string;
+        isCorrect: boolean;
+        remainingTime: number;
+      };
+    },
     score: number
   ) => {
     sessionStorage.setItem(

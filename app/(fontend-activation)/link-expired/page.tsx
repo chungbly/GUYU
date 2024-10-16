@@ -8,7 +8,6 @@ import { useSearchParams } from 'next/navigation';
 
 export default function ExpiredLinkPage() {
   const searchParams = useSearchParams();
-  const email = searchParams.get('email');
 
   const handleResendEmail = () => {
     const email = searchParams.get('email');

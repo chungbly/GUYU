@@ -1,8 +1,8 @@
 import dbConnect from '@/lib/db-connect';
+import { sendActivationLinkToEmail } from '@/lib/send-mail';
 import { API_ERROR_CODE, API_STATUS } from '@/models/API';
 import User from '@/models/User';
 import moment from 'moment';
-import { sendActivationLinkToEmail } from '../route';
 
 export async function POST(request: Request) {
   await dbConnect();

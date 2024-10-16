@@ -12,7 +12,7 @@ import useCreateResource from '@/hooks/createResource';
 import { removeCookie } from '@/lib/cookie';
 import { cn } from '@/lib/utils';
 import { API_STATUS } from '@/models/API';
-import { User } from '@/models/User';
+import { UserModel } from '@/models/User';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,14 +22,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { HoveredLink, Menu, MenuItem } from '../ui/navbar-menu';
 
 const fetchUser = async () => {
-  const response = await callAPI<User>('/api/auth/user');
+  const response = await callAPI<UserModel>('/api/auth/user');
   if (response.status === API_STATUS.OK) return response.data;
   return null;
 };
 
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
-  const user = useCreateResource<User>(fetchUser);
+  const user = useCreateResource<UserModel>(fetchUser);
 
   return (
     <div className="bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">

@@ -9,7 +9,7 @@ import { NextRequest } from 'next/server';
 export async function GET(request: NextRequest) {
   await dbConnect();
   const token = request.nextUrl.searchParams.get('token') || '';
-  const decode: any = jwt.verify(token!, process.env.PRIVATE_KEY!);
+  const decode = jwt.verify(token!, process.env.PRIVATE_KEY!) as { email: string };
   const email = decode.email;
   const userResp = await User.findOne({
     email: decode.email,

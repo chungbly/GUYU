@@ -45,7 +45,7 @@ const Result = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">Chi tiết từ "{idiomData.simplified}"</h1>
+      <h1 className="text-2xl font-bold mb-4">Chi tiết từ &quot;{idiomData.simplified}&quot;</h1>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
@@ -118,7 +118,7 @@ const InitialUI = () => {
           <p className="text-lg mb-2">你懂吗？</p>
           <p className="text-sm text-gray-600">
             Đừng để trả lời khi bị hỏi những câu hỏi bất lịch sự mà đáng nhẽ không nên hỏi. Tương đương với
-            câu "Hỏi gì hỏi vô duyên vậy?", "Có tý miếng duyên nào không?".
+            câu &quot;Hỏi gì hỏi vô duyên vậy?&quot;, &quot;Có tý miếng duyên nào không?&quot;.
           </p>
         </CardContent>
       </Card>
@@ -165,7 +165,7 @@ const InitialUI = () => {
 };
 
 export default function Component() {
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState<string | null>(null);
   const { register, handleSubmit } = useForm<{
     searchTerm: string;
   }>();

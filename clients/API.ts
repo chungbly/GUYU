@@ -28,7 +28,8 @@ export const callAPI = async <T>(
   } catch (e) {
     return {
       status: API_STATUS.ERROR,
-      message: e.message,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      message: (e as any).message,
       data: null as T,
     };
   }

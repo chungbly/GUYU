@@ -136,7 +136,7 @@ export default function TwoColumnConnectFlashcards() {
       {isGameComplete && (
         <div className="mt-4 p-4 rounded-md bg-green-100 text-green-700">
           <h2 className="text-xl font-bold">Congratulations!</h2>
-          <p>You've completed the game. Great job!</p>
+          <p>You&apos;ve completed the game. Great job!</p>
         </div>
       )}
     </div>

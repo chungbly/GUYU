@@ -112,7 +112,7 @@ export default function ActivationLinkSentDialog({
 
   const handleResendEmail = async () => {
     setIsLoading(true);
-    const res = await callAPI('/api/signup/resend-activation', API_METHOD.POST, {
+    await callAPI('/api/signup/resend-activation', API_METHOD.POST, {
       body: {
         email,
       },

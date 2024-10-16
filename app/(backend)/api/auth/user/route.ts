@@ -19,7 +19,7 @@ export const GET = auth(async function GET(req) {
     if (!sessionToken?.value) {
       return NextResponse.json({ message: 'Not authenticated', status: API_STATUS.ERROR }, { status: 401 });
     }
-    const decoded: any = jwt.verify(sessionToken.value, process.env.PRIVATE_KEY!);
+    const decoded = jwt.verify(sessionToken.value, process.env.PRIVATE_KEY!) as { email: string };
     if (!decoded) {
       return NextResponse.json({ message: 'Not authenticated', status: API_STATUS.ERROR }, { status: 401 });
     }
