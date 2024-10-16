@@ -5,8 +5,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { API_METHOD } from '@/models/API';
 import { AlertCircle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function ExpiredLinkPage() {
+ function ExpiredLinkPage() {
   const searchParams = useSearchParams();
 
   const handleResendEmail = () => {
@@ -48,4 +49,10 @@ export default function ExpiredLinkPage() {
       </Card>
     </div>
   );
+}
+
+export default function Page() {
+  return <Suspense>
+    <ExpiredLinkPage />
+  </Suspense>
 }
