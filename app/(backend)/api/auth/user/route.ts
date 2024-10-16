@@ -1,4 +1,5 @@
 import { auth } from '@/auth';
+import dbConnect from '@/lib/db-connect';
 import { API_STATUS } from '@/models/API';
 import User from '@/models/User';
 import jwt from 'jsonwebtoken';
@@ -13,6 +14,7 @@ export const GET = auth(async function GET(req) {
       data: req.auth.user,
     });
   } else {
+    await dbConnect();
     const sessionToken = cookies().get('session-token');
     if (!sessionToken?.value) {
       return NextResponse.json({ message: 'Not authenticated', status: API_STATUS.ERROR }, { status: 401 });

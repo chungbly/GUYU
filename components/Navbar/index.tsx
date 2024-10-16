@@ -9,16 +9,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import useCreateResource from '@/hooks/createResource';
+import { removeCookie } from '@/lib/cookie';
 import { cn } from '@/lib/utils';
 import { API_STATUS } from '@/models/API';
 import { User } from '@/models/User';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { SignInDialog, SignUpForm } from '../Login';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { HoveredLink, Menu, MenuItem } from '../ui/navbar-menu';
-import { removeCookie } from '@/lib/cookie';
 
 const fetchUser = async () => {
   const response = await callAPI<User>('/api/auth/user');
@@ -35,8 +36,14 @@ function Navbar({ className }: { className?: string }) {
       <div className={cn(' container flex mx-auto items-center ', className)}>
         <Image src={'/images/logo.png'} width={180} height={60} alt="logo" className="bg-cyan-600 mr-2" />
 
-        <Menu setActive={setActive} className="hidden sm:flex">
-          <MenuItem setActive={setActive} active={active} item="Tra cứu" />
+        <Menu setActive={setActive} className="hidden sm:flex items-center">
+          <Link
+            onMouseEnter={() => setActive(null)}
+            href="/tra-cuu"
+            className="cursor-pointer transition-colors hover:text-foreground/80 dark:text-white font-medium space-x-1 text-sm"
+          >
+            Tra cứu
+          </Link>
           <MenuItem setActive={setActive} active={active} item="Luyện tập">
             <div className="flex flex-col text-sm">
               <HoveredLink href="/web-dev">Nhận biết</HoveredLink>
@@ -46,12 +53,13 @@ function Navbar({ className }: { className?: string }) {
             </div>
           </MenuItem>
 
-          <MenuItem setActive={setActive} active={active} item="Pricing">
+          <MenuItem setActive={setActive} active={active} item="Games">
             <div className="flex flex-col text-sm">
-              <HoveredLink href="/hobby">Hobby</HoveredLink>
-              <HoveredLink href="/individual">Individual</HoveredLink>
-              <HoveredLink href="/team">Team</HoveredLink>
-              <HoveredLink href="/enterprise">Enterprise</HoveredLink>
+              <HoveredLink href="/games/dien-vao-cho-trong">Điền vào chỗ trống</HoveredLink>
+              <HoveredLink href="/games/tim-hai-o-giong-nhau">Tìm hai ô giống nhau</HoveredLink>
+              <HoveredLink href="/games/sap-xep-cau">Sắp xếp thành ngữ</HoveredLink>
+              <HoveredLink href="/games/trac-nghiem">Trắc nghiệm</HoveredLink>
+              <HoveredLink href="/games/noi-cap">Nối cặp</HoveredLink>
             </div>
           </MenuItem>
         </Menu>
@@ -74,10 +82,14 @@ function Navbar({ className }: { className?: string }) {
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Billing</DropdownMenuItem>
                 <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => {
-                  signOut();
-                  removeCookie('session-token');
-                }}>Đăng xuất</DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => {
+                    signOut();
+                    removeCookie('session-token');
+                  }}
+                >
+                  Đăng xuất
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

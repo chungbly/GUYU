@@ -26,7 +26,7 @@ export const sendActivationLinkToEmail = async (email: string) => {
 
     auth: {
       user: 'websiteguyu@gmail.com',
-      pass: 'rfky tpsz nqxw iqwv',
+      pass: '',
     },
   });
   try {
