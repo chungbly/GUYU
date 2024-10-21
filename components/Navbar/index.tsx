@@ -20,6 +20,7 @@ import { useState } from 'react';
 import { SignInDialog, SignUpForm } from '../Login';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { HoveredLink, Menu, MenuItem } from '../ui/navbar-menu';
+import { MobileMenu } from './menu-mobile';
 
 const fetchUser = async () => {
   const response = await callAPI<UserModel>('/api/auth/user');
@@ -32,7 +33,7 @@ function Navbar({ className }: { className?: string }) {
   const user = useCreateResource<UserModel>(fetchUser);
 
   return (
-    <div className="bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
+    <div className="bg-cyan-600 sm:bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
       <div className={cn(' container flex mx-auto items-center ', className)}>
         <Image src={'/images/logo.png'} width={180} height={60} alt="logo" className="bg-cyan-600 mr-2" />
 
@@ -64,7 +65,7 @@ function Navbar({ className }: { className?: string }) {
           </MenuItem>
         </Menu>
 
-        <div className="flex-1 flex justify-end">
+        <div className="flex-1 hidden sm:flex justify-end">
           {user.data ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -98,6 +99,9 @@ function Navbar({ className }: { className?: string }) {
               <SignUpForm />
             </div>
           )}
+        </div>
+        <div className="flex sm:hidden flex-1 justify-end">
+          <MobileMenu user={user} />
         </div>
       </div>
     </div>
