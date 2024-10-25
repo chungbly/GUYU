@@ -1,5 +1,4 @@
 import { API_METHOD, API_STATUS, ApiResponse } from '@/models/API';
-import { ofetch } from 'ofetch';
 
 interface Options {
   headers: {
@@ -14,17 +13,16 @@ export const callAPI = async <T>(
   options?: Partial<Options>
 ): Promise<ApiResponse<T>> => {
   try {
-    const response = await ofetch(url, {
+    const response = await fetch(url, {
       method,
       headers: {
         'Content-Type': 'application/json',
         ...options?.headers,
       },
       body: JSON.stringify(options?.body),
-      ignoreResponseError: true,
     });
-
-    return response;
+    const data = await response.json();
+    return data;
   } catch (e) {
     return {
       status: API_STATUS.ERROR,

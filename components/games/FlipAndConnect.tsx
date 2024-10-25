@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shuffle, CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const flashcards = [
   { id: 1, front: 'Apple', back: 'Quả táo' },
@@ -72,6 +72,7 @@ export default function FlipAndConnect() {
   };
 
   const isGameComplete = matchedPairs.length === flashcards.length;
+
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">

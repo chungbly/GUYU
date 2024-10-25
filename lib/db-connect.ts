@@ -30,7 +30,7 @@ async function dbConnect() {
       bufferCommands: false,
       serverApi: {
         version: ServerApiVersion.v1,
-        strict: true,
+        strict: false,
         deprecationErrors: true,
       },
     };

@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import { callAPI } from '@/clients/API';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { API_STATUS } from '@/models/API';
+import { IdiomModel } from '@/models/Idioms';
 import {
   AlertTriangle,
   Bookmark,
@@ -13,46 +18,33 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Fragment, useCallback, useState } from 'react';
+import { useForm, UseFormSetValue } from 'react-hook-form';
 
 const Levels = ['Nhận biết', 'Vận dụng', 'Thông hiểu', 'Tổng hợp'];
 
-// Mock data for demonstration
-const idiomData = {
-  simplified: '吃闭门羹',
-  traditional: '吃閉門羹',
-  pinyin: 'chī bì mén gēng',
-  meaning: 'đóng cửa không tiếp; cấm cửa không tiếp; không được tiếp đón',
-  explanation:
-    '羹：流汁食品吃闭门羹，比喻串门时，主人不在家，被拒绝进门或受其冷遇【羹：流汁食品吃閉門羹，比喻串門時，主人不在家，被拒絕進門或受其冷遇】',
-  example: {
-    chinese: '拒绝客人进门叫做让客人吃闭门羹。【拒絕客人進門叫做讓客人吃閉門羹。】',
-    pinyin: 'jùjué kèrén jìnmén jiàozuò ràng kèrén chībìméngēng.',
-    translation: 'Từ chối, không để khách vào nhà có thể gọi là đóng cửa không tiếp.',
-  },
-  stats: {
-    lookups: 417,
-    notebooks: 16,
-    hanziiCode: '#17913',
-  },
-};
-
-const Result = () => {
+const Result = ({
+  idioms,
+  setValue,
+  handleSearch,
+}: {
+  idioms: IdiomModel[];
+  setValue: UseFormSetValue<{
+    searchTerm: string;
+  }>;
+  handleSearch: (searchTerm: string) => void;
+}) => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
   const toggleAudio = () => setIsAudioPlaying(!isAudioPlaying);
-
+  const thebestResult = idioms[0];
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">Chi tiết từ &quot;{idiomData.simplified}&quot;</h1>
+      <h1 className="text-2xl font-bold mb-4">Chi tiết câu &quot;{thebestResult.simplified}&quot;</h1>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <div>
-              <span className="text-3xl text-red-600 mr-2">{idiomData.simplified}</span>
-              <span className="text-3xl text-blue-600">【{idiomData.traditional}】</span>
-            </div>
+            <span className="text-3xl text-red-600 mr-2">{thebestResult.simplified}</span>
             <div>
               <Button variant="ghost" size="icon" onClick={toggleAudio}>
                 {isAudioPlaying ? <Volume2 className="h-6 w-6" /> : <VolumeX className="h-6 w-6" />}
@@ -65,34 +57,61 @@ const Result = () => {
               </Button>
             </div>
           </CardTitle>
-          <p className="text-lg">【{idiomData.pinyin} 】</p>
+          <p className="text-lg">【{thebestResult.pinyin} 】</p>
         </CardHeader>
         <CardContent>
           <div>
             <h2 className="font-semibold mb-2">Từ loại: Thành ngữ</h2>
             <ol className="list-decimal list-inside">
-              <li>{idiomData.meaning}</li>
+              <li>{thebestResult.explanation}</li>
             </ol>
-            <p className="mt-2 text-sm">{idiomData.explanation}</p>
+            <p className="mt-2 text-sm">{thebestResult.meaning}</p>
           </div>
           <div>
             <h2 className="font-semibold mb-2">Ví dụ:</h2>
             <div className="bg-gray-100 p-3 rounded">
-              <p className="flex items-center">
-                <Button variant="ghost" size="icon" className="mr-2">
-                  <Play className="h-4 w-4" />
-                </Button>
-                <span className="text-red-600">{idiomData.example.chinese}</span>
-              </p>
-              <p className="text-gray-600 mt-1">{idiomData.example.pinyin}</p>
-              <p className="mt-1">{idiomData.example.translation}</p>
+              {thebestResult.examples.map((example, index) => (
+                <Fragment key={index}>
+                  <p className="flex items-center">
+                    <Button variant="ghost" size="icon" className="mr-2">
+                      <Play className="h-4 w-4" />
+                    </Button>
+                    <span className="text-red-600">{example.chinese}</span>
+                  </p>
+                  <p className="text-gray-600 mt-1">{example.pinyin}</p>
+                  <p className="mt-1">{example.vietnamese}</p>
+                </Fragment>
+              ))}
             </div>
           </div>
-          <div className="mt-6 text-sm text-gray-600">
+
+          {/* <div className="mt-6 text-sm text-gray-600">
             <p>Độ phổ biến trên Guyu: {idiomData.stats.hanziiCode}</p>
             <p>Được tra cứu {idiomData.stats.lookups} lần</p>
             <p>Được thêm trong {idiomData.stats.notebooks} sổ tay</p>
-          </div>
+          </div> */}
+          {idioms.length > 1 && (
+            <>
+              <p className="font-semibold mt-5">Các kết quả khác</p>
+              <div className=" p-2 flex gap-2 ">
+                {idioms.map((idiom, index) => {
+                  if (index === 0) return null;
+                  return (
+                    <p
+                      key={index}
+                      className="text-sm text-primary bg-neutral-100 p-2 rounded-md cursor-pointer"
+                      onClick={() => {
+                        setValue('searchTerm', idiom.simplified);
+                        handleSearch(idiom.simplified);
+                      }}
+                    >
+                      {idiom.simplified} ({idiom.pinyin})
+                    </p>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </>
@@ -107,6 +126,7 @@ const InitialUI = () => {
     { name: 'Màu sắc và Hình dạng', icon: '🔶' },
     { name: 'Chim', icon: '🐦' },
   ];
+
   return (
     <>
       <h1 className="text-2xl font-bold flex items-center mb-4">Tips học tập</h1>
@@ -165,16 +185,47 @@ const InitialUI = () => {
 };
 
 export default function Component() {
-  const [searchResults, setSearchResults] = useState<string | null>(null);
-  const { register, handleSubmit } = useForm<{
+  const [searchResults, setSearchResults] = useState<IdiomModel[] | null>(null);
+  const methods = useForm<{
     searchTerm: string;
   }>();
+  const {
+    control,
+    getValues,
+    setError,
+    clearErrors,
+    setValue,
+    formState: { errors },
+  } = methods;
 
-  const handleSearch = ({ searchTerm }: { searchTerm: string }) => {
-    // In a real application, this would trigger an API call to search for the idiom
-    console.log('Searching for:', searchTerm);
-    setSearchResults(searchTerm);
-  };
+  const debounce = useCallback((func: (...args: any[]) => void) => {
+    let timeout: ReturnType<typeof setTimeout>;
+    return function (...args: any[]) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), 300);
+    };
+  }, []);
+
+  const handleSearch = useCallback(
+    debounce(async (searchTerm: string) => {
+      if (!searchTerm) {
+        setSearchResults(null);
+        clearErrors('searchTerm');
+        return;
+      }
+      const res = await callAPI<IdiomModel[]>(`/api/idioms?text=${searchTerm}`);
+      if (res.status === API_STATUS.OK && res.data?.length) {
+        setSearchResults(res.data);
+        clearErrors('searchTerm');
+      } else {
+        setSearchResults([]);
+        setError('searchTerm', {
+          type: 'manual',
+        });
+      }
+    }),
+    []
+  );
 
   return (
     <div className="container mx-auto">
@@ -183,16 +234,47 @@ export default function Component() {
           <CardTitle>Tìm kiếm thành ngữ, cụm từ, chữ Hán.</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(handleSearch)} className="flex gap-6">
-            <Input {...register('searchTerm')} placeholder="Nhập vào ô tra cứu Tiếng Trung, pinyin" />
-            <Button type="submit">
+          <div className="flex gap-4">
+            <FormField
+              control={control}
+              name="searchTerm"
+              render={({ field }) => (
+                <div className="flex flex-col w-full">
+                  <Input
+                    value={field.value}
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleSearch(e.target.value);
+                    }}
+                    placeholder="Nhập vào ô tra cứu Tiếng Trung, pinyin"
+                  />
+                  {errors.searchTerm && (
+                    <p className="text-red-500 text-sm mt-4">
+                      Không tìm thấy kết quả tương ứng với {field.value}
+                    </p>
+                  )}
+                </div>
+              )}
+            />
+            <Button
+              type="submit"
+              onClick={() => {
+                const text = getValues('searchTerm');
+                handleSearch(text);
+              }}
+            >
               <Search className="mr-2 h-4 w-4" /> Search
             </Button>
-          </form>
-          <p className="text-sm text-gray-600 mt-2">Ví dụ: 吃闭门羹, chībìméngēng.</p>
+          </div>
+
+          <p className="text-sm text-gray-600 mt-2">Ví dụ: 吃闭门羹, chī bì mén gēnɡ.</p>
         </CardContent>
       </Card>
-      {searchResults ? <Result /> : <InitialUI />}
+      {!!searchResults?.length ? (
+        <Result idioms={searchResults} handleSearch={handleSearch} setValue={setValue} />
+      ) : (
+        <InitialUI />
+      )}
     </div>
   );
 }
