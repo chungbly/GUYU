@@ -6,7 +6,7 @@ import Lookup from './container';
 
 const getIdiom = async (search: string) => {
   if (!search) return;
-  const res = await callAPI<IdiomModel[]>(`${process.env.URL}/api/idioms?text=${search}`);
+  const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms?text=${search}`);
   if (res.status === API_STATUS.OK && res.data?.length) {
     return res.data;
   }
