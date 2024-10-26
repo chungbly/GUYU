@@ -192,13 +192,13 @@ const Result = ({
           {idioms.length > 1 && (
             <>
               <p className="font-semibold mt-5">Các kết quả khác</p>
-              <div className=" p-2 flex gap-2 ">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2">
                 {idioms.map((idiom, index) => {
                   if (index === 0) return null;
                   return (
                     <div
                       key={index}
-                      className="text-sm text-primary bg-neutral-100 p-2 rounded-md cursor-pointer"
+                      className="col-span-1 text-sm text-primary bg-neutral-100 p-2 rounded-md cursor-pointer"
                       onClick={() => {
                         setValue('searchTerm', idiom.simplified);
                         handleSearch(idiom.simplified);
