@@ -16,10 +16,9 @@ export const callAPI = async <T>(
     const response = await fetch(url, {
       method,
       headers: {
-        'Content-Type': 'application/json',
         ...options?.headers,
       },
-      body: JSON.stringify(options?.body),
+      body: options?.body instanceof FormData ? options.body : JSON.stringify(options?.body),
     });
     const data = await response.json();
     return data;

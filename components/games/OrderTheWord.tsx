@@ -80,9 +80,6 @@ export default function IdiomWordOrderGameDnD() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
-  console.log('shuffledWords', shuffledWords);
-  console.log('selectedWords', selectedWords);
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },

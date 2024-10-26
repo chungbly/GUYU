@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { UserModel } from '@/models/User';
-import { IconDeviceGamepad2, IconMenu2 } from '@tabler/icons-react';
+import { IconDeviceGamepad2, IconMenu2, IconSearch } from '@tabler/icons-react';
 import { ChevronDown, FileText, HelpCircle, Home, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -19,6 +19,7 @@ type MenuItem = {
 
 const menuItems: MenuItem[] = [
   { icon: <Home className="w-6 h-6" />, label: 'Trang chủ', href: '/' },
+  { icon: <IconSearch className="w-6 h-6" stroke={2} />, label: 'Tra cứu', href: '/tra-cuu' },
   {
     icon: <FileText className="w-6 h-6" />,
     label: 'Luyện tập',

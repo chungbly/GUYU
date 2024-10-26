@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'; // defaults to auto
+export const dynamic = 'force-dynamic'; 
 import dbConnect from '@/lib/db-connect';
 import { createHashPassword } from '@/lib/hash-password';
 import { sendActivationLinkToEmail } from '@/lib/send-mail';

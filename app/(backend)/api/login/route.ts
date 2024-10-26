@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic'; // defaults to auto
 import dbConnect from '@/lib/db-connect';
 import { API_STATUS } from '@/models/API';
 import User from '@/models/User';

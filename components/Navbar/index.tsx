@@ -35,7 +35,9 @@ function Navbar({ className }: { className?: string }) {
   return (
     <div className="bg-cyan-600 sm:bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
       <div className={cn(' container flex mx-auto items-center ', className)}>
-        <Image src={'/images/logo.png'} width={180} height={60} alt="logo" className="bg-cyan-600 mr-2" />
+        <Link href="/">
+          <Image src={'/images/logo.png'} width={180} height={60} alt="logo" className="bg-cyan-600 mr-2" />
+        </Link>
 
         <Menu setActive={setActive} className="hidden sm:flex items-center">
           <Link

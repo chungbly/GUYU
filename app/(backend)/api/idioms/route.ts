@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/db-connect';
 import { API_STATUS } from '@/models/API';
 import Idioms from '@/models/Idioms';
@@ -30,6 +31,7 @@ export async function GET(request: NextRequest) {
       .sort({
         score: { $meta: 'textScore' },
       });
+
     if (!idioms) {
       return NextResponse.json({
         status: API_STATUS.ERROR,
@@ -39,6 +41,31 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       status: API_STATUS.OK,
       data: idioms,
+    });
+  } catch (e) {
+    return NextResponse.json(
+      {
+        status: API_STATUS.ERROR,
+        message: (
+          e as unknown as {
+            message: string;
+          }
+        ).message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    await dbConnect();
+    const idiom = await Idioms.create(request.body);
+    return NextResponse.json({
+      status: API_STATUS.OK,
+      data: idiom,
     });
   } catch (e) {
     return NextResponse.json(

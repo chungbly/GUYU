@@ -77,7 +77,6 @@ export default function EnhancedFillInTheBlank() {
 
   const handleSubmit = (isTimeout = false) => {
     const userInput = userInputRef.current;
-    console.log('isTimeout', isTimeout, 'userInput', userInput);
     const correct = userInput.toLowerCase() === sentences[currentSentence].answer.toLowerCase();
     setIsCorrect(correct);
     setShowResult(true);

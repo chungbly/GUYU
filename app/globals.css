@@ -71,4 +71,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  @font-face {
+    font-family: 'Simsun';
+    src: local('Simsun'), url(/fonts/SimSun.ttf) format('ttf');
+  }
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  input {
+    font-size: 16px;
+  }
 }
