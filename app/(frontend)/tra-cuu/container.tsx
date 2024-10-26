@@ -102,9 +102,9 @@ const PlayAudioButton = ({
 
   useEffect(() => {
     const fetchAudio = async () => {
-      if (!audioId) return;
+      if (!audioId) return setAudioSrc(null);
       const buffer = await ofetch(`/api/google/getAudio?id=${audioId}`).then((res) => res.arrayBuffer());
-      if (!buffer) return;
+      if (!buffer) return setAudioSrc(null);
       setAudioSrc(URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' })));
     };
     fetchAudio();
@@ -311,6 +311,8 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
 
   const handleSearch = useCallback(
     debounce(async (searchTerm: string) => {
+      const audioInput = document.getElementById('simplified-audio') as HTMLAudioElement;
+      audioInput?.pause();
       router.push(`/tra-cuu?search=${searchTerm}`);
       if (!searchTerm) {
         setSearchResults(null);
