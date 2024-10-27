@@ -1,3 +1,4 @@
+export const fetchCache = 'force-no-store';
 import { callAPI } from '@/clients/API';
 import Flashcard from '@/containers/pages/flash-cards/components/flashcard';
 import { handleGetUser } from '@/lib/user';
