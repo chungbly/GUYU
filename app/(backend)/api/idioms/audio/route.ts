@@ -1,24 +1,15 @@
 import dbConnect from '@/lib/db-connect';
-import { API_STATUS } from '@/models/API';
+import { errorResp, successResp } from '@/lib/server-json';
 import Idioms, { Example } from '@/models/Idioms';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
     await dbConnect();
     const { id, simplifiedAudio, examplesAudio } = await request.json();
     const idiom = await Idioms.findById({ _id: id });
-    if (!idiom) {
-      return NextResponse.json(
-        {
-          status: API_STATUS.ERROR,
-          message: 'Idiom not found',
-        },
-        {
-          status: 404,
-        }
-      );
-    }
+    if (!idiom) return errorResp('Idiom not found', 404);
+
     if (simplifiedAudio) {
       idiom.audioId = simplifiedAudio;
     }
@@ -32,23 +23,15 @@ export async function POST(request: NextRequest) {
       });
     }
     const res = await Idioms.findByIdAndUpdate(idiom._id, idiom, { new: true });
-    return NextResponse.json({
-      status: API_STATUS.OK,
-      data: res,
-    });
+    if (!res) return errorResp('Update failed', 500);
+    return successResp(res);
   } catch (e) {
-    return NextResponse.json(
-      {
-        status: API_STATUS.ERROR,
-        message: (
-          e as unknown as {
-            message: string;
-          }
-        ).message,
-      },
-      {
-        status: 500,
-      }
+    return errorResp(
+      (
+        e as unknown as {
+          message: string;
+        }
+      ).message
     );
   }
 }

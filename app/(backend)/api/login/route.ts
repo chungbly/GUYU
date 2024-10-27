@@ -1,4 +1,5 @@
 import dbConnect from '@/lib/db-connect';
+import { errorResp } from '@/lib/server-json';
 import { API_STATUS } from '@/models/API';
 import User from '@/models/User';
 import bcrypt from 'bcrypt';
@@ -9,29 +10,11 @@ export async function POST(request: Request) {
   await dbConnect();
   const { email, password } = await request.json();
   const user = await User.findOne({ email });
-  if (!user) {
-    return Response.json(
-      {
-        status: API_STATUS.ERROR,
-        message: 'Email không đúng',
-      },
-      {
-        status: 400,
-      }
-    );
-  }
+  if (!user) return errorResp('Email không tồn tại', 400);
+
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return Response.json(
-      {
-        status: API_STATUS.ERROR,
-        message: 'Mật khẩu không đúng',
-      },
-      {
-        status: 400,
-      }
-    );
-  }
+  if (!isMatch) return errorResp('Mật khẩu không đúng', 400);
+
   const newToken = jwt.sign(
     {
       id: user._id,

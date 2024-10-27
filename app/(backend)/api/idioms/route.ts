@@ -1,24 +1,15 @@
 export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/db-connect';
-import { API_STATUS } from '@/models/API';
+import { errorResp, successResp } from '@/lib/server-json';
 import Idioms from '@/models/Idioms';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
     const text = request.nextUrl.searchParams.get('text');
-    if (!text) {
-      return NextResponse.json(
-        {
-          status: API_STATUS.ERROR,
-          message: 'Vui lòng nhập từ khóa',
-        },
-        {
-          status: 404,
-        }
-      );
-    }
+    if (!text) return errorResp('Vui lòng nhập từ khóa', 400);
+
     const idioms = await Idioms.find(
       {
         $text: { $search: text },
@@ -32,54 +23,15 @@ export async function GET(request: NextRequest) {
         score: { $meta: 'textScore' },
       });
 
-    if (!idioms) {
-      return NextResponse.json({
-        status: API_STATUS.ERROR,
-        message: 'Không tìm thấy thành ngữ',
-      });
-    }
-    return NextResponse.json({
-      status: API_STATUS.OK,
-      data: idioms,
-    });
+    if (!idioms) return errorResp('Không tìm thấy thành ngữ', 404);
+    return successResp(idioms);
   } catch (e) {
-    return NextResponse.json(
-      {
-        status: API_STATUS.ERROR,
-        message: (
-          e as unknown as {
-            message: string;
-          }
-        ).message,
-      },
-      {
-        status: 500,
-      }
-    );
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    await dbConnect();
-    const idiom = await Idioms.create(request.body);
-    return NextResponse.json({
-      status: API_STATUS.OK,
-      data: idiom,
-    });
-  } catch (e) {
-    return NextResponse.json(
-      {
-        status: API_STATUS.ERROR,
-        message: (
-          e as unknown as {
-            message: string;
-          }
-        ).message,
-      },
-      {
-        status: 500,
-      }
+    return errorResp(
+      (
+        e as unknown as {
+          message: string;
+        }
+      ).message
     );
   }
 }

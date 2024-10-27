@@ -1,3 +1,4 @@
+'use client'
 import { callAPI } from '@/clients/API';
 import { Button } from '@/components/ui/button';
 import {
@@ -99,7 +100,7 @@ export function SignInDialog() {
 import { DialogFooter } from '@/components/ui/dialog';
 import { Mail } from 'lucide-react';
 
-export default function ActivationLinkSentDialog({
+ function ActivationLinkSentDialog({
   email,
   open,
   onClose,
@@ -173,7 +174,7 @@ const formSchema = z
     path: ['confirmPassword'],
   });
 
-export function SignUpForm() {
+export default function SignUpForm() {
   const [open, setOpen] = useState(false);
   const [hasSent, setHasSent] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -1,14 +1,18 @@
+'use client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { UserModel } from '@/models/User';
 import { IconDeviceGamepad2, IconMenu2, IconSearch } from '@tabler/icons-react';
 import { ChevronDown, FileText, HelpCircle, Home, Settings } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { SignInDialog, SignUpForm } from '../Login';
 import './styles.css';
+
+const SignInDialog = dynamic(() => import('@/components/Login/sign-in'));
+const SignUpForm = dynamic(() => import('@/components/Login/sign-up'));
 
 type MenuItem = {
   icon: React.ReactNode;
@@ -45,14 +49,7 @@ const menuItems: MenuItem[] = [
   { icon: <HelpCircle className="w-6 h-6" />, label: 'Help' },
 ];
 
-export function MobileMenu({
-  user,
-}: {
-  user: {
-    data: UserModel | null;
-    loading: boolean;
-  };
-}) {
+export function MobileMenu({ user }: { user: UserModel | null }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -68,15 +65,15 @@ export function MobileMenu({
       <Drawer direction="right" open={open} onOpenChange={setOpen}>
         <DrawerContent>
           <div className="p-4">
-            {user?.data && (
+            {user && (
               <div className=" mb-8 flex items-center">
                 <Avatar className="w-16 h-16 border-2 border-primary-foreground">
                   <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
                 <div className="ml-4">
-                  <h2 className="text-xl font-semibold">{user.data?.name}</h2>
-                  <p className="text-sm opacity-75">{user.data?.email}</p>
+                  <h2 className="text-xl font-semibold">{user.name}</h2>
+                  <p className="text-sm opacity-75">{user.email}</p>
                 </div>
               </div>
             )}
@@ -122,7 +119,7 @@ export function MobileMenu({
               </ul>
             </nav>
           </div>
-          {!user.data && (
+          {!user && (
             <div className="flex justify-around">
               <SignInDialog />
               <SignUpForm />

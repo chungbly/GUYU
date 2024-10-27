@@ -4,8 +4,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { IdiomModel } from '@/models/Idioms';
-import { AlertTriangle, Bookmark } from 'lucide-react';
-import { Fragment } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
 import { callAPI } from '@/clients/API';
@@ -14,6 +12,7 @@ import { API_METHOD, API_STATUS } from '@/models/API';
 import { Volume2, VolumeX } from 'lucide-react';
 import { ofetch } from 'ofetch';
 import { useEffect, useState } from 'react';
+import AddFlashCard from './add-flashcard';
 
 export const handleUploadAudio = async ({
   src,
@@ -136,7 +135,7 @@ const Result = ({
       </div>
       <audio crossOrigin="anonymous" id="simplified-audio" hidden />
       <Card>
-        <CardHeader>
+        <CardHeader className="p-3 sm:p-6">
           <CardTitle className="flex items-center justify-between">
             <span className="text-3xl text-red-600 mr-2 font-[Simsun]">{thebestResult.simplified}</span>
             <div>
@@ -145,18 +144,12 @@ const Result = ({
                 text={thebestResult.simplified}
                 audioId={thebestResult.audioId}
               />
-
-              <Button variant="ghost" size="icon">
-                <Bookmark className="h-6 w-6" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <AlertTriangle className="h-6 w-6" />
-              </Button>
+              <AddFlashCard idiom={thebestResult}/>
             </div>
           </CardTitle>
-          <p className="text-lg ">【{thebestResult.pinyin} 】</p>
+          <p className="text-lg ">【{thebestResult.pinyin}】</p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-3 sm:p-6">
           <div>
             <ol className="list-decimal list-inside">
               <li className="font-[Simsun]">{thebestResult.explanation}</li>
@@ -167,19 +160,22 @@ const Result = ({
             <h2 className="font-semibold mb-2">Ví dụ:</h2>
             <div className="bg-gray-100 p-3 rounded">
               {thebestResult.examples.map((example, index) => (
-                <Fragment key={index}>
-                  <p className="flex items-center">
-                    <PlayAudioButton
-                      idiomId={thebestResult._id}
-                      text={example.chinese}
-                      audioId={example.audioId}
-                      exampleId={example._id}
-                    />
-                    <span className="text-red-600 font-[Simsun]">{example.chinese}</span>
-                  </p>
-                  <p className="text-gray-600 mt-1 ">{example.pinyin}</p>
-                  <p className="mt-1">{example.vietnamese}</p>
-                </Fragment>
+                <div key={index} className="mt-2 flex">
+                  <span className="text-gray-600 mr-2 relative top-[6px]">{`${index + 1})`}</span>
+                  <div>
+                    <p className="flex items-center">
+                      <PlayAudioButton
+                        idiomId={thebestResult._id}
+                        text={example.chinese}
+                        audioId={example.audioId}
+                        exampleId={example._id}
+                      />
+                      <span className="text-red-500 font-[Simsun]">{example.chinese}</span>
+                    </p>
+                    <p className="text-gray-600 mt-1 ">{example.pinyin}</p>
+                    <p className="mt-1">{example.vietnamese}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

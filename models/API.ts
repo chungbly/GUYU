@@ -8,6 +8,7 @@ export enum API_METHOD {
   POST = 'POST',
   'PATCH' = 'PATCH',
   'PUT' = 'PUT',
+  'DELETE' = 'DELETE',
 }
 
 export enum API_ERROR_CODE {

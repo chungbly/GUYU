@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
@@ -61,23 +62,21 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
           type: 'manual',
         });
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }),
-    []
+    }),[]
   );
 
   useEffect(() => {
     if (search) {
       setValue('searchTerm', search);
     }
-  }, []);
+  }, [search, setValue]);
   return (
     <div className="container mx-auto">
       <Card className="my-6">
-        <CardHeader>
+        <CardHeader className="p-3 sm:p-6">
           <CardTitle>Tìm kiếm thành ngữ, cụm từ, chữ Hán.</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-3 sm:p-6">
           <div className="flex gap-4">
             <FormField
               control={control}
