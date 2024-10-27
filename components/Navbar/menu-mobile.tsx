@@ -1,10 +1,12 @@
-'use client'
+'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
+import { removeCookie } from '@/lib/cookie';
 import { UserModel } from '@/models/User';
-import { IconDeviceGamepad2, IconMenu2, IconSearch } from '@tabler/icons-react';
-import { ChevronDown, FileText, HelpCircle, Home, Settings } from 'lucide-react';
+import { IconDeviceGamepad2, IconLogout, IconMenu2, IconPlayCardA, IconSearch } from '@tabler/icons-react';
+import { ChevronDown, FileText, HelpCircle, Home } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -45,7 +47,7 @@ const menuItems: MenuItem[] = [
       { label: 'Nối cặp', href: '/games/noi-cap' },
     ],
   },
-  { icon: <Settings className="w-6 h-6" />, label: 'Settings' },
+  { icon: <IconPlayCardA stroke={2} className="w-6 h-6" />, label: 'Flash cards', href: '/flash-cards' },
   { icon: <HelpCircle className="w-6 h-6" />, label: 'Help' },
 ];
 
@@ -116,6 +118,16 @@ export function MobileMenu({ user }: { user: UserModel | null }) {
                     )}
                   </li>
                 ))}
+                <li
+                  className="flex p-3"
+                  onClick={() => {
+                    signOut();
+                    removeCookie('session-token');
+                  }}
+                >
+                  <IconLogout stroke={2} className="w-6 h-6" />
+                  <span className="text-sm ml-4">Đăng xuất</span>
+                </li>
               </ul>
             </nav>
           </div>

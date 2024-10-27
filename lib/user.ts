@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import User from '@/models/User';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
+import dbConnect from './db-connect';
 
 const getUserInfo = async (email: string) => {
   const userResp = await User.findOne({
@@ -12,6 +13,7 @@ const getUserInfo = async (email: string) => {
 };
 
 export const handleGetUser = async () => {
+  await dbConnect();
   const sessionNextAuth = await auth();
   if (sessionNextAuth?.user?.email) {
     return await getUserInfo(sessionNextAuth.user.email);
