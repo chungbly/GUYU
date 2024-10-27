@@ -88,6 +88,7 @@ const PlayAudioButton = ({
 
       if (!buffer) return;
       src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
+      setAudioSrc(src);
       if (!src) return;
     }
     audioInput.src = src;

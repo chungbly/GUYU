@@ -70,6 +70,7 @@ export const sendActivationLinkToEmail = async (email: string) => {
     return mail?.accepted?.length;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
+    console.log("error", e);
     return null;
   }
 };
