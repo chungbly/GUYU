@@ -118,16 +118,18 @@ export function MobileMenu({ user }: { user: UserModel | null }) {
                     )}
                   </li>
                 ))}
-                <li
-                  className="flex p-3"
-                  onClick={() => {
-                    signOut();
-                    removeCookie('session-token');
-                  }}
-                >
-                  <IconLogout stroke={2} className="w-6 h-6" />
-                  <span className="text-sm ml-4">Đăng xuất</span>
-                </li>
+                {user && (
+                  <li
+                    className="flex p-3"
+                    onClick={() => {
+                      signOut();
+                      removeCookie('session-token');
+                    }}
+                  >
+                    <IconLogout stroke={2} className="w-6 h-6" />
+                    <span className="text-sm ml-4">Đăng xuất</span>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
