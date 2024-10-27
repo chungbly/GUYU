@@ -1,7 +1,7 @@
 import dbConnect from '@/lib/db-connect';
 import { errorResp, successResp } from '@/lib/server-json';
 import { handleGetUser } from '@/lib/user';
-import Flashcard from '@/models/Flashcard';
+import Flashcard, { FlashCardModel } from '@/models/Flashcard';
 import Idioms from '@/models/Idioms';
 import User from '@/models/User';
 import { NextRequest } from 'next/server';
@@ -21,8 +21,8 @@ export const GET = async (request: NextRequest) => {
       userId: user._id,
     };
     if (idiomId) query['idiomId'] = idiomId;
-    const flashcards = await Flashcard.findOne(query);
-    if (!flashcards) return errorResp('Flashcards not found', 404);
+    const flashcards = await Flashcard.find<FlashCardModel>(query);
+    if (!flashcards?.length) return errorResp('Flashcards not found', 404);
     const idiomIds = flashcards.map((f) => f.idiomId);
     const idioms = await Idioms.find({ _id: { $in: idiomIds } });
     if (!idioms) return errorResp('Flashcards not found', 404);
