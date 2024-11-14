@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   env: {
     ELEVENLABS_API_KEY: process.env.ELEVENLABS_API_KEY,
     GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
