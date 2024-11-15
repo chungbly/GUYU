@@ -32,15 +32,11 @@ jobs:
 
       - name: "Run pull images from Docker Hub"
         run: sudo docker pull buithiendev/guyu:latest
-
       - name: "Run docker file"
         run: sudo docker run --env-file .env.production -p 80:3000 buithiendev/guyu:latest
-
       - name: "Remove images with tag <none>"
         run: sudo docker image prune -f
-      
       - name: "Docker images"
         run: sudo docker images
-
       - name: "Remove '.env.production' file"
         run: rm -f .env.production
