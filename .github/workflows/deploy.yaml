@@ -31,11 +31,9 @@ jobs:
           echo "GOOGLE_PRIVATE_KEY=\"${{ secrets.GOOGLE_PRIVATE_KEY }}\"" >> .env.production
 
       - name: "Run pull images from Docker Hub"
-        working-directory: docker/
         run: sudo docker pull buithiendev/guyu:latest
 
       - name: "Run docker file"
-        working-directory: docker/
         run: sudo docker run --env-file .env.production -p 80:3000 buithiendev/guyu:latest
 
       - name: "Remove images with tag <none>"
