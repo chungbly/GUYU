@@ -1,0 +1,48 @@
+name: Pull images and Run on EC2
+
+on:
+  workflow_run:
+    workflows: ["Build and Publish Docker Image"]
+    types:
+      - completed
+  
+jobs:
+  deploy:
+    runs-on: [self-hosted, ec2]
+
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v4.2.2
+
+      - name: "Create '.env.production' file"
+        run: |
+          echo "PORT=${{ secrets.PORT }}" >> .env.production
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env.production
+          echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> .env.production
+          echo "WEB_URL=${{ secrets.WEB_URL }}" >> .env.production
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
+          echo "AUTH_FACEBOOK_ID=${{ secrets.AUTH_FACEBOOK_ID }}" >> .env.production
+          echo "AUTH_FACEBOOK_SECRET=${{ secrets.AUTH_FACEBOOK_SECRET }}" >> .env.production
+          echo "AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }}" >> .env.production
+          echo "AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }}" >> .env.production
+          echo "GMAIL_PASSWORD=${{ secrets.GMAIL_PASSWORD }}" >> .env.production
+          echo "ELEVENLABS_API_KEY=${{ secrets.ELEVENLABS_API_KEY }}" >> .env.production
+          echo "GOOGLE_CLIENT_EMAIL=${{ secrets.GOOGLE_CLIENT_EMAIL }}" >> .env.production
+          echo "GOOGLE_PRIVATE_KEY=\"${{ secrets.GOOGLE_PRIVATE_KEY }}\"" >> .env.production
+
+      - name: "Run pull images from Docker Hub"
+        working-directory: docker/
+        run: sudo docker pull buithiendev/guyu:latest
+
+      - name: "Run docker file"
+        working-directory: docker/
+        run: sudo docker run --env-file .env.production -p 80:3000 buithiendev/guyu:latest
+
+      - name: "Remove images with tag <none>"
+        run: sudo docker image prune -f
+      
+      - name: "Docker images"
+        run: sudo docker images
+
+      - name: "Remove '.env.production' file"
+        run: rm -f .env.production
