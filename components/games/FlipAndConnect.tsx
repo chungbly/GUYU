@@ -5,31 +5,21 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const flashcards = [
-  { id: 1, front: 'Apple', back: 'Quả táo' },
-  { id: 2, front: 'Banana', back: 'Quả chuối' },
-  { id: 3, front: 'Orange', back: 'Quả cam' },
-  { id: 4, front: 'Grape', back: 'Quả nho' },
-  { id: 5, front: 'Mango', back: 'Quả xoài' },
-  { id: 6, front: 'Pineapple', back: 'Quả dứa' },
-  { id: 7, front: 'Watermelon', back: 'Quả dưa hấu' },
-  { id: 8, front: 'Strawberry', back: 'Quả dâu tây' },
-];
 
-export default function FlipAndConnect() {
-  const [cards, setCards] = useState(flashcards);
+
+export default function FlipAndConnect({ data }: { data: { id: string; content: string }[] }) {
+  const [cards, setCards] = useState(
+    [...data, ...data].sort(() => Math.random() - 0.5).map((card, index) => ({ ...card, uniqueId: index }))
+  );
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
-  const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
+  const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    shuffleCards();
-  }, []);
 
   const shuffleCards = () => {
-    const shuffled = [...flashcards, ...flashcards]
+    const shuffled = [...data, ...data]
       .sort(() => Math.random() - 0.5)
       .map((card, index) => ({ ...card, uniqueId: index }));
     setCards(shuffled);
@@ -71,15 +61,14 @@ export default function FlipAndConnect() {
     }
   };
 
-  const isGameComplete = matchedPairs.length === flashcards.length;
-
+  const isGameComplete = matchedPairs.length === data.length;
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <h1 className="text-2xl font-bold mb-6 text-center">Connect Flashcards Game</h1>
       <div className="flex justify-between items-center mb-4">
         <p>
-          Score: {score} / {flashcards.length}
+          Score: {score} / {data.length}
         </p>
         <Button onClick={shuffleCards} className="flex items-center">
           <Shuffle className="mr-2 h-4 w-4" />
@@ -100,9 +89,7 @@ export default function FlipAndConnect() {
             <CardContent className="flex items-center justify-center h-24 p-2">
               <p className="text-center text-sm">
                 {selectedCards.includes(index) || matchedPairs.includes(card.id)
-                  ? card.front === card.back
-                    ? card.front
-                    : card.back
+                  ? card.content
                   : '?'}
               </p>
             </CardContent>
