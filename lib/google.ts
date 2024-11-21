@@ -18,7 +18,7 @@ export async function uploadAudio(file: File, id?: string) {
     requestBody: {
       name: `${id ?? v4()}.mp3`,
       mimeType: 'audio/mpeg',
-      parents: ['1MZEIvguGsZ8TgUlqK4EtHhGVa3hhvWRy'],
+      parents: ['1UY7xchG0Wd1XAviCsYMc6aSsODwlYdMp'],
     },
     media: {
       mimeType: 'audio/mpeg',

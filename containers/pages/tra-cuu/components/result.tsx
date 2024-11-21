@@ -100,10 +100,14 @@ const PlayAudioButton = ({
 
   useEffect(() => {
     const fetchAudio = async () => {
-      if (!audioId) return setAudioSrc(null);
-      const buffer = await ofetch(`/api/google/getAudio?id=${audioId}`).then((res) => res.arrayBuffer());
-      if (!buffer) return setAudioSrc(null);
-      setAudioSrc(URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' })));
+      try {
+        if (!audioId) return setAudioSrc(null);
+        const buffer = await ofetch(`/api/google/getAudio?id=${audioId}`).then((res) => res.arrayBuffer());
+        if (!buffer) return setAudioSrc(null);
+        setAudioSrc(URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' })));
+      } catch (e) {
+        console.log(e);
+      }
     };
     fetchAudio();
   }, [audioId]);
@@ -145,7 +149,7 @@ const Result = ({
                 text={thebestResult.simplified}
                 audioId={thebestResult.audioId}
               />
-              <AddFlashCard idiom={thebestResult}/>
+              <AddFlashCard idiom={thebestResult} />
             </div>
           </CardTitle>
           <p className="text-lg ">【{thebestResult.pinyin}】</p>

@@ -9,20 +9,64 @@ import { FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
+import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Control, useForm, UseFormGetValues, useWatch } from 'react-hook-form';
 
 const InitialUI = dynamic(() => import('@/containers/pages/tra-cuu/components/initialUI'));
 const Result = dynamic(() => import('@/containers/pages/tra-cuu/components/result'));
+
+const SearchBtn = ({
+  getValues,
+  handleSearch,
+  control,
+}: {
+  getValues: UseFormGetValues<{
+    searchTerm: string;
+  }>;
+  control: Control<
+    {
+      searchTerm: string;
+      isLoading: boolean;
+    },
+    any
+  >;
+  handleSearch: (text: string) => void;
+}) => {
+  const isLoading = useWatch({ control, name: 'isLoading' });
+  return (
+    <Button
+      type="submit"
+      onClick={() => {
+        const text = getValues('searchTerm');
+        handleSearch(text);
+      }}
+    >
+      {isLoading ? (
+        <motion.div
+          className="h-4 w-4 rounded-full border-4 border-primary border-t-white"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          aria-label="Loading"
+        />
+      ) : (
+        <Search className=" sm:mr-2 h-4 w-4" />
+      )}
+
+      <span className="hidden sm:inline">Tìm kiếm</span>
+    </Button>
+  );
+};
 
 export default function Lookup({ search, data }: { search: string; data: IdiomModel[] | null | undefined }) {
   const [searchResults, setSearchResults] = useState<IdiomModel[] | null | undefined>(data);
   const router = useRouter();
   const methods = useForm<{
     searchTerm: string;
+    isLoading: boolean;
   }>();
 
   const {
@@ -52,6 +96,7 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
         clearErrors('searchTerm');
         return;
       }
+      setValue('isLoading', true);
       const res = await callAPI<IdiomModel[]>(`/api/idioms?text=${searchTerm}`);
       if (res.status === API_STATUS.OK && res.data?.length) {
         setSearchResults(res.data);
@@ -62,7 +107,9 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
           type: 'manual',
         });
       }
-    }),[]
+      setValue('isLoading', false);
+    }),
+    []
   );
 
   useEffect(() => {
@@ -87,7 +134,12 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
                     value={field.value}
                     onChange={(e) => {
                       field.onChange(e.target.value);
-                      handleSearch(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        const text = getValues('searchTerm');
+                        handleSearch(text);
+                      }
                     }}
                     placeholder="Nhập vào ô tra cứu Tiếng Trung, pinyin"
                   />
@@ -99,16 +151,7 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
                 </div>
               )}
             />
-            <Button
-              type="submit"
-              onClick={() => {
-                const text = getValues('searchTerm');
-                handleSearch(text);
-              }}
-            >
-              <Search className=" sm:mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Tìm kiếm</span>
-            </Button>
+            <SearchBtn getValues={getValues} handleSearch={handleSearch} control={control} />
           </div>
 
           <p className="text-sm text-gray-600 mt-2">Ví dụ: 吃闭门羹, chī bì mén gēnɡ.</p>
