@@ -26,6 +26,7 @@ const SearchBtn = ({
 }: {
   getValues: UseFormGetValues<{
     searchTerm: string;
+    isLoading: boolean;
   }>;
   control: Control<
     {
