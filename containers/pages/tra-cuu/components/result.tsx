@@ -127,6 +127,7 @@ const Result = ({
   idioms: IdiomModel[];
   setValue: UseFormSetValue<{
     searchTerm: string;
+    isLoading: boolean;
   }>;
   handleSearch: (searchTerm: string) => void;
 }) => {
