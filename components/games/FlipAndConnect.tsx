@@ -3,9 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
-
+import { useState } from 'react';
 
 export default function FlipAndConnect({ data }: { data: { id: string; content: string }[] }) {
   const [cards, setCards] = useState(
@@ -16,7 +14,6 @@ export default function FlipAndConnect({ data }: { data: { id: string; content: 
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
-
 
   const shuffleCards = () => {
     const shuffled = [...data, ...data]
@@ -88,9 +85,7 @@ export default function FlipAndConnect({ data }: { data: { id: string; content: 
           >
             <CardContent className="flex items-center justify-center h-24 p-2">
               <p className="text-center text-sm">
-                {selectedCards.includes(index) || matchedPairs.includes(card.id)
-                  ? card.content
-                  : '?'}
+                {selectedCards.includes(index) || matchedPairs.includes(card.id) ? card.content : '?'}
               </p>
             </CardContent>
           </Card>
