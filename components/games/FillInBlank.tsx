@@ -222,7 +222,10 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
               )}
             />
             <div className="flex justify-between mt-4">
-              <Button disabled={answeredSentences[currentSentence]?.checked} onClick={() => handleSubmit()}>
+              <Button
+                disabled={answeredSentences[currentSentence]?.checked}
+                onClick={() => handleSubmit(currentSentence, false)}
+              >
                 Kiểm tra
               </Button>
               <Button onClick={nextSentence} disabled={!showResult}>
