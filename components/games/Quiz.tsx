@@ -2,48 +2,16 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MultipleChoiceModel } from '@/models/multiple-choice';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const quizQuestions = [
-  {
-    id: 1,
-    question: 'What is the capital of France?',
-    answers: ['London', 'Berlin', 'Paris', 'Madrid'],
-    correctAnswer: 'Paris',
-  },
-  {
-    id: 2,
-    question: 'Which planet is known as the Red Planet?',
-    answers: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
-    correctAnswer: 'Mars',
-  },
-  {
-    id: 3,
-    question: 'Who painted the Mona Lisa?',
-    answers: ['Vincent van Gogh', 'Pablo Picasso', 'Leonardo da Vinci', 'Michelangelo'],
-    correctAnswer: 'Leonardo da Vinci',
-  },
-  {
-    id: 4,
-    question: 'What is the largest ocean on Earth?',
-    answers: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
-    correctAnswer: 'Pacific Ocean',
-  },
-  {
-    id: 5,
-    question: "Which element has the chemical symbol 'O'?",
-    answers: ['Gold', 'Silver', 'Oxygen', 'Iron'],
-    correctAnswer: 'Oxygen',
-  },
-];
-
-export default function MultipleChoiceQuiz() {
+export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel[] }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [questions, setQuestions] = useState(quizQuestions);
+  const [questions, setQuestions] = useState(data);
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
 
   useEffect(() => {
@@ -51,7 +19,7 @@ export default function MultipleChoiceQuiz() {
   }, []);
 
   const shuffleQuestions = () => {
-    const shuffled = [...quizQuestions].sort(() => Math.random() - 0.5);
+    const shuffled = [...data].sort(() => Math.random() - 0.5);
     setQuestions(shuffled);
     setCurrentQuestion(0);
     setScore(0);
