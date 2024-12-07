@@ -13,6 +13,9 @@ async function Page() {
   const idioms = await getRandomIdioms();
   const questions = idioms
     .map((idiom) => {
+      if (!idiom?.examples?.length) {
+        return [];
+      }
       return idiom.examples
         .map((example) => {
           if (example.question) {
