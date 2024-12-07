@@ -69,7 +69,6 @@ export default function IdiomWordOrderGameDnD({
     hint?: string;
   }[];
 }) {
-  console.log('questions', questions);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [shuffledWords, setShuffledWords] = useState<Word[]>([]);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
