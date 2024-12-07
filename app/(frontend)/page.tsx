@@ -4,6 +4,7 @@ import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-w
 import { Card, Carousel } from '@/components/ui/apple-cards-carousel';
 import { Button } from '@/components/ui/button';
 import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
+import Link from 'next/link';
 
 const data = [
   {
@@ -55,10 +56,14 @@ export default function Home() {
             </div>
             <TextGenerateEffect words={words} />
             <div className="flex gap-5 justify-center pt-5">
-              <Button className="w-32">Luyện tập</Button>
-              <Button className="w-32" variant="outline">
-                Tra cứu
-              </Button>
+              <Link href="/ghi-nho">
+                <Button className="w-32">Luyện tập</Button>
+              </Link>
+              <Link href="/tra-cuu">
+                <Button className="w-32" variant="outline">
+                  Tra cứu
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="col-span-1">
