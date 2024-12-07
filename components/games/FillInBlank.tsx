@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { v4 } from 'uuid';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
@@ -19,7 +20,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session');
-
+  const limit = searchParams.get('limit');
   const [currentSentence, setCurrentSentence] = useState(0);
   const [score, setScore] = useState(0);
   // const [showResult, setShowResult] = useState(false);
@@ -133,9 +134,10 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   }, [currentSentence, answeredSentences]);
 
   useEffect(() => {
+    if (!limit) return;
     if (!sessionId) {
       const now = moment().unix();
-      router.push(`/van-dung?session=${now}`);
+      router.push(`/van-dung?session=${now}&limit=${limit}`);
       return;
     }
 
@@ -147,7 +149,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       setScore(parsedAnswers.score);
       setErrors(parsedAnswers.errors || {});
     }
-  }, [sessionId]);
+  }, [sessionId, limit]);
 
   const handleSaveAnswers = (
     answeredSentences: {
@@ -175,6 +177,32 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       })
     );
   };
+  if (!limit) {
+    return (
+      <Dialog open={!limit}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
+            <DialogDescription>Chọn bộ câu hỏi phù hợp với bạn</DialogDescription>
+            <div className="grid grid-cols-4 gap-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-white rounded-md shadow-md cursor-pointer"
+                  onClick={() => {
+                    router.push(`/van-dung?limit=${(index + 1) * 5}`);
+                  }}
+                >
+                  <h3 className="text-lg text-center font-bold">Bộ {index + 1}</h3>
+                  <p className="text-sm text-center text-muted-foreground">{(index + 1) * 5} câu hỏi</p>
+                </div>
+              ))}
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    );
+  }
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold my-6 text-center">Luyện tập điền từ vào chỗ trống</h1>
@@ -259,7 +287,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className='w-full flex justify-end'>
+            <div className="w-full flex justify-end">
               <Button
                 onClick={() => {
                   window.location.replace(`/van-dung?session=${moment().unix()}`);

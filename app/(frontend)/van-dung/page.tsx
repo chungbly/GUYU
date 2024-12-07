@@ -4,8 +4,15 @@ import { API_STATUS } from '@/models/API';
 import { ParagrahpModel } from '@/models/paragraph';
 import { Suspense } from 'react';
 
-async function Page() {
-  const res = await callAPI<ParagrahpModel[]>(`${process.env.WEB_URL}/api/paragraph`);
+async function Page({
+  searchParams,
+}: {
+  searchParams: {
+    limit: number;
+  };
+}) {
+  const limit = searchParams.limit || 10;
+  const res = await callAPI<ParagrahpModel[]>(`${process.env.WEB_URL}/api/paragraph?limit=${limit}`);
   if (res.status !== API_STATUS.OK) return <div>Không tìm thấy dữ liệu</div>;
   const paragraphs = res.data;
   return (
