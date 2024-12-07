@@ -22,7 +22,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
 
   const [currentSentence, setCurrentSentence] = useState(0);
   const [score, setScore] = useState(0);
-  const [showResult, setShowResult] = useState(false);
+  // const [showResult, setShowResult] = useState(false);
   const [answeredSentences, setAnsweredSentences] = useState<{
     [key: string]: {
       userAnswers: {
@@ -72,7 +72,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       [currentSentence]: error,
     };
     setErrors(newErrors);
-    setShowResult(true);
+    // setShowResult(true);
     setAnsweredSentences((prev) => {
       prev[currentSentence.toString()] = {
         userAnswers,
@@ -97,14 +97,14 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       setCurrentSentence(nextUnanswered);
       userInputRef.current = answeredSentences[nextUnanswered]?.userAnswers || '';
     }
-    setShowResult(!!userInputRef.current);
+    // setShowResult(!!userInputRef.current);
     setTimeLeft(TIMER_DURATION);
   };
 
   const selectSentence = (index: number) => {
     setCurrentSentence(index);
     userInputRef.current = answeredSentences[index]?.userAnswers || '';
-    setShowResult(!!userInputRef.current);
+    // setShowResult(!!userInputRef.current);
     setTimeLeft(TIMER_DURATION);
   };
 
@@ -116,7 +116,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
     }
     const isShowResult =
       !!userInputRef.current || (remainingTime !== undefined && remainingTime !== TIMER_DURATION);
-    setShowResult(isShowResult);
+    // setShowResult(isShowResult);
     if (isShowResult) return;
     // const timer = setInterval(() => {
     //   setTimeLeft((prevTime) => {

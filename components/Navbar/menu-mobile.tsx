@@ -4,7 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { removeCookie } from '@/lib/cookie';
 import { UserModel } from '@/models/User';
-import { IconDeviceGamepad2, IconLogout, IconMenu2, IconPlayCardA, IconSearch } from '@tabler/icons-react';
+import { IconLogout, IconMenu2, IconPlayCardA, IconSearch } from '@tabler/icons-react';
 import { ChevronDown, FileText, HelpCircle, Home } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import dynamic from 'next/dynamic';
@@ -32,7 +32,7 @@ const menuItems: MenuItem[] = [
     subItems: [
       { label: 'Ghi nhớ', href: '/ghi-nho' },
       { label: 'Vận dụng', href: '/van-dung' },
-      { label: 'Thông hiểu', href: '/thong-hieu' }
+      { label: 'Thông hiểu', href: '/thong-hieu' },
     ],
   },
   { icon: <IconPlayCardA stroke={2} className="w-6 h-6" />, label: 'Flash cards', href: '/flash-cards' },
