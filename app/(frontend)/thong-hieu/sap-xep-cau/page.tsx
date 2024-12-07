@@ -11,14 +11,23 @@ const getRandomIdioms = async () => {
 };
 async function Page() {
   const idioms = await getRandomIdioms();
-  const questions = idioms.map((idiom) => {
-    return idiom.examples.map((example) => ({
-      question: example.question,
-      answer: example.chinese,
-      hint: example.vietnamese,
-    }));
-  }).flat();
-  return <IdiomWordOrderGameDnD questions={questions} />;
+  const questions = idioms
+    .map((idiom) => {
+      return idiom.examples
+        .map((example) => {
+          if (example.question) {
+            return {
+              question: example.question,
+              answer: example.chinese,
+            };
+          }
+          return null;
+        })
+        .filter((f) => !!f);
+    })
+
+    .flat();
+  return <IdiomWordOrderGameDnD questions={questions!} />;
 }
 
 export default Page;
