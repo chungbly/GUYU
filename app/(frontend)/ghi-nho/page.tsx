@@ -1,12 +1,15 @@
 'use client';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { motion } from 'framer-motion';
 import { Link, Puzzle } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 function Page() {
   const router = useRouter();
+  const [destination, setDestination] = useState<string | null>(null);
   return (
     <div className="container mx-auto ">
       <div className="min-h-[80vh]  p-4 md:p-8">
@@ -24,7 +27,7 @@ function Page() {
             <Card
               className="group cursor-pointer overflow-hidden"
               onClick={() => {
-                router.push('/ghi-nho/noi-cap');
+                setDestination('/ghi-nho/noi-cap');
               }}
             >
               <CardContent className="p-0">
@@ -50,7 +53,7 @@ function Page() {
             <Card
               className="group cursor-pointer overflow-hidden"
               onClick={() => {
-                router.push('/ghi-nho/tim-hai-o-giong-nhau');
+                setDestination('/ghi-nho/tim-hai-o-giong-nhau');
               }}
             >
               <CardContent className="p-0">
@@ -79,6 +82,28 @@ function Page() {
           <p>Chọn một chế độ chơi để bắt đầu.</p>
         </footer>
       </div>
+      <Dialog open={!!destination} onOpenChange={() => setDestination(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
+            <DialogDescription>Chọn bộ câu hỏi phù hợp với bạn</DialogDescription>
+            <div className="grid grid-cols-5 gap-4">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-white rounded-md shadow-md cursor-pointer"
+                  onClick={() => {
+                    router.push(`${destination}?limit=${(index + 1) * 5}`);
+                  }}
+                >
+                  <h3 className="text-lg text-center font-bold">Bộ {index + 1}</h3>
+                  <p className="text-sm text-center text-muted-foreground">{(index + 1) * 5} câu hỏi</p>
+                </div>
+              ))}
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

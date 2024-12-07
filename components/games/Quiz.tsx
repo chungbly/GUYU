@@ -55,7 +55,7 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
   const isQuizFinished = answeredQuestions.length === questions.length;
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-6 text-center">Trắc nghiệm</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="md:col-span-2">
@@ -122,7 +122,7 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Question List</CardTitle>
+            <CardTitle>Câu hỏi</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-2">
