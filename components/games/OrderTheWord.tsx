@@ -182,7 +182,7 @@ export default function IdiomWordOrderGameDnD({
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold my-6 text-center">Luyện tập sắp xếp thành ngữ</h1>
+      <h1 className="text-2xl font-bold my-6 text-center">Luyện tập sắp xếp quán dụng ngữ</h1>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
         <Card className="col-span-1 sm:col-span-2">
           <CardHeader>
@@ -234,12 +234,12 @@ export default function IdiomWordOrderGameDnD({
                 {isCorrect ? (
                   <div className="flex items-center text-green-700">
                     <CheckCircle className="mr-2" />
-                    Chính xác! Thành ngữ là: {questions[currentQuestion].answer}
+                    Chính xác! Câu đúng là: {questions[currentQuestion].answer}
                   </div>
                 ) : (
                   <div className="flex items-center text-red-700">
                     <XCircle className="mr-2" />
-                    Sai. Thành ngữ đúng là: {questions[currentQuestion].answer}
+                    Sai. Câu đúng là: {questions[currentQuestion].answer}
                   </div>
                 )}
               </div>

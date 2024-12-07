@@ -32,8 +32,8 @@ function Navbar({ className, children }: { className?: string; children?: ReactN
           <MenuItem setActive={setActive} active={active} item="Luyện tập">
             <div className="flex flex-col text-sm">
               <HoveredLink href="/ghi-nho">Ghi nhớ</HoveredLink>
-              <HoveredLink href="/van-dung">Vận dụng</HoveredLink>
               <HoveredLink href="/thong-hieu">Thông hiểu</HoveredLink>
+              <HoveredLink href="/van-dung">Vận dụng</HoveredLink>
             </div>
           </MenuItem>
           <Link

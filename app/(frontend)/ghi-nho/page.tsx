@@ -9,13 +9,13 @@ function Page() {
   const router = useRouter();
   return (
     <div className="container mx-auto ">
-      <div className="min-h-screen  p-4 md:p-8">
+      <div className="min-h-[80vh]  p-4 md:p-8">
         <header className="mb-8 text-center">
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            Chọn chế độ chơi
+            Chọn chế độ luyện tập
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Chọn một chế độ chơi để bắt đầu học từ vựng và thành ngữ
+            Chọn một chế độ luyện tập để bắt đầu học từ vựng và thành ngữ
           </p>
         </header>
 
@@ -36,10 +36,10 @@ function Page() {
                     fill
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
-                  <div className="absolute bg-gradient-to-b from-green-900/20 to-green-900/60 inset-0 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">Word Connect</h2>
-                    <p className="text-sm text-center opacity-90">Nối quán dụng và nghĩa của từ</p>
+                    <p className="text-center ">Nối quán dụng và nghĩa của từ</p>
                   </div>
                 </div>
               </CardContent>
@@ -62,10 +62,10 @@ function Page() {
                     fill
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
-                  <div className="absolute bg-gradient-to-b from-blue-900/20 to-blue-900/60 inset-0 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Puzzle className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">Memory Match</h2>
-                    <p className="text-sm text-center opacity-90">
+                    <p className="text-center drop-shadow-md">
                       Tìm cặp từ giống nhau để kiểm tra kỹ năng ghi nhớ của bạn
                     </p>
                   </div>

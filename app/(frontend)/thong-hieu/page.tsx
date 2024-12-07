@@ -12,10 +12,10 @@ function Page() {
       <div className="min-h-screen  p-4 md:p-8">
         <header className="mb-8 text-center">
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            Chọn chế độ chơi
+            Chọn chế độ luyện tập
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Chọn một chế độ chơi để bắt đầu học từ vựng và thành ngữ
+            Chọn một chế độ luyện tập để bắt đầu học từ vựng và thành ngữ
           </p>
         </header>
 
@@ -36,10 +36,10 @@ function Page() {
                     fill
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
-                  <div className="absolute bg-gradient-to-b from-red-900/10 to-red-900/60 inset-0 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute bg-gradient-to-b from-black/5 to-black/80  inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">Sắp xếp từ thành câu</h2>
-                    <p className="text-sm text-center opacity-90">Sắp xếp từ thành câu hoàn chỉnh</p>
+                    <p className="text-center opacity-90">Sắp xếp từ thành câu hoàn chỉnh</p>
                   </div>
                 </div>
               </CardContent>
@@ -62,10 +62,10 @@ function Page() {
                     fill
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
-                  <div className="absolute bg-gradient-to-b from-blue-900/20 to-blue-900/60 inset-0 flex flex-col items-center justify-center text-white p-6">
+                  <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Puzzle className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">Trắc nghiệm</h2>
-                    <p className="text-sm text-center opacity-90">
+                    <p className="text-center opacity-90">
                       Trả lời câu hỏi để kiểm tra kiến thức của bạn
                     </p>
                   </div>
@@ -76,7 +76,7 @@ function Page() {
         </div>
 
         <footer className="mt-8 text-center text-sm text-muted-foreground">
-          <p>Chọn một chế độ chơi để bắt đầu.</p>
+          <p>Chọn một chế độ luyện tập để bắt đầu.</p>
         </footer>
       </div>
     </div>

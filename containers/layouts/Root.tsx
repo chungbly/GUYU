@@ -9,7 +9,7 @@ async function Root({ children }: { children: React.ReactNode }) {
       <Navbar>
         <UserInfo />
       </Navbar>
-
+      
       {children}
       <Footer />
     </SessionProvider>

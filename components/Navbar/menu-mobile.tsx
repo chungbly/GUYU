@@ -31,8 +31,8 @@ const menuItems: MenuItem[] = [
     label: 'Luyện tập',
     subItems: [
       { label: 'Ghi nhớ', href: '/ghi-nho' },
-      { label: 'Vận dụng', href: '/van-dung' },
       { label: 'Thông hiểu', href: '/thong-hieu' },
+      { label: 'Vận dụng', href: '/van-dung' },
     ],
   },
   { icon: <IconPlayCardA stroke={2} className="w-6 h-6" />, label: 'Flash cards', href: '/flash-cards' },
