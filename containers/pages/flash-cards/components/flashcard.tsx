@@ -35,7 +35,7 @@ function Flashcard({ cards: originalData }: { cards: IdiomModel[] }) {
         </Button>
       </div>
       <p className="mt-4 text-foreground/60 mb-5">Bạn có thể ấn vào thẻ để xem nghĩa của cụm từ đó.</p>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         {cards.map((card) => (
           <Card
             key={card._id}
@@ -49,12 +49,12 @@ function Flashcard({ cards: originalData }: { cards: IdiomModel[] }) {
             <div className="relative w-full h-full [backface-visibility:hidden]">
               <CardContent className="flex h-full flex-col items-center justify-center p-6">
                 <h2 className="text-2xl font-bold mb-2">{card.simplified}</h2>
-                <p className="text-gray-600">{card.pinyin}</p>
               </CardContent>
             </div>
             <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
-              <CardContent className="flex items-center justify-center h-full p-6 border-primary border rounded-md">
-                <p className="text-xl text-center">{card.meaning}</p>
+              <CardContent className="flex flex-col gap-4 items-center justify-center h-full p-6 border-primary border rounded-md">
+                <p className="text-gray-600 text-xl">[{card.pinyin}]</p>
+                <p className="text-center">{card.meaning}</p>
               </CardContent>
             </div>
           </Card>

@@ -159,6 +159,7 @@ const Result = ({
           <div>
             <ol className="list-decimal list-inside">
               <li className="font-[Simsun]">{thebestResult.explanation}</li>
+              <p className="mt-2 text-sm">[ {thebestResult.explanationPinyin} ]</p>
             </ol>
             <p className="mt-2 text-sm">{thebestResult.meaning}</p>
           </div>
@@ -178,6 +179,7 @@ const Result = ({
                       />
                       <span className="text-red-500 font-[Simsun]">{example.chinese}</span>
                     </p>
+
                     <p className="text-gray-600 mt-1 ">{example.pinyin}</p>
                     <p className="mt-1">{example.vietnamese}</p>
                   </div>

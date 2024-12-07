@@ -30,8 +30,8 @@ function UserMenu({ user }: { user: UserModel }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className=" flex items-center gap-2 border rounded-md h-fit py-1 px-3 shadow-sm">
-          <p className="text-foreground/80">{user.name}</p>
+        <div className=" flex items-center gap-2 border rounded-md h-fit py-1 px-3 shadow-sm bg-white/80 backdrop-blur-sm">
+          <p>{user.name}</p>
           <Avatar className="h-8 w-8">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>{userNameFallback}</AvatarFallback>

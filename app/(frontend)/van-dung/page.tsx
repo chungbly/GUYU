@@ -10,7 +10,7 @@ async function Page() {
   const paragraphs = res.data;
   return (
     <Suspense>
-      <EnhancedFillInTheBlank data={paragraphs} />;
+      <EnhancedFillInTheBlank data={paragraphs.sort((a, b) => a.paragraph.length - b.paragraph.length)} />;
     </Suspense>
   );
 }

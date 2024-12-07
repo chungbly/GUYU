@@ -25,18 +25,6 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-const idioms = [
-  { id: 1, idiom: 'A piece of cake', meaning: 'Something that is very easy to do' },
-  {
-    id: 2,
-    idiom: 'Hit the nail on the head',
-    meaning: 'To describe exactly what is causing a situation or problem',
-  },
-  { id: 3, idiom: 'When pigs fly', meaning: 'Something that will never happen' },
-  { id: 4, idiom: 'Break a leg', meaning: 'Good luck' },
-  { id: 5, idiom: 'Bite off more than you can chew', meaning: 'To take on a task that is way too big' },
-];
-
 export function SortableItem({
   children,
   id,
@@ -72,8 +60,17 @@ type Word = {
   id: string;
 };
 
-export default function IdiomWordOrderGameDnD() {
-  const [currentIdiom, setCurrentIdiom] = useState(0);
+export default function IdiomWordOrderGameDnD({
+  questions,
+}: {
+  questions: {
+    answer: string;
+    question: string;
+    hint?: string;
+  }[];
+}) {
+  console.log('questions', questions);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [shuffledWords, setShuffledWords] = useState<Word[]>([]);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
   const [showResult, setShowResult] = useState(false);
@@ -90,7 +87,10 @@ export default function IdiomWordOrderGameDnD() {
   );
 
   const shuffleIdiom = () => {
-    const words = idioms[currentIdiom].idiom.split(' ');
+    const words = questions[currentQuestion].question
+      .split('/')
+      .map((w) => w.trim())
+      .filter((w) => [' ', '', '!', '.', '，', '?', '。'].indexOf(w) === -1);
     const shuffled = [...words].sort(() => Math.random() - 0.5);
     setShuffledWords(
       shuffled.map((word, index) => ({
@@ -126,7 +126,35 @@ export default function IdiomWordOrderGameDnD() {
   }
 
   const checkAnswer = () => {
-    const correct = selectedWords.map((s) => s.word).join(' ') === idioms[currentIdiom].idiom;
+    const correct =
+      selectedWords.map((s) => s.word).join('') ===
+      questions[currentQuestion].answer
+        .replaceAll('?', '')
+        .replaceAll('!', '')
+        .replaceAll('。', '')
+        .replaceAll('，', '')
+        .replaceAll('、', '')
+        .replaceAll('；', '')
+        .replaceAll('：', '')
+        .replaceAll('“', '')
+        .replaceAll('”', '')
+        .replaceAll('《', '')
+        .replaceAll('》', '')
+        .replaceAll('（', '')
+        .replaceAll('）', '')
+        .replaceAll('『', '')
+        .replaceAll('』', '')
+        .replaceAll('【', '')
+        .replaceAll('】', '')
+        .replaceAll('…', '')
+        .replaceAll('—', '')
+        .replaceAll('～', '')
+        .replaceAll('？', '')
+        .replaceAll('！', '')
+        .replaceAll('：', '')
+        .replaceAll('；', '')
+        .replaceAll('，', '')
+        .replaceAll('。', '');
     setIsCorrect(correct);
     setShowResult(true);
     if (correct) {
@@ -135,8 +163,8 @@ export default function IdiomWordOrderGameDnD() {
   };
 
   const nextIdiom = () => {
-    if (currentIdiom < idioms.length - 1) {
-      setCurrentIdiom(currentIdiom + 1);
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
     } else {
       // Game finished
       setShowResult(true);
@@ -144,93 +172,118 @@ export default function IdiomWordOrderGameDnD() {
   };
 
   const resetGame = () => {
-    setCurrentIdiom(0);
+    setCurrentQuestion(0);
     setScore(0);
     shuffleIdiom();
   };
 
   useEffect(() => {
     shuffleIdiom();
-  }, [currentIdiom]);
+  }, [currentQuestion]);
 
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold my-6 text-center">Luyện tập sắp xếp thành ngữ</h1>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex justify-between items-center">
-            Câu {currentIdiom + 1} / {idioms.length}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <p className="font-semibold">Gợi ý:</p>
-            <p>{idioms[currentIdiom].meaning}</p>
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <Card className="col-span-1 sm:col-span-2">
+          <CardHeader>
+            <CardTitle className="flex justify-between items-center">
+              Câu {currentQuestion + 1} / {questions.length}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* <div className="mb-4">
+              <p className="font-semibold">Gợi ý:</p>
+              <p>{questions[currentQuestion].hint}</p>
+            </div> */}
 
-          <DndContext
-            sensors={sensors}
-            modifiers={[restrictToHorizontalAxis]}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext items={selectedWords} strategy={horizontalListSortingStrategy}>
-              <div className="p-4 bg-gray-100 min-h-[60px] rounded-md flex flex-wrap gap-2 mb-4">
-                {selectedWords.map((selected) => (
-                  <SortableItem id={selected.id} key={selected.id} onClick={() => handleWordClick(selected)}>
-                    {selected.word}
-                  </SortableItem>
-                ))}
+            <DndContext
+              sensors={sensors}
+              modifiers={[restrictToHorizontalAxis]}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext items={selectedWords} strategy={horizontalListSortingStrategy}>
+                <div className="p-4 bg-gray-100 min-h-[60px] rounded-md flex flex-wrap gap-2 mb-4">
+                  {selectedWords.map((selected) => (
+                    <SortableItem
+                      id={selected.id}
+                      key={selected.id}
+                      onClick={() => handleWordClick(selected)}
+                    >
+                      {selected.word}
+                    </SortableItem>
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+
+            <div className="flex gap-3 flex-wrap">
+              {shuffledWords.map((word) => (
+                <Button key={word.id} variant="outline" onClick={() => handleWordClick(word)}>
+                  {word.word}
+                </Button>
+              ))}
+            </div>
+            {!showResult && (
+              <Button onClick={checkAnswer} className="mt-4 w-full">
+                Kiểm tra đáp án
+              </Button>
+            )}
+            {showResult && (
+              <div className={`mt-4 p-4 rounded-md ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`}>
+                {isCorrect ? (
+                  <div className="flex items-center text-green-700">
+                    <CheckCircle className="mr-2" />
+                    Chính xác! Thành ngữ là: {questions[currentQuestion].answer}
+                  </div>
+                ) : (
+                  <div className="flex items-center text-red-700">
+                    <XCircle className="mr-2" />
+                    Sai. Thành ngữ đúng là: {questions[currentQuestion].answer}
+                  </div>
+                )}
               </div>
-            </SortableContext>
-          </DndContext>
-
-          <div className="flex gap-3">
-            {shuffledWords.map((word) => (
-              <Button key={word.id} variant="outline" onClick={() => handleWordClick(word)}>
-                {word.word}
+            )}
+            {showResult && currentQuestion < questions.length - 1 && (
+              <Button onClick={nextIdiom} className="mt-4 w-full">
+                Tiếp theo
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            ))}
-          </div>
-          {!showResult && (
-            <Button onClick={checkAnswer} className="mt-4 w-full">
-              Kiểm tra đáp án
-            </Button>
-          )}
-          {showResult && (
-            <div className={`mt-4 p-4 rounded-md ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`}>
-              {isCorrect ? (
-                <div className="flex items-center text-green-700">
-                  <CheckCircle className="mr-2" />
-                  Chính xác! Thành ngữ là: {idioms[currentIdiom].idiom}
-                </div>
-              ) : (
-                <div className="flex items-center text-red-700">
-                  <XCircle className="mr-2" />
-                  Sai. Thành ngữ đúng là: {idioms[currentIdiom].idiom}
-                </div>
-              )}
+            )}
+            {currentQuestion === questions.length - 1 && showResult && (
+              <div className="mt-4 p-4 rounded-md bg-blue-100 text-blue-700">
+                <h2 className="text-xl font-bold">Game Completed!</h2>
+                <p>
+                  Điểm của bạn: {score} trên tổng số {questions.length}
+                </p>
+                <Button onClick={resetGame} className="mt-2 w-full">
+                  Làm lại
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+        <Card className="col-span-1">
+          <CardHeader>
+            <CardTitle>Câu hỏi</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-2">
+              {questions.map((_, index) => (
+                <Button
+                  key={index}
+                  onClick={() => setCurrentQuestion(index)}
+                  variant={currentQuestion === index ? 'default' : 'outline'}
+                  // className={`w-full ${answeredQuestions.includes(index) ? 'opacity-50' : ''}`}
+                >
+                  {index + 1}
+                </Button>
+              ))}
             </div>
-          )}
-          {showResult && currentIdiom < idioms.length - 1 && (
-            <Button onClick={nextIdiom} className="mt-4 w-full">
-              Tiếp theo
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          )}
-          {currentIdiom === idioms.length - 1 && showResult && (
-            <div className="mt-4 p-4 rounded-md bg-blue-100 text-blue-700">
-              <h2 className="text-xl font-bold">Game Completed!</h2>
-              <p>
-                Điểm của bạn: {score} trên tổng số {idioms.length}
-              </p>
-              <Button onClick={resetGame} className="mt-2 w-full">
-                Làm lại
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

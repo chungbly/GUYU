@@ -84,7 +84,7 @@ export default function TwoColumnConnectFlashcards({
             <Card
               key={`left-${card.id}`}
               className={`cursor-pointer transition-all duration-300 transform ${
-                selectedLeft === index ? 'bg-blue-100' : 'hover:scale-105'
+                selectedLeft === index ? 'bg-blue-100' : 'hover:scale-[1.01]'
               }`}
               onClick={() => handleCardClick('left', index)}
             >
@@ -99,7 +99,7 @@ export default function TwoColumnConnectFlashcards({
             <Card
               key={`right-${card.id}`}
               className={`cursor-pointer transition-all duration-300 transform ${
-                selectedRight === index ? 'bg-blue-100' : 'hover:scale-105'
+                selectedRight === index ? 'bg-blue-100' : 'hover:scale-[1.01]'
               }`}
               onClick={() => handleCardClick('right', index)}
             >

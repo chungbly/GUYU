@@ -30,21 +30,9 @@ const menuItems: MenuItem[] = [
     icon: <FileText className="w-6 h-6" />,
     label: 'Luyện tập',
     subItems: [
-      { label: 'Nhận biết', href: '/web-dev' },
-      { label: 'Vận dụng', href: '/interface-design' },
-      { label: 'Thông hiểu', href: '/seo' },
-      { label: 'Tổng hợp', href: '/branding' },
-    ],
-  },
-  {
-    icon: <IconDeviceGamepad2 stroke={2} className="w-6 h-6" />,
-    label: 'Games',
-    subItems: [
-      { label: 'Điền vào chỗ trống', href: '/games/dien-vao-cho-trong' },
-      { label: 'Tìm hai ô giống nhau', href: '/games/tim-hai-o-giong-nhau' },
-      { label: 'Sắp xếp thành ngữ', href: '/games/sap-xep-cau' },
-      { label: 'Trắc nghiệm', href: '/games/trac-nghiem' },
-      { label: 'Nối cặp', href: '/games/noi-cap' },
+      { label: 'Ghi nhớ', href: '/ghi-nho' },
+      { label: 'Vận dụng', href: '/van-dung' },
+      { label: 'Thông hiểu', href: '/thong-hieu' }
     ],
   },
   { icon: <IconPlayCardA stroke={2} className="w-6 h-6" />, label: 'Flash cards', href: '/flash-cards' },

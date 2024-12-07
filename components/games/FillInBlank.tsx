@@ -3,9 +3,8 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { ParagrahpModel } from '@/models/paragraph';
-import { Clock } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import moment from 'moment';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -44,7 +43,11 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       answer: {},
     },
   });
-  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
+  const [errors, setErrors] = useState<{
+    [key: string]: {
+      [key: number]: boolean;
+    };
+  }>({});
 
   const sentence = data[currentSentence].paragraph;
   const userInputRef = useRef<{
@@ -53,17 +56,22 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
 
   const handleSubmit = (currentSentence: number, isTimeout = false) => {
     const userAnswers = getValues('answer');
-    const errors: {
+    const error: {
       [key: number]: boolean;
     } = {};
-    const correctCount = Object.entries(userAnswers).reduce((acc, [index, answer]) => {
-      if (answer === data[currentSentence].correctAnswer[Number(index)]) {
-        return acc + 1;
+    let correctCount = 0;
+    data[currentSentence].correctAnswer.forEach((answer, index) => {
+      if (userAnswers[index] === answer) {
+        correctCount += 1;
+      } else {
+        error[index] = true;
       }
-      errors[Number(index)] = true;
-      return acc;
-    }, 0);
-    setErrors(errors);
+    });
+    const newErrors = {
+      ...errors,
+      [currentSentence]: error,
+    };
+    setErrors(newErrors);
     setShowResult(true);
     setAnsweredSentences((prev) => {
       prev[currentSentence.toString()] = {
@@ -72,14 +80,19 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         checked: true,
         remainingTime: isTimeout ? 0 : timeLeft,
       };
-      handleSaveAnswers(prev, score + (data[currentSentence].correctAnswer.length / 10) * correctCount);
+      handleSaveAnswers(
+        prev,
+        score + (data[currentSentence].correctAnswer.length / 10) * correctCount,
+        newErrors
+      );
       return prev;
     });
   };
 
   const nextSentence = () => {
-    setErrors({});
-    const nextUnanswered = data.findIndex((_, index) => answeredSentences[index]?.userAnswers === undefined);
+    const nextUnanswered = data.findIndex(
+      (_, index) => answeredSentences[index]?.userAnswers === undefined && index > currentSentence
+    );
     if (nextUnanswered !== -1) {
       setCurrentSentence(nextUnanswered);
       userInputRef.current = answeredSentences[nextUnanswered]?.userAnswers || '';
@@ -105,24 +118,24 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       !!userInputRef.current || (remainingTime !== undefined && remainingTime !== TIMER_DURATION);
     setShowResult(isShowResult);
     if (isShowResult) return;
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          handleSubmit(currentSentence, true);
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
+    // const timer = setInterval(() => {
+    //   setTimeLeft((prevTime) => {
+    //     if (prevTime <= 1) {
+    //       clearInterval(timer);
+    //       handleSubmit(currentSentence, true);
+    //       return 0;
+    //     }
+    //     return prevTime - 1;
+    //   });
+    // }, 1000);
 
-    return () => clearInterval(timer);
+    // return () => clearInterval(timer);
   }, [currentSentence, answeredSentences]);
 
   useEffect(() => {
     if (!sessionId) {
       const now = moment().unix();
-      router.push(`/games/dien-vao-cho-trong?session=${now}`);
+      router.push(`/van-dung?session=${now}`);
       return;
     }
 
@@ -132,6 +145,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       setAnsweredSentences(parsedAnswers.answeredSentences);
       setValue('answer', parsedAnswers.answeredSentences[currentSentence]?.userAnswers || {});
       setScore(parsedAnswers.score);
+      setErrors(parsedAnswers.errors || {});
     }
   }, [sessionId]);
 
@@ -145,13 +159,19 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         remainingTime: number;
       };
     },
-    score: number
+    score: number,
+    errors: {
+      [key: string]: {
+        [key: number]: boolean;
+      };
+    }
   ) => {
     sessionStorage.setItem(
       `userAnswers-${sessionId}`,
       JSON.stringify({
         answeredSentences,
         score,
+        errors,
       })
     );
   };
@@ -163,14 +183,14 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               Câu {currentSentence + 1} / {data.length}
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <Clock className="mr-2 h-4 w-4" />
                 <span>{timeLeft}s</span>
-              </div>
+              </div> */}
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <Progress value={(timeLeft / TIMER_DURATION) * 100} className="mb-4" />
+          <CardContent className="p-2 pt-0 sm:p-6 sm:pt-0">
+            {/* <Progress value={(timeLeft / TIMER_DURATION) * 100} className="mb-4" /> */}
             <p className="text-lg mb-4">{sentence}</p>
             <Controller
               name="answer"
@@ -201,7 +221,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                                     });
                                   }}
                                 >
-                                  <RadioGroupItem value={answer} id="option-one" />
+                                  <RadioGroupItem className="min-w-4" value={answer} id="option-one" />
                                   <Label htmlFor="option-one" className="cursor-pointer">
                                     {answer}
                                   </Label>
@@ -210,7 +230,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                             })}
                           </RadioGroup>
                         </div>
-                        {errors[index] && (
+                        {errors[currentSentence]?.[index] && (
                           <p className="text-red-500 text-sm">
                             Đáp án đúng là: {data[currentSentence].correctAnswer[index]}{' '}
                           </p>
@@ -228,7 +248,10 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
               >
                 Kiểm tra
               </Button>
-              <Button onClick={nextSentence} disabled={!showResult}>
+              <Button
+                onClick={nextSentence}
+                // disabled={!showResult}
+              >
                 Tiếp theo
               </Button>
             </div>
@@ -236,6 +259,19 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         </Card>
         <Card>
           <CardContent className="p-4">
+            <div className='w-full flex justify-end'>
+              <Button
+                onClick={() => {
+                  window.location.replace(`/van-dung?session=${moment().unix()}`);
+                }}
+                variant="destructive"
+                className="mb-2 "
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Làm lại
+              </Button>
+            </div>
+
             <div className="grid grid-cols-4 gap-2">
               {data.map((_, index) => (
                 <Button

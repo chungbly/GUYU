@@ -9,12 +9,19 @@ function Navbar({ className, children }: { className?: string; children?: ReactN
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <div className="bg-cyan-600 sm:bg-white shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
-      <div className={cn(' container flex mx-auto items-center ', className)}>
-        <Link href="/">
-          <Image src={'/images/logo.png'} width={180} height={60} alt="logo" className="bg-cyan-600 mr-2" />
+    <div className="bg-[#F19160] shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
+      <div className={cn('container flex mx-auto items-center ', className)}>
+        <Link href="/" className="flex gap-2 items-center">
+          <Image
+            src={'/images/logo.png'}
+            width={60}
+            height={60}
+            alt="logo"
+            className="mr-2 object-contain max-h-[60px] max-w-[60px]"
+          />
+          <span className="text-white text-2xl font-bold">GUYU</span>
         </Link>
-        <Menu setActive={setActive} className="hidden sm:flex items-center">
+        <Menu setActive={setActive} className="hidden sm:flex items-center text-white hover:text-white/80">
           <Link
             onMouseEnter={() => setActive(null)}
             href="/tra-cuu"
@@ -24,20 +31,9 @@ function Navbar({ className, children }: { className?: string; children?: ReactN
           </Link>
           <MenuItem setActive={setActive} active={active} item="Luyện tập">
             <div className="flex flex-col text-sm">
-              <HoveredLink href="/web-dev">Nhận biết</HoveredLink>
-              <HoveredLink href="/interface-design">Vận dụng</HoveredLink>
-              <HoveredLink href="/seo">Thông hiểu</HoveredLink>
-              <HoveredLink href="/branding">Tổng hợp</HoveredLink>
-            </div>
-          </MenuItem>
-
-          <MenuItem setActive={setActive} active={active} item="Games">
-            <div className="flex flex-col text-sm">
-              <HoveredLink href="/games/dien-vao-cho-trong">Điền vào chỗ trống</HoveredLink>
-              <HoveredLink href="/games/tim-hai-o-giong-nhau">Tìm hai ô giống nhau</HoveredLink>
-              <HoveredLink href="/games/sap-xep-cau">Sắp xếp thành ngữ</HoveredLink>
-              <HoveredLink href="/games/trac-nghiem">Trắc nghiệm</HoveredLink>
-              <HoveredLink href="/games/noi-cap">Nối cặp</HoveredLink>
+              <HoveredLink href="/ghi-nho">Ghi nhớ</HoveredLink>
+              <HoveredLink href="/van-dung">Vận dụng</HoveredLink>
+              <HoveredLink href="/thong-hieu">Thông hiểu</HoveredLink>
             </div>
           </MenuItem>
           <Link

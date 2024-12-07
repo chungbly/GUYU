@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 export interface IdiomModel {
   _id: string;
   simplified: string;
+  explanationPinyin: string;
   audioId?: string;
   pinyin: string;
   meaning: string;
@@ -16,6 +17,7 @@ export interface Example {
   chinese: string;
   pinyin: string;
   vietnamese?: string;
+  question?: string;
 }
 
 /* User will correspond to a collection in your MongoDB database. */
@@ -42,6 +44,9 @@ const IdiomSchema = new mongoose.Schema<IdiomModel>(
       type: String,
       required: true,
     },
+    explanationPinyin: {
+      type: String,
+    },
     examples: [
       {
         audioId: {
@@ -57,6 +62,9 @@ const IdiomSchema = new mongoose.Schema<IdiomModel>(
         vietnamese: {
           type: String,
         },
+        question: {
+          type: String
+        }
       },
     ],
   },

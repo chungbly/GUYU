@@ -56,15 +56,15 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-2xl font-bold mb-6 text-center">Enhanced Multiple Choice Quiz</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Trắc nghiệm</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="md:col-span-2">
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
-              Question {currentQuestion + 1} of {questions.length}
+              Câu {currentQuestion + 1} / {questions.length}
               <Button onClick={shuffleQuestions} size="sm">
                 <Shuffle className="mr-2 h-4 w-4" />
-                Shuffle
+                Ngẫu nhiên
               </Button>
             </CardTitle>
           </CardHeader>

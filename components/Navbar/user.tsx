@@ -10,7 +10,7 @@ async function UserInfo() {
   const user = await handleGetUser();
   return (
     <>
-      <div className="flex-1 hidden sm:flex justify-end">
+      <div className="flex-1 hidden sm:flex justify-end ">
         {user ? (
           <UserMenu user={user} />
         ) : (

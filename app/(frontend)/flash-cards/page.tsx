@@ -18,7 +18,7 @@ const fetchFlashCards = async () => {
 export default async function Page() {
   const flashcards = await fetchFlashCards();
   return (
-    <div className="container mx-auto ">
+    <div className="container mx-auto">
       {flashcards?.length ? (
         <Flashcard cards={flashcards} />
       ) : (
