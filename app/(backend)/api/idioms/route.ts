@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         score: { $meta: 'textScore' },
       });
 
-    if (!idioms) return errorResp('Không tìm thấy thành ngữ', 404);
+    if (!idioms) return errorResp('Không tìm thấy quán dụng', 404);
     return successResp(idioms);
   } catch (e) {
     return errorResp(

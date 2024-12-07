@@ -11,10 +11,10 @@ export async function GET(request: NextRequest) {
 
     const idioms = await Idioms.aggregate([
       {
-        $sample: { size: limit }
-      }
-    ])
-    if (!idioms) return errorResp('Không tìm thấy thành ngữ', 404);
+        $sample: { size: limit },
+      },
+    ]);
+    if (!idioms) return errorResp('Không tìm thấy quán dụng', 404);
     return successResp(idioms);
   } catch (e) {
     return errorResp(

@@ -18,7 +18,7 @@ function Page() {
             Chọn chế độ luyện tập
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Chọn một chế độ luyện tập để bắt đầu học từ vựng và thành ngữ
+            Chọn một chế độ luyện tập để bắt đầu học từ vựng và quán dụng
           </p>
         </header>
 

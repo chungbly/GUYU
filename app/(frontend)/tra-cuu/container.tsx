@@ -122,7 +122,7 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
     <div className="container mx-auto">
       <Card className="my-6">
         <CardHeader className="p-3 sm:p-6">
-          <CardTitle>Tìm kiếm thành ngữ, cụm từ, chữ Hán.</CardTitle>
+          <CardTitle>Tìm kiếm quán dụng, cụm từ, chữ Hán.</CardTitle>
         </CardHeader>
         <CardContent className="p-3 sm:p-6">
           <div className="flex gap-4">
