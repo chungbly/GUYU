@@ -153,7 +153,7 @@ const Result = ({
               <AddFlashCard idiom={thebestResult} />
             </div>
           </CardTitle>
-          <p className="text-lg ">【{thebestResult.pinyin}】</p>
+          <p className="text-lg ">{thebestResult.pinyin}</p>
         </CardHeader>
         <CardContent className="p-3 sm:p-6">
           <div>
