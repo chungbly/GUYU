@@ -145,11 +145,11 @@ const Result = ({
           <CardTitle className="flex items-center justify-between">
             <span className="text-3xl text-red-600 mr-2 font-[Simsun]">{thebestResult.simplified}</span>
             <div>
-              <PlayAudioButton
+              {/* <PlayAudioButton
                 idiomId={thebestResult._id}
                 text={thebestResult.simplified}
                 audioId={thebestResult.audioId}
-              />
+              /> */}
               <AddFlashCard idiom={thebestResult} />
             </div>
           </CardTitle>
@@ -171,12 +171,12 @@ const Result = ({
                   <span className="text-gray-600 mr-2 relative top-[6px]">{`${index + 1})`}</span>
                   <div>
                     <p className="flex items-center">
-                      <PlayAudioButton
+                      {/* <PlayAudioButton
                         idiomId={thebestResult._id}
                         text={example.chinese}
                         audioId={example.audioId}
                         exampleId={example._id}
-                      />
+                      /> */}
                       <span className="text-red-500 font-[Simsun]">{`${example.chinese}${
                         !example.chinese?.includes('。') && '。'
                       }`}</span>

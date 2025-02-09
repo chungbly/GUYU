@@ -60,7 +60,7 @@ function Page() {
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <div className="absolute inset-0 " />
                   <Image
-                    src="/images/quiz.png"
+                    src="/images/quiz.jpg"
                     alt="Memory Match Game"
                     fill
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"

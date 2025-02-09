@@ -34,10 +34,10 @@ function Page() {
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <div className="absolute inset-0 " />
                   <Image
-                    src="/images/connect.png"
+                    src="/images/word-connect.jpg"
                     alt="Word Connect Game"
                     fill
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                    className="w-full h-full object-stretch transition-transform group-hover:scale-105"
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
