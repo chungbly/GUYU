@@ -9,17 +9,17 @@ function Navbar({ className, children }: { className?: string; children?: ReactN
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <div className="bg-[#F19160] shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
+    <div className="bg-primary shadow-sm border-b sticky top-0  z-50 backdrop-blur-sm">
       <div className={cn('container flex mx-auto items-center ', className)}>
         <Link href="/" className="flex gap-2 items-center">
           <Image
             src={'/images/logo.png'}
-            width={60}
-            height={60}
+            width={160}
+            height={100}
             alt="logo"
-            className="mr-2 object-contain max-h-[60px] max-w-[60px]"
+            className="mr-2 object-stretch w-fit h-20"
           />
-          <span className="text-white text-2xl font-bold">GUYU</span>
+          {/* <span className="text-white text-2xl font-bold">GUYU</span> */}
         </Link>
         <Menu setActive={setActive} className="hidden sm:flex items-center text-white hover:text-white/80">
           <Link
