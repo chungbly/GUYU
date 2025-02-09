@@ -159,7 +159,7 @@ const Result = ({
           <div>
             <ol className="list-decimal list-inside">
               <li className="font-[Simsun]">{thebestResult.explanation}</li>
-              <p className="mt-2 text-sm">[ {thebestResult.explanationPinyin} ]</p>
+              <p className="mt-2 text-sm"> {thebestResult.explanationPinyin} </p>
             </ol>
             <p className="mt-2 text-sm">{thebestResult.meaning}</p>
           </div>
