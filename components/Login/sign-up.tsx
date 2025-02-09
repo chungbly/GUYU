@@ -210,7 +210,7 @@ export default function SignUpForm() {
 
   return (
     <>
-      <Button variant="ghost" onClick={() => setOpen(true)}>
+      <Button variant="ghost" className='text-white' onClick={() => setOpen(true)}>
         Đăng ký
       </Button>
       {hasSent ? (

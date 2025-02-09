@@ -43,7 +43,7 @@ export default function SignInDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Đăng nhập</Button>
+        <Button variant="ghost" className='text-white' >Đăng nhập</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
