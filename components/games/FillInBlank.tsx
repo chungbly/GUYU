@@ -34,6 +34,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       remainingTime: number;
     };
   }>({});
+  console.log('answeredSentences', answeredSentences);
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const { control, setValue, getValues } = useForm<{
     answer: {
@@ -205,7 +206,12 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   }
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold my-6 text-center">Luyện tập điền từ vào chỗ trống</h1>
+      <h1 className="text-2xl font-bold my-6 text-center">完成含有惯用语的短文</h1>
+      <p className="text-muted-foreground text-center mb-2">Hoàn thành đoạn văn chứa quán dụng ngữ</p>
+      <p className="text-muted-foreground text-center mb-6 text-xs">
+        Chọn đáp án đúng để hoàn thành đoạn văn. Nhấn <strong>Kiểm tra</strong> để xem kết quả. Nếu bạn trả
+        lời sai, hệ thống sẽ hiển thị đáp án đúng. Nhấn <strong>Tiếp theo</strong> để chuyển sang câu kế tiếp
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="col-span-1 md:col-span-2">
           <CardHeader>
@@ -270,12 +276,21 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
               )}
             />
             <div className="flex justify-between mt-4">
-              <Button
-                disabled={answeredSentences[currentSentence]?.checked}
-                onClick={() => handleSubmit(currentSentence, false)}
-              >
-                Kiểm tra
-              </Button>
+              <Controller
+                name="answer"
+                control={control}
+                defaultValue={{}}
+                render={({ field }) => {
+                  return (
+                    <Button
+                      disabled={Object.keys(field.value).length !== data[currentSentence].answers.length}
+                      onClick={() => handleSubmit(currentSentence, false)}
+                    >
+                      Kiểm tra
+                    </Button>
+                  );
+                }}
+              />
               <Button
                 onClick={nextSentence}
                 // disabled={!showResult}

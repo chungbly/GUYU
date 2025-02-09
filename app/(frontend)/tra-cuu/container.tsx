@@ -121,8 +121,10 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
   return (
     <div className="container mx-auto">
       <Card className="my-6">
-        <CardHeader className="p-3 sm:p-6">
-          <CardTitle>Tìm kiếm quán dụng, cụm từ, chữ Hán.</CardTitle>
+        <CardHeader className="p-3 sm:p-6 sm:pb-0">
+          <CardTitle>
+            Tìm kiếm quán dụng ngữ bằng cách gõ phiên âm hoặc từ nằm trong quán dụng ngữ đó.
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-3 sm:p-6">
           <div className="flex gap-4">
@@ -155,7 +157,7 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
             <SearchBtn getValues={getValues} handleSearch={handleSearch} control={control} />
           </div>
 
-          <p className="text-sm text-gray-600 mt-2">Ví dụ: 吃闭门羹, chī bì mén gēnɡ.</p>
+          <p className="text-sm text-gray-600 mt-2">Ví dụ: 吃闭门羹 chī bì mén gēnɡ.</p>
         </CardContent>
       </Card>
       {!!searchResults?.length ? (

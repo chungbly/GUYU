@@ -41,8 +41,8 @@ function Page() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">Word Connect</h2>
-                    <p className="text-center ">Nối quán dụng và nghĩa của từ</p>
+                    <h2 className="text-2xl font-bold text-center mb-2">连线惯用语与定义</h2>
+                    <p className="text-center ">Nối quán dụng ngữ và định nghĩa</p>
                   </div>
                 </div>
               </CardContent>
@@ -67,10 +67,8 @@ function Page() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Puzzle className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">Memory Match</h2>
-                    <p className="text-center drop-shadow-md">
-                      Tìm cặp từ giống nhau để kiểm tra kỹ năng ghi nhớ của bạn
-                    </p>
+                    <h2 className="text-2xl font-bold text-center mb-2">找出相同的惯用语片段</h2>
+                    <p className="text-center drop-shadow-md">Tìm mảnh ghép quán dụng ngữ giống nhau</p>
                   </div>
                 </div>
               </CardContent>
@@ -86,7 +84,9 @@ function Page() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
-            <DialogDescription>Chọn bộ câu hỏi phù hợp với bạn</DialogDescription>
+            <DialogDescription>
+              Chọn bộ câu hỏi (Bộ 1, 2, 3, 4, 5) tương ứng với (5, 10, 15, 20, 25 câu).
+            </DialogDescription>
             <div className="grid grid-cols-5 gap-4">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div

@@ -177,7 +177,9 @@ const Result = ({
                         audioId={example.audioId}
                         exampleId={example._id}
                       />
-                      <span className="text-red-500 font-[Simsun]">{example.chinese}</span>
+                      <span className="text-red-500 font-[Simsun]">{`${example.chinese}${
+                        !example.chinese?.includes('。') && '。'
+                      }`}</span>
                     </p>
 
                     <p className="text-gray-600 mt-1 ">{example.pinyin}</p>

@@ -182,7 +182,12 @@ export default function IdiomWordOrderGameDnD({
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold my-6 text-center">Luyện tập sắp xếp quán dụng ngữ</h1>
+      <h1 className="text-2xl font-bold my-6 text-center">排列含有惯用语的句子</h1>
+      <p className="text-muted-foreground text-center mb-2">Sắp xếp câu có chứa quán dụng ngữ</p>
+      <p className="text-muted-foreground text-center mb-6 text-xs">
+        Chọn câu hỏi bất kỳ → Sắp xếp các cụm từ xáo trộn thành câu hoàn chỉnh. Nếu chưa đúng, bạn có thể thử
+        lại. Nhấn <strong>Kiểm tra đáp án</strong> để kiểm tra kết quả.
+      </p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
         <Card className="col-span-1 sm:col-span-2">
           <CardHeader>

@@ -68,14 +68,21 @@ export default function TwoColumnConnectFlashcards({
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-2xl font-bold mb-6 text-center">Two-Column Connect Flashcards Game</h1>
+      <h1 className="text-2xl font-bold text-center">连线惯用语与定义</h1>
+      <p className="text-muted-foreground text-center mb-2"> Nối quán dụng ngữ và định nghĩa</p>
+      <p className="text-muted-foreground text-center mb-6 text-xs">
+        Nhấn chọn một quán dụng ngữ bất kỳ ở cột trái → nhấn chọn nghĩa tương ứng ở cột phải . Nếu đúng, quán
+        dụng ngữ và nghĩa sẽ mất đi. Nếu chưa đúng, hệ thống sẽ cho bạn thử lại. Chọn lần lượt hết các cặp
+        quán dụng ngữ và nghĩa để hoàn thành bài tập. Nếu muốn làm lại bạn chọn “随机打乱顺序” hiển thị trên
+        màn hình.
+      </p>
       <div className="flex justify-between items-center mb-4">
         <p>
           Score: {score} / {data.length}
         </p>
         <Button onClick={shuffleCards} className="flex items-center">
           <Shuffle className="mr-2 h-4 w-4" />
-          Shuffle Cards
+          随机打乱顺序
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-8">
@@ -115,20 +122,20 @@ export default function TwoColumnConnectFlashcards({
           {isCorrect ? (
             <div className="flex items-center text-green-700">
               <CheckCircle className="mr-2" />
-              Correct match!
+              Chính xác!
             </div>
           ) : (
             <div className="flex items-center text-red-700">
               <XCircle className="mr-2" />
-              Try again!
+              Sai rồi!
             </div>
           )}
         </div>
       )}
       {isGameComplete && (
         <div className="mt-4 p-4 rounded-md bg-green-100 text-green-700">
-          <h2 className="text-xl font-bold">Congratulations!</h2>
-          <p>You&apos;ve completed the game. Great job!</p>
+          <h2 className="text-xl font-bold">Tuyệt vời!</h2>
+          <p>Bạn đã hoàn thành bài tập. Chúc mừng!</p>
         </div>
       )}
     </div>

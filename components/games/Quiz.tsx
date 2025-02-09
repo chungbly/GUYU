@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { MultipleChoiceModel } from '@/models/multiple-choice';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -56,7 +57,12 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">Trắc nghiệm</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">选择正确的答案</h1>
+      <p className="text-muted-foreground text-center mb-2">Chọn đáp án đúng</p>
+      <p className="text-muted-foreground text-center mb-6 text-xs">
+        Chọn đáp án đúng để hoàn thành câu có sẵn. Nếu chưa đúng, bạn có thể thử lại. Nếu sai, bạn có thể chọn
+        lại. Chọn Tiếp theo để tiếp tục.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="md:col-span-2">
           <CardHeader>
@@ -64,7 +70,7 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
               Câu {currentQuestion + 1} / {questions.length}
               <Button onClick={shuffleQuestions} size="sm">
                 <Shuffle className="mr-2 h-4 w-4" />
-                Ngẫu nhiên
+                随机打乱顺序
               </Button>
             </CardTitle>
           </CardHeader>
@@ -75,11 +81,14 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
                 <Button
                   key={index}
                   onClick={() => handleAnswerClick(answer)}
-                  className="h-24 text-lg"
-                  variant={selectedAnswer === answer ? 'secondary' : 'outline'}
-                  disabled={showResult}
+                  variant="secondary"
+                  className={cn(
+                    'h-24 text-lg hover:bg-blue-100',
+                    selectedAnswer === answer ? 'bg-blue-100' : '',
+                    selectedAnswer === questions[currentQuestion].correctAnswer ? 'pointer-events-none' : ''
+                  )}
                 >
-                  {answer}
+                  {`${String.fromCharCode(65 + index)}. ${answer}`}
                 </Button>
               ))}
             </div>
@@ -92,29 +101,35 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
                 {selectedAnswer === questions[currentQuestion].correctAnswer ? (
                   <div className="flex items-center text-green-700">
                     <CheckCircle className="mr-2" />
-                    Correct!
+                    Chính xác!
                   </div>
                 ) : (
                   <div className="flex items-center text-red-700">
                     <XCircle className="mr-2" />
-                    Incorrect. The correct answer is: {questions[currentQuestion].correctAnswer}
+                    Sai rồi!!.
                   </div>
                 )}
               </div>
             )}
             {showResult && !isQuizFinished && (
               <Button onClick={handleNextQuestion} className="mt-4 w-full">
-                Next Question
+                Câu tiếp theo
               </Button>
             )}
             {isQuizFinished && (
-              <div className="mt-4 p-4 rounded-md bg-blue-100 text-blue-700">
-                <h2 className="text-xl font-bold">Quiz Completed!</h2>
+              <div className="mt-4 p-4 rounded-md bg-blue-100">
+                <h2 className="text-xl font-bold text-green-500">Đã hoàn thành!</h2>
                 <p>
-                  Your final score: {score} out of {questions.length}
+                  Điểm của bạn:
+                  <span
+                    className={cn('', score / questions.length > 0.7 ? 'text-green-500' : 'text-red-500')}
+                  >
+                    {score}
+                  </span>
+                  /{questions.length}
                 </p>
                 <Button onClick={shuffleQuestions} className="mt-2 w-full">
-                  Restart Quiz
+                  Chơi lại
                 </Button>
               </div>
             )}

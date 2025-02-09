@@ -41,8 +41,8 @@ function Page() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80  inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">Sắp xếp từ thành câu</h2>
-                    <p className="text-center opacity-90">Sắp xếp từ thành câu hoàn chỉnh</p>
+                    <h2 className="text-2xl font-bold text-center mb-2">排列含有惯用语的句子</h2>
+                    <p className="text-center opacity-90">Sắp xếp câu có chứa quán dụng ngữ</p>
                   </div>
                 </div>
               </CardContent>
@@ -67,8 +67,8 @@ function Page() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Puzzle className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">Trắc nghiệm</h2>
-                    <p className="text-center opacity-90">Trả lời câu hỏi để kiểm tra kiến thức của bạn</p>
+                    <h2 className="text-2xl font-bold text-center mb-2">选择正确的答案</h2>
+                    <p className="text-center opacity-90">Chọn đáp án đúng</p>
                   </div>
                 </div>
               </CardContent>
@@ -84,7 +84,8 @@ function Page() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
-            <DialogDescription>Chọn bộ câu hỏi phù hợp với bạn</DialogDescription>
+            <DialogDescription>
+              Chọn bộ câu hỏi (Bộ 1, 2, 3, 4, 5) tương ứng với (5, 10, 15, 20, 25 câu).</DialogDescription>
             <div className="grid grid-cols-5 gap-4">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div
