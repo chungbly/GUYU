@@ -4,20 +4,19 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-primary text-white py-8 mt-6">
+    <footer className="bg-[#ffdead] py-8 mt-6">
       <div className="container mx-auto ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Contact Information */}
           <div className="space-y-2">
-            <Link href="/" className="flex gap-2 items-center">
+            <Link href="/" className="flex gap-2 items-center justify-center sm:justify-start">
               <Image
                 src={'/images/logo.png'}
-                width={60}
-                height={60}
+                width={160}
+                height={100}
                 alt="logo"
-                className="mr-2 object-contain max-h-[60px] max-w-[60px]"
+                className="mr-2 object-stretch w-fit h-20"
               />
-              <span className="text-white text-2xl font-bold">GUYU</span>
             </Link>
             <div className="flex items-start gap-2">
               <HomeIcon className="size-5 mt-1 flex-shrink-0" />
