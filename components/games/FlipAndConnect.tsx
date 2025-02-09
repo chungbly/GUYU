@@ -84,7 +84,7 @@ export default function FlipAndConnect({ data }: { data: { id: string; content: 
         {cards.map((card, index) => (
           <Card
             key={index}
-            className={`cursor-pointer transition-all duration-300 transform ${
+            className={`cursor-pointer bg-sky-100 transition-all duration-300 transform ${
               selectedCards.includes(index) || matchedPairs.includes(card.id)
                 ? 'bg-blue-100'
                 : 'hover:scale-105'
