@@ -25,7 +25,7 @@ function Navbar({ className, children }: { className?: string; children?: ReactN
           <Link
             onMouseEnter={() => setActive(null)}
             href="/tra-cuu"
-            className="cursor-pointer transition-colors hover:text-foreground/80 dark:text-white font-medium space-x-1 text-sm"
+            className="cursor-pointer transition-colors hover:text-foreground/80 dark:text-white font-medium space-x-1 text-sm hover:bg-white p-2 rounded-sm"
           >
             Tra cứu
           </Link>
@@ -39,7 +39,7 @@ function Navbar({ className, children }: { className?: string; children?: ReactN
           <Link
             onMouseEnter={() => setActive(null)}
             href="/flash-cards"
-            className="cursor-pointer transition-colors hover:text-foreground/80 dark:text-white font-medium space-x-1 text-sm"
+            className="cursor-pointer transition-colors hover:text-foreground/80 dark:text-white font-medium space-x-1 text-sm hover:bg-white p-2 rounded-sm"
           >
             Flash Cards
           </Link>

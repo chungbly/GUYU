@@ -229,13 +229,14 @@ export default function IdiomWordOrderGameDnD({
                 </Button>
               ))}
             </div>
+            <p className="my-2 text-xs text-muted-foreground">{questions[currentQuestion].hint}</p>
             {!showResult && (
               <Button onClick={checkAnswer} className="mt-4 w-full">
                 Kiểm tra đáp án
               </Button>
             )}
             {showResult && (
-              <div className={`mt-4 p-4 rounded-md ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`}>
+              <div className={`mt-2 p-4 rounded-md ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`}>
                 {isCorrect ? (
                   <div className="flex items-center text-green-700">
                     <CheckCircle className="mr-2" />

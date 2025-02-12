@@ -29,6 +29,7 @@ async function Page({
             return {
               question: example.question,
               answer: example.chinese,
+              hint: example.vietnamese,
             };
           }
           return null;
