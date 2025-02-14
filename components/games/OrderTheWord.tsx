@@ -86,7 +86,7 @@ export default function IdiomWordOrderGameDnD({
   );
 
   const shuffleIdiom = () => {
-    const words = questions[currentQuestion].question.split('/');
+    const words = questions[currentQuestion].question.split('/').filter((w) => w.trim() !== '');
     const shuffled = [...words].sort(() => Math.random() - 0.5);
     setShuffledWords(
       shuffled.map((word, index) => ({
