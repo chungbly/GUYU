@@ -122,7 +122,11 @@ export default function IdiomWordOrderGameDnD({
   }
 
   const checkAnswer = () => {
-    const correct = selectedWords.map((s) => s.word.trim()).join('') === questions[currentQuestion].answer;
+    const correct =
+      selectedWords
+        .map((s) => s.word.trim())
+        .join('')
+        .replaceAll(' ', '') === questions[currentQuestion].answer.replaceAll(' ', '');
     setIsCorrect(correct);
     setShowResult(true);
     if (correct) {
