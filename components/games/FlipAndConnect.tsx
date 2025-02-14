@@ -2,13 +2,19 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useState } from 'react';
 
-export default function FlipAndConnect({ data }: { data: { id: string; content: string }[] }) {
+export default function FlipAndConnect({
+  data,
+}: {
+  data: { id: string; content: string; matched?: boolean }[];
+}) {
   const [cards, setCards] = useState(
     [...data, ...data].sort(() => Math.random() - 0.5).map((card, index) => ({ ...card, uniqueId: index }))
   );
+
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -55,7 +61,10 @@ export default function FlipAndConnect({ data }: { data: { id: string; content: 
         setSelectedCards([]);
         setShowFeedback(false);
         if (isCorrect) {
-          setCards((prev) => prev.filter((card) => card.id !== firstCard.id));
+          // setCards((prev) => prev.filter((card) => card.id !== firstCard.id));
+          setCards((prev) =>
+            prev.map((card) => (card.id === firstCard.id ? { ...card, matched: true } : card))
+          );
         }
       }, 1000);
     }
@@ -81,23 +90,26 @@ export default function FlipAndConnect({ data }: { data: { id: string; content: 
         </Button>
       </div>
       <div className="grid grid-cols-4 gap-4">
-        {cards.map((card, index) => (
-          <Card
-            key={index}
-            className={`cursor-pointer bg-sky-100 transition-all duration-300 transform ${
-              selectedCards.includes(index) || matchedPairs.includes(card.id)
-                ? 'bg-blue-100'
-                : 'hover:scale-105'
-            }`}
-            onClick={() => handleCardClick(index)}
-          >
-            <CardContent className="flex items-center justify-center h-24 p-2">
-              <p className="text-center text-sm">
-                {selectedCards.includes(index) || matchedPairs.includes(card.id) ? card.content : '?'}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
+        {!isGameComplete &&
+          cards.map((card, index) => (
+            <Card
+              key={index}
+              className={cn(
+                'cursor-pointer bg-sky-100 transition-all duration-300 transform',
+                card.matched ? 'invisible' : 'visible',
+                selectedCards.includes(index) || matchedPairs.includes(card.id)
+                  ? 'bg-blue-100'
+                  : 'hover:scale-105'
+              )}
+              onClick={() => handleCardClick(index)}
+            >
+              <CardContent className="flex items-center justify-center h-24 p-2">
+                <p className="text-center text-sm">
+                  {selectedCards.includes(index) || matchedPairs.includes(card.id) ? card.content : '?'}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
       </div>
       {showFeedback && (
         <div className={`mt-4 p-4 rounded-md ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`}>

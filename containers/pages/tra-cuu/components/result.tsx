@@ -178,7 +178,7 @@ const Result = ({
                         exampleId={example._id}
                       /> */}
                       <span className="text-red-500 font-[Simsun]">{`${example.chinese}${
-                        !example.chinese?.includes('。') && '。'
+                        example.chinese?.includes('。') ? '' : '。'
                       }`}</span>
                     </p>
 

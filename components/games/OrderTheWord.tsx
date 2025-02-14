@@ -86,10 +86,7 @@ export default function IdiomWordOrderGameDnD({
   );
 
   const shuffleIdiom = () => {
-    const words = questions[currentQuestion].question
-      .split('/')
-      .map((w) => w.trim().replaceAll('。', ''))
-      .filter((w) => [' ', '', '!', '.', '，', '?', '。'].indexOf(w) === -1);
+    const words = questions[currentQuestion].question.split('/');
     const shuffled = [...words].sort(() => Math.random() - 0.5);
     setShuffledWords(
       shuffled.map((word, index) => ({
@@ -125,35 +122,7 @@ export default function IdiomWordOrderGameDnD({
   }
 
   const checkAnswer = () => {
-    const correct =
-      selectedWords.map((s) => s.word).join('') ===
-      questions[currentQuestion].answer
-        .replaceAll('?', '')
-        .replaceAll('!', '')
-        .replaceAll('。', '')
-        .replaceAll('，', '')
-        .replaceAll('、', '')
-        .replaceAll('；', '')
-        .replaceAll('：', '')
-        .replaceAll('“', '')
-        .replaceAll('”', '')
-        .replaceAll('《', '')
-        .replaceAll('》', '')
-        .replaceAll('（', '')
-        .replaceAll('）', '')
-        .replaceAll('『', '')
-        .replaceAll('』', '')
-        .replaceAll('【', '')
-        .replaceAll('】', '')
-        .replaceAll('…', '')
-        .replaceAll('—', '')
-        .replaceAll('～', '')
-        .replaceAll('？', '')
-        .replaceAll('！', '')
-        .replaceAll('：', '')
-        .replaceAll('；', '')
-        .replaceAll('，', '')
-        .replaceAll('。', '');
+    const correct = selectedWords.map((s) => s.word.trim()).join('') === questions[currentQuestion].answer;
     setIsCorrect(correct);
     setShowResult(true);
     if (correct) {
