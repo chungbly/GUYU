@@ -91,7 +91,7 @@ export default function TwoColumnConnectFlashcards({
           {leftCards.map((card, index) => (
             <Card
               key={`left-${card.id}`}
-              className={`cursor-pointer transition-all duration-300 transform ${
+              className={`cursor-pointer transition-all duration-300 bg-[#C6EDC3] transform ${
                 selectedLeft === index ? 'bg-blue-100' : 'hover:scale-[1.01]'
               }`}
               onClick={() => handleCardClick('left', index)}
