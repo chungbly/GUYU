@@ -1,4 +1,4 @@
-import { HomeIcon, MailIcon } from 'lucide-react';
+import { Facebook, HomeIcon, MailIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -27,6 +27,17 @@ export default function Footer() {
               <a href="mailto:websiteguyu@gmail.com" className="hover:underline">
                 websiteguyu@gmail.com
               </a>
+            </div>
+            <div className="col-span-1 max-lg:col-span-2 flex flex-col gap-2">
+              <h1 className="flex gap-2 ">
+                <Facebook className="size-5" />
+                Fanpage
+              </h1>
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18iWjrbdRW%2F&tabs=timeline&width=350&height=100&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                className="w-full h-[200px] "
+              ></iframe>
             </div>
           </div>
 

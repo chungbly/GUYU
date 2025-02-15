@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ParagrahpModel } from '@/models/paragraph';
-import { ArrowRight, Check, CheckCheckIcon, CheckIcon, RefreshCw } from 'lucide-react';
+import { ArrowRight, CheckIcon, RefreshCw } from 'lucide-react';
 import moment from 'moment';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -295,9 +295,12 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                 render={({ field }) => {
                   return (
                     <Button
-                      disabled={Object.keys(field.value[currentSentence] || {}).length !== data[currentSentence].answers.length}
+                      disabled={
+                        Object.keys(field.value[currentSentence] || {}).length !==
+                        data[currentSentence].answers.length
+                      }
                       onClick={() => handleSubmit(currentSentence, false)}
-                      className='bg-green-500 hover:bg-green-600'
+                      className="bg-green-500 hover:bg-green-600"
                     >
                       <CheckIcon className="mr-2 h-4 w-4" />
                       Kiểm tra
@@ -318,11 +321,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         <Card>
           <CardContent className="p-4">
             <div className="w-full flex justify-end">
-              <Button
-                onClick={resetGame}
-                variant="destructive"
-                className="mb-2 "
-              >
+              <Button onClick={resetGame} variant="destructive" className="mb-2 ">
                 <RefreshCw className="mr-2 h-4 w-4" />
                 Làm lại
               </Button>
