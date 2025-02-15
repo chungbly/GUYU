@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ParagrahpModel } from '@/models/paragraph';
-import { RefreshCw } from 'lucide-react';
+import { ArrowRight, Check, CheckCheckIcon, CheckIcon, RefreshCw } from 'lucide-react';
 import moment from 'moment';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -13,6 +13,7 @@ import { v4 } from 'uuid';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import QuizCompletionModal from './quiz-complete-modal';
 
 const TIMER_DURATION = 60; // 60 seconds per sentence
 
@@ -38,7 +39,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const { control, setValue, getValues } = useForm<{
     answer: {
-      [key: number]: string;
+      [key: number]: Record<number, string>;
     };
   }>({
     defaultValues: {
@@ -57,7 +58,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   }>({});
 
   const handleSubmit = (currentSentence: number, isTimeout = false) => {
-    const userAnswers = getValues('answer');
+    const userAnswers = getValues('answer')[currentSentence];
     const error: {
       [key: number]: boolean;
     } = {};
@@ -133,6 +134,14 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
 
     // return () => clearInterval(timer);
   }, [currentSentence, answeredSentences]);
+
+  const resetGame = () => {
+    sessionStorage.removeItem(`userAnswers-${sessionId}`);
+    setValue('answer', {});
+    setAnsweredSentences({});
+    setScore(0);
+    setErrors({});
+  };
 
   useEffect(() => {
     if (!limit) return;
@@ -240,7 +249,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                           <RadioGroup
                             disabled={answeredSentences[currentSentence]?.checked}
                             className="grid grid-cols-4 flex-1 gap-2"
-                            value={field.value?.[index]}
+                            value={field.value?.[currentSentence]?.[index]}
                           >
                             {answers.map((answer) => {
                               return (
@@ -251,7 +260,10 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                                     if (answeredSentences[currentSentence]?.checked) return;
                                     setValue('answer', {
                                       ...field.value,
-                                      [index]: answer,
+                                      [currentSentence]: {
+                                        ...field.value[currentSentence],
+                                        [index]: answer,
+                                      },
                                     });
                                   }}
                                 >
@@ -283,9 +295,11 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                 render={({ field }) => {
                   return (
                     <Button
-                      disabled={Object.keys(field.value).length !== data[currentSentence].answers.length}
+                      disabled={Object.keys(field.value[currentSentence] || {}).length !== data[currentSentence].answers.length}
                       onClick={() => handleSubmit(currentSentence, false)}
+                      className='bg-green-500 hover:bg-green-600'
                     >
+                      <CheckIcon className="mr-2 h-4 w-4" />
                       Kiểm tra
                     </Button>
                   );
@@ -296,6 +310,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                 // disabled={!showResult}
               >
                 Tiếp theo
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </CardContent>
@@ -304,9 +319,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
           <CardContent className="p-4">
             <div className="w-full flex justify-end">
               <Button
-                onClick={() => {
-                  window.location.replace(`/van-dung?session=${moment().unix()}`);
-                }}
+                onClick={resetGame}
                 variant="destructive"
                 className="mb-2 "
               >
@@ -333,6 +346,16 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       <p className="text-center mt-4">
         Your Score: {score} / {10 * data.length}
       </p>
+      <QuizCompletionModal
+        isOpen={Object.keys(answeredSentences).length === data.length}
+        onClose={() => null}
+        score={score}
+        totalQuestions={data.length}
+        onRetry={resetGame}
+        onContinue={() => {
+          window.location.replace(`/van-dung?session=${moment().unix()}`);
+        }}
+      />
     </div>
   );
 }

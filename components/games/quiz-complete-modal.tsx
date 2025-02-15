@@ -6,9 +6,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 interface QuizCompletionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  score: number;
-  totalQuestions: number;
-  onRetry: () => void;
+  score?: number;
+  totalQuestions?: number;
+  isShowScore?: boolean;
+  onRetry?: () => void;
   onContinue: () => void;
 }
 
@@ -19,6 +20,7 @@ export default function QuizCompletionModal({
   totalQuestions,
   onRetry,
   onContinue,
+  isShowScore = true,
 }: QuizCompletionModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -30,21 +32,25 @@ export default function QuizCompletionModal({
         </DialogHeader>
 
         <div className="space-y-6">
-          <p className="text-muted-foreground">Chúc mừng bạn đã hoàn thành tất cả các câu hỏi</p>
+          <p className="text-muted-foreground">Chúc mừng bạn đã hoàn thành bài tập</p>
 
-          <div className="flex flex-col items-center space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">Điểm của bạn:</p>
-            <div className="flex items-baseline space-x-2">
-              <span className="text-4xl font-bold">{score}</span>
-              <span className="text-4xl font-bold text-muted-foreground">/</span>
-              <span className="text-4xl font-bold text-muted-foreground">{totalQuestions}</span>
+          {isShowScore && (
+            <div className="flex flex-col items-center space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">Điểm của bạn:</p>
+              <div className="flex items-baseline space-x-2">
+                <span className="text-4xl font-bold">{score}</span>
+                <span className="text-4xl font-bold text-muted-foreground">/</span>
+                <span className="text-4xl font-bold text-muted-foreground">{totalQuestions}</span>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
-            <Button variant="destructive" className="sm:order-1" onClick={onRetry}>
-              Làm lại
-            </Button>
+            {onRetry && (
+              <Button variant="destructive" className="sm:order-1" onClick={onRetry}>
+                Làm lại
+              </Button>
+            )}
             <Button className=" sm:order-2" onClick={onContinue}>
               Tiếp tục luyện tập
             </Button>

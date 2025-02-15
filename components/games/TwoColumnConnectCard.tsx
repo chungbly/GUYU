@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useState } from 'react';
+import QuizCompletionModal from './quiz-complete-modal';
 
 export default function TwoColumnConnectFlashcards({
   data,
@@ -132,12 +133,15 @@ export default function TwoColumnConnectFlashcards({
           )}
         </div>
       )}
-      {isGameComplete && (
-        <div className="mt-4 p-4 rounded-md bg-green-100 text-green-700">
-          <h2 className="text-xl font-bold">Tuyệt vời!</h2>
-          <p>Bạn đã hoàn thành bài tập. Chúc mừng!</p>
-        </div>
-      )}
+
+      <QuizCompletionModal
+        isOpen={isGameComplete}
+        onClose={() => null}
+        isShowScore={false}
+        onContinue={() => {
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }

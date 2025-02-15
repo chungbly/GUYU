@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils';
 import { MultipleChoiceModel } from '@/models/multiple-choice';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import QuizCompletionModal from './quiz-complete-modal';
+import { fireWorks } from '../ui/confetti';
 
 export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel[] }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -34,6 +36,7 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
     setShowResult(true);
     if (answer === questions[currentQuestion].correctAnswer) {
       setScore(score + 1);
+      fireWorks()
     }
     setAnsweredQuestions([...answeredQuestions, currentQuestion]);
   };
@@ -116,23 +119,6 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
                 Câu tiếp theo
               </Button>
             )}
-            {isQuizFinished && (
-              <div className="mt-4 p-4 rounded-md bg-blue-100">
-                <h2 className="text-xl font-bold text-green-500">Đã hoàn thành!</h2>
-                <p>
-                  Điểm của bạn:
-                  <span
-                    className={cn('', score / questions.length > 0.7 ? 'text-green-500' : 'text-red-500')}
-                  >
-                    {score}
-                  </span>
-                  /{questions.length}
-                </p>
-                <Button onClick={shuffleQuestions} className="mt-2 w-full">
-                  Chơi lại
-                </Button>
-              </div>
-            )}
           </CardContent>
         </Card>
         <Card>
@@ -155,6 +141,16 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
           </CardContent>
         </Card>
       </div>
+      <QuizCompletionModal
+        isOpen={isQuizFinished}
+        onClose={() => null}
+        score={score}
+        totalQuestions={questions.length}
+        onRetry={shuffleQuestions}
+        onContinue={() => {
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }

@@ -25,7 +25,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import confetti from 'canvas-confetti';
-import { ConfettiButton } from '../ui/confetti';
+import { ConfettiButton, fireWorks } from '../ui/confetti';
 import QuizCompletionModal from './quiz-complete-modal';
 
 export function SortableItem({
@@ -80,8 +80,6 @@ export default function IdiomWordOrderGameDnD({
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
-  console.log('userResponses', userResponses);
-  console.log('selectedWords', selectedWords);
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
@@ -131,53 +129,6 @@ export default function IdiomWordOrderGameDnD({
       });
     }
   }
-
-  const fireWorks = () => {
-    try {
-      const body = document.querySelector('body');
-      if (!body) return;
-      const rect = body.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-      const end = Date.now() + 2 * 1000; // 2 seconds
-      const colors = ['#a786ff', '#fd8bbc', '#eca184', '#f8deb1'];
-      for (let i = 0; i < 10; i++) {
-        confetti({
-          origin: {
-            x: x / window.innerWidth,
-            y: y / window.innerHeight,
-          },
-        });
-      }
-
-      const frame = () => {
-        if (Date.now() > end) return;
-
-        confetti({
-          particleCount: 2,
-          angle: 60,
-          spread: 55,
-          startVelocity: 60,
-          origin: { x: 0, y: 0.5 },
-          colors: colors,
-        });
-        confetti({
-          particleCount: 2,
-          angle: 120,
-          spread: 55,
-          startVelocity: 60,
-          origin: { x: 1, y: 0.5 },
-          colors: colors,
-        });
-
-        requestAnimationFrame(frame);
-      };
-
-      frame();
-    } catch (error) {
-      console.error('Confetti button error:', error);
-    }
-  };
 
   const checkAnswer = () => {
     const correct =
@@ -319,7 +270,7 @@ export default function IdiomWordOrderGameDnD({
         isOpen={Object.keys(userResponses).length === questions.length}
         onClose={() => null}
         score={score}
-        totalQuestions={1}
+        totalQuestions={questions.length}
         onRetry={resetGame}
         onContinue={() => {
           window.location.reload();
