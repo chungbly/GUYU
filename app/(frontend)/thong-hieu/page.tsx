@@ -18,7 +18,7 @@ function Page() {
             Chọn chế độ luyện tập
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Chọn một chế độ luyện tập để bắt đầu học từ vựng và quán dụng
+            Chọn một chế độ để bắt đầu học và luyện tập quán dụng ngữ
           </p>
         </header>
 
@@ -85,7 +85,8 @@ function Page() {
           <DialogHeader>
             <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
             <DialogDescription>
-              Chọn bộ câu hỏi (Bộ 1, 2, 3, 4, 5) tương ứng với (5, 10, 15, 20, 25 câu).</DialogDescription>
+              Chọn bộ câu hỏi (Bộ 1, 2, 3, 4, 5) tương ứng với (5, 10, 15, 20, 25 câu).
+            </DialogDescription>
             <div className="grid grid-cols-5 gap-4">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div

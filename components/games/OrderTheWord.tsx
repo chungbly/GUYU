@@ -24,6 +24,9 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import confetti from 'canvas-confetti';
+import { ConfettiButton } from '../ui/confetti';
+import QuizCompletionModal from './quiz-complete-modal';
 
 export function SortableItem({
   children,
@@ -69,6 +72,7 @@ export default function IdiomWordOrderGameDnD({
     hint?: string;
   }[];
 }) {
+  const [userResponses, setUserResponses] = useState<Record<number, Word[]>>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [shuffledWords, setShuffledWords] = useState<Word[]>([]);
   const [selectedWords, setSelectedWords] = useState<Word[]>([]);
@@ -76,6 +80,8 @@ export default function IdiomWordOrderGameDnD({
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
 
+  console.log('userResponses', userResponses);
+  console.log('selectedWords', selectedWords);
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
@@ -85,7 +91,7 @@ export default function IdiomWordOrderGameDnD({
     })
   );
 
-  const shuffleIdiom = () => {
+  const shuffleIdiom = (currentQuestion: number) => {
     const words = questions[currentQuestion].question.split('/').filter((w) => w.trim() !== '');
     const shuffled = [...words].sort(() => Math.random() - 0.5);
     setShuffledWords(
@@ -94,8 +100,13 @@ export default function IdiomWordOrderGameDnD({
         id: `${word}-${index}`,
       }))
     );
-    setSelectedWords([]);
-    setShowResult(false);
+    if (userResponses[currentQuestion]) {
+      setSelectedWords(userResponses[currentQuestion]);
+      setShowResult(true);
+    } else {
+      setSelectedWords([]);
+      setShowResult(false);
+    }
   };
 
   const handleWordClick = (word: Word) => {
@@ -121,15 +132,64 @@ export default function IdiomWordOrderGameDnD({
     }
   }
 
+  const fireWorks = () => {
+    try {
+      const body = document.querySelector('body');
+      if (!body) return;
+      const rect = body.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const end = Date.now() + 2 * 1000; // 2 seconds
+      const colors = ['#a786ff', '#fd8bbc', '#eca184', '#f8deb1'];
+      for (let i = 0; i < 10; i++) {
+        confetti({
+          origin: {
+            x: x / window.innerWidth,
+            y: y / window.innerHeight,
+          },
+        });
+      }
+
+      const frame = () => {
+        if (Date.now() > end) return;
+
+        confetti({
+          particleCount: 2,
+          angle: 60,
+          spread: 55,
+          startVelocity: 60,
+          origin: { x: 0, y: 0.5 },
+          colors: colors,
+        });
+        confetti({
+          particleCount: 2,
+          angle: 120,
+          spread: 55,
+          startVelocity: 60,
+          origin: { x: 1, y: 0.5 },
+          colors: colors,
+        });
+
+        requestAnimationFrame(frame);
+      };
+
+      frame();
+    } catch (error) {
+      console.error('Confetti button error:', error);
+    }
+  };
+
   const checkAnswer = () => {
     const correct =
       selectedWords
         .map((s) => s.word.trim())
         .join('')
         .replaceAll(' ', '') === questions[currentQuestion].answer.replaceAll(' ', '');
+    setUserResponses((prev) => ({ ...prev, [currentQuestion]: selectedWords }));
     setIsCorrect(correct);
     setShowResult(true);
     if (correct) {
+      fireWorks();
       setScore(score + 1);
     }
   };
@@ -146,11 +206,12 @@ export default function IdiomWordOrderGameDnD({
   const resetGame = () => {
     setCurrentQuestion(0);
     setScore(0);
-    shuffleIdiom();
+    shuffleIdiom(0);
+    setUserResponses({});
   };
 
   useEffect(() => {
-    shuffleIdiom();
+    shuffleIdiom(currentQuestion);
   }, [currentQuestion]);
 
   return (
@@ -161,6 +222,7 @@ export default function IdiomWordOrderGameDnD({
         Chọn câu hỏi bất kỳ → Sắp xếp các cụm từ xáo trộn thành câu hoàn chỉnh. Nếu chưa đúng, bạn có thể thử
         lại. Nhấn <strong>Kiểm tra đáp án</strong> để kiểm tra kết quả.
       </p>
+      <ConfettiButton>Confetti 🎉</ConfettiButton>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
         <Card className="col-span-1 sm:col-span-2">
           <CardHeader>
@@ -229,17 +291,6 @@ export default function IdiomWordOrderGameDnD({
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             )}
-            {currentQuestion === questions.length - 1 && showResult && (
-              <div className="mt-4 p-4 rounded-md bg-blue-100 text-blue-700">
-                <h2 className="text-xl font-bold">Game Completed!</h2>
-                <p>
-                  Điểm của bạn: {score} trên tổng số {questions.length}
-                </p>
-                <Button onClick={resetGame} className="mt-2 w-full">
-                  Làm lại
-                </Button>
-              </div>
-            )}
           </CardContent>
         </Card>
         <Card className="col-span-1">
@@ -251,7 +302,9 @@ export default function IdiomWordOrderGameDnD({
               {questions.map((_, index) => (
                 <Button
                   key={index}
-                  onClick={() => setCurrentQuestion(index)}
+                  onClick={() => {
+                    setCurrentQuestion(index);
+                  }}
                   variant={currentQuestion === index ? 'default' : 'outline'}
                   // className={`w-full ${answeredQuestions.includes(index) ? 'opacity-50' : ''}`}
                 >
@@ -262,6 +315,16 @@ export default function IdiomWordOrderGameDnD({
           </CardContent>
         </Card>
       </div>
+      <QuizCompletionModal
+        isOpen={Object.keys(userResponses).length === questions.length}
+        onClose={() => null}
+        score={score}
+        totalQuestions={1}
+        onRetry={resetGame}
+        onContinue={() => {
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }
