@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import QuizCompletionModal from './quiz-complete-modal';
+import { fireWorks } from '../ui/confetti';
 
 const TIMER_DURATION = 60; // 60 seconds per sentence
 
@@ -35,7 +36,6 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       remainingTime: number;
     };
   }>({});
-  console.log('answeredSentences', answeredSentences);
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const { control, setValue, getValues } = useForm<{
     answer: {
@@ -75,6 +75,9 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       [currentSentence]: error,
     };
     setErrors(newErrors);
+    if (!Object.keys(newErrors).length){
+      fireWorks();
+    }
     // setShowResult(true);
     setAnsweredSentences((prev) => {
       prev[currentSentence.toString()] = {
