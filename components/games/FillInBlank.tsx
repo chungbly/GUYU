@@ -71,7 +71,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         error[index] = true;
       }
     });
-    const newErrors = {
+    const newErrors: Record<number,typeof error> = {
       ...errors,
       [currentSentence]: error,
     };
@@ -97,7 +97,6 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   };
 
   const nextSentence = () => {
-    
     const nextUnanswered = data.findIndex(
       (_, index) => answeredSentences[index]?.userAnswers === undefined && index > currentSentence
     );
@@ -110,7 +109,6 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   };
 
   const selectSentence = (index: number) => {
-    
     setCurrentSentence(index);
     userInputRef.current = answeredSentences[index]?.userAnswers || '';
     setShowResult(!!userInputRef.current);
