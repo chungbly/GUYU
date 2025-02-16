@@ -97,7 +97,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   };
 
   const nextSentence = () => {
-    setShowResult(false);
+    
     const nextUnanswered = data.findIndex(
       (_, index) => answeredSentences[index]?.userAnswers === undefined && index > currentSentence
     );
@@ -105,15 +105,15 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       setCurrentSentence(nextUnanswered);
       userInputRef.current = answeredSentences[nextUnanswered]?.userAnswers || '';
     }
-    // setShowResult(!!userInputRef.current);
+    setShowResult(!!userInputRef.current);
     setTimeLeft(TIMER_DURATION);
   };
 
   const selectSentence = (index: number) => {
-    setShowResult(false);
+    
     setCurrentSentence(index);
     userInputRef.current = answeredSentences[index]?.userAnswers || '';
-    // setShowResult(!!userInputRef.current);
+    setShowResult(!!userInputRef.current);
     setTimeLeft(TIMER_DURATION);
   };
 
