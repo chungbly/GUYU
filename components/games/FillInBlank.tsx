@@ -223,8 +223,11 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       <h1 className="text-2xl font-bold my-6 text-center">完成含有惯用语的短文</h1>
       <p className="text-muted-foreground text-center mb-2">Hoàn thành đoạn văn chứa quán dụng ngữ</p>
       <p className="text-muted-foreground text-center mb-6 text-xs">
-        Chọn đáp án đúng để hoàn thành đoạn văn. Nhấn <strong>Kiểm tra</strong> để xem kết quả. Nếu bạn trả
-        lời sai, hệ thống sẽ hiển thị đáp án đúng. Nhấn <strong>Tiếp theo</strong> để chuyển sang câu kế tiếp
+        Chọn đáp án đúng để hoàn thành đoạn văn. Nhấn <strong>Kiểm tra</strong> để xem kết quả. Nếu đúng đáp
+        án sẽ chuyển màu
+        <strong className="text-green-500"> xanh</strong>, nếu sai đáp án sẽ chuyển màu
+        <strong className="text-red-500"> đỏ</strong>. Nhấn <strong>Tiếp theo</strong> để chuyển sang câu kế
+        tiếp
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="col-span-1 md:col-span-2">
@@ -364,9 +367,9 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
           </CardContent>
         </Card>
       </div>
-      <p className="text-center mt-4">
+      {/* <p className="text-center mt-4">
         Your Score: {score} / {10 * data.length}
-      </p>
+      </p> */}
       <QuizCompletionModal
         isOpen={Object.keys(answeredSentences).length === data.length}
         onClose={() => null}
