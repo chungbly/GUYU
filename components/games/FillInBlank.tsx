@@ -3,6 +3,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { ParagrahpModel } from '@/models/paragraph';
 import { ArrowRight, CheckIcon, RefreshCw } from 'lucide-react';
 import moment from 'moment';
@@ -10,11 +11,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { v4 } from 'uuid';
+import { fireWorks } from '../ui/confetti';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import QuizCompletionModal from './quiz-complete-modal';
-import { fireWorks } from '../ui/confetti';
 
 const TIMER_DURATION = 60; // 60 seconds per sentence
 
@@ -25,7 +26,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   const limit = searchParams.get('limit');
   const [currentSentence, setCurrentSentence] = useState(0);
   const [score, setScore] = useState(0);
-  // const [showResult, setShowResult] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   const [answeredSentences, setAnsweredSentences] = useState<{
     [key: string]: {
       userAnswers: {
@@ -75,10 +76,10 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       [currentSentence]: error,
     };
     setErrors(newErrors);
-    if (!Object.keys(newErrors).length){
+    if (!Object.keys(newErrors).length) {
       fireWorks();
     }
-    // setShowResult(true);
+    setShowResult(true);
     setAnsweredSentences((prev) => {
       prev[currentSentence.toString()] = {
         userAnswers,
@@ -144,6 +145,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
     setAnsweredSentences({});
     setScore(0);
     setErrors({});
+    setShowResult(false);
   };
 
   useEffect(() => {
@@ -255,6 +257,10 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                             value={field.value?.[currentSentence]?.[index]}
                           >
                             {answers.map((answer) => {
+                              const isChecked = field.value?.[currentSentence]?.[index] === answer;
+                              const isCorrect =
+                                showResult && data[currentSentence].correctAnswer[index] === answer;
+                              const isWrong = showResult && !isCorrect && isChecked;
                               return (
                                 <div
                                   key={answer}
@@ -270,8 +276,21 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                                     });
                                   }}
                                 >
-                                  <RadioGroupItem className="min-w-4" value={answer} id="option-one" />
-                                  <Label htmlFor="option-one" className="cursor-pointer">
+                                  <RadioGroupItem
+                                    className={cn(
+                                      'min-w-4',
+                                      isCorrect ? 'bg-green-500' : isWrong ? 'bg-red-500' : ''
+                                    )}
+                                    value={answer}
+                                    id="option-one"
+                                  />
+                                  <Label
+                                    htmlFor="option-one"
+                                    className={cn(
+                                      'cursor-pointer',
+                                      isCorrect ? 'text-green-500' : isWrong ? 'text-red-500' : ''
+                                    )}
+                                  >
                                     {answer}
                                   </Label>
                                 </div>
@@ -279,11 +298,11 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                             })}
                           </RadioGroup>
                         </div>
-                        {errors[currentSentence]?.[index] && (
+                        {/* {errors[currentSentence]?.[index] && (
                           <p className="text-red-500 text-sm">
                             Đáp án đúng là: {data[currentSentence].correctAnswer[index]}{' '}
                           </p>
-                        )}
+                        )} */}
                       </div>
                     );
                   })}
