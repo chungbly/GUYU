@@ -379,7 +379,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         totalQuestions={data.length}
         onRetry={resetGame}
         onContinue={() => {
-          window.location.replace(`/van-dung?session=${moment().unix()}`);
+          window.location.replace(`/van-dung?session=${moment().unix()}&limit=${limit}`);
         }}
       />
     </div>
