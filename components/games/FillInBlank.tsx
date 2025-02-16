@@ -76,7 +76,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       [currentSentence]: error,
     };
     setErrors(newErrors);
-    if (!Object.keys(newErrors).length) {
+    if (!Object.keys(newErrors[currentSentence]).length) {
       fireWorks();
     }
     setShowResult(true);
