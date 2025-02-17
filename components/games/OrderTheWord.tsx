@@ -24,7 +24,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ConfettiButton, fireWorks } from '../ui/confetti';
+import { fireWorks } from '../ui/confetti';
 import QuizCompletionModal from './quiz-complete-modal';
 
 export function SortableItem({
