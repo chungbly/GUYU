@@ -3,9 +3,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { motion } from 'framer-motion';
 import { Link, Puzzle } from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+export const metadata: Metadata = {
+  title: 'Luyện tập - Ghi nhớ',
+  description: 'Luyện tập và ghi nhớ quán dụng ngữ',
+};
 
 function Page() {
   const router = useRouter();

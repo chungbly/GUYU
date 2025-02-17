@@ -2,6 +2,12 @@ import { callAPI } from '@/clients/API';
 import TwoColumnConnectFlashcards from '@/components/games/TwoColumnConnectCard';
 import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Nối quán dụng và định nghĩa',
+  description: 'Nối quán dụng ngữ và định nghĩa',
+};
 
 const getRandomIdioms = async (limit:number) => {
   const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms/random?limit=${limit}`);

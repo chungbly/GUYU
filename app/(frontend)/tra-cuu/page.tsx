@@ -2,7 +2,13 @@ export const fetchCache = 'force-no-store';
 import { callAPI } from '@/clients/API';
 import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
+import { Metadata } from 'next';
 import Lookup from './container';
+
+export const metadata: Metadata = {
+  title: 'Tra cứu quán dụng ngữ',
+  description: 'Tra cứu quán dụng ngữ theo từ khóa',
+};
 
 const getIdiom = async (search: string) => {
   if (!search) return;

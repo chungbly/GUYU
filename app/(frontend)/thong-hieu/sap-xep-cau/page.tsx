@@ -2,6 +2,13 @@ import { callAPI } from '@/clients/API';
 import IdiomWordOrderGameDnD from '@/components/games/OrderTheWord';
 import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sắp xếp câu',
+  description: 'Luyện tập mức độ thông hiểu',
+};
+
 const getRandomIdioms = async (limit: number) => {
   const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms/random?limit=${limit}`);
   if (res.status === API_STATUS.OK && res.data?.length) {
@@ -37,7 +44,8 @@ async function Page({
         .filter((f) => !!f);
     })
 
-    .flat().filter((_, index) => index < limit);
+    .flat()
+    .filter((_, index) => index < limit);
   return <IdiomWordOrderGameDnD questions={questions!} />;
 }
 

@@ -2,7 +2,13 @@ import { callAPI } from '@/clients/API';
 import EnhancedFillInTheBlank from '@/components/games/FillInBlank';
 import { API_STATUS } from '@/models/API';
 import { ParagrahpModel } from '@/models/paragraph';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+export const metadata: Metadata = {
+  title: 'Điền từ vào chỗ trống',
+  description: 'Luyện tập mức độ vận dụng',
+};
 
 async function Page({
   searchParams,

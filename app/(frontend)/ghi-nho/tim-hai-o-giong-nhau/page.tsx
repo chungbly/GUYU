@@ -2,8 +2,13 @@ import { callAPI } from '@/clients/API';
 import FlipAndConnect from '@/components/games/FlipAndConnect';
 import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Tìm mảnh ghép quán dụng ngữ giống nhau',
+  description: 'Tìm mảnh ghép quán dụng ngữ giống nhau',
+};
 
-const getRandomIdioms = async (limit:number) => {
+const getRandomIdioms = async (limit: number) => {
   const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms/random?limit=${limit}`);
   if (res.status === API_STATUS.OK && res.data?.length) {
     return res.data;

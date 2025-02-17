@@ -2,6 +2,12 @@ import { callAPI } from '@/clients/API';
 import MultipleChoiceQuiz from '@/components/games/Quiz';
 import { API_STATUS } from '@/models/API';
 import { MultipleChoiceModel } from '@/models/multiple-choice';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Trắc nghiệm',
+  description: 'Luyện tập mức độ thông hiểu',
+};
 
 async function Page({
   searchParams,

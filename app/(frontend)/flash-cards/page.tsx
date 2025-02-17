@@ -5,6 +5,12 @@ import { handleGetUser } from '@/lib/user';
 import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
 import { IconZoomExclamation } from '@tabler/icons-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Flashcards',
+  description: 'Flashcards',
+};
 
 const fetchFlashCards = async () => {
   const user = await handleGetUser();
