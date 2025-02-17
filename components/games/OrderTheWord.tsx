@@ -172,7 +172,6 @@ export default function IdiomWordOrderGameDnD({
         Chọn câu hỏi bất kỳ → Sắp xếp các cụm từ xáo trộn thành câu hoàn chỉnh. Nếu chưa đúng, bạn có thể thử
         lại. Nhấn <strong>Kiểm tra đáp án</strong> để kiểm tra kết quả.
       </p>
-      <ConfettiButton>Confetti 🎉</ConfettiButton>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
         <Card className="col-span-1 sm:col-span-2">
           <CardHeader>
