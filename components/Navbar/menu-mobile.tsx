@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import { removeCookie } from '@/lib/cookie';
 import { UserModel } from '@/models/User';
+import { Separator } from '@radix-ui/react-dropdown-menu';
 import { IconLogout, IconMenu2, IconPlayCardA, IconSearch } from '@tabler/icons-react';
 import { ChevronDown, FileText, HelpCircle, Home } from 'lucide-react';
 import { signOut } from 'next-auth/react';
@@ -122,10 +123,15 @@ export function MobileMenu({ user }: { user: UserModel | null }) {
             </nav>
           </div>
           {!user && (
-            <div className="flex justify-around">
-              <SignInDialog />
-              <SignUpForm />
-            </div>
+            <>
+              <Separator className="h-[1px] w-full bg-slate-100" />
+              <div className="flex justify-around">
+                <SignInDialog />
+                <Separator className="h-full w-[1px] bg-slate-100"  />
+
+                <SignUpForm />
+              </div>
+            </>
           )}
         </DrawerContent>
       </Drawer>
