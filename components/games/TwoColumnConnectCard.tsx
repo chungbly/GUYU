@@ -69,8 +69,8 @@ export default function TwoColumnConnectFlashcards({
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-2xl font-bold text-center">连线惯用语与定义</h1>
-      <p className="text-muted-foreground text-center mb-2"> Nối quán dụng ngữ và định nghĩa</p>
+      <h1 className="text-2xl font-bold text-center">把惯用语与相对应的意义连接起来</h1>
+      <p className="text-muted-foreground text-center mb-2">Nối quán dụng ngữ và ngữ nghĩa tương ứng</p>
       <p className="text-muted-foreground text-center mb-6 text-xs">
         Nhấn chọn một quán dụng ngữ bất kỳ ở cột trái → nhấn chọn nghĩa tương ứng ở cột phải . Nếu đúng, quán
         dụng ngữ và nghĩa sẽ mất đi. Nếu chưa đúng, hệ thống sẽ cho bạn thử lại. Chọn lần lượt hết các cặp
