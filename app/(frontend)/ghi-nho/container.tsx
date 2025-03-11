@@ -41,8 +41,8 @@ function MemorizePage() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">连线惯用语与定义</h2>
-                    <p className="text-center ">Nối quán dụng ngữ và định nghĩa</p>
+                    <h2 className="text-2xl font-bold text-center mb-2">把惯用语与相对应的意义连接起来</h2>
+                    <p className="text-center ">Nối quán dụng ngữ và ngữ nghĩa tương ứng</p>
                   </div>
                 </div>
               </CardContent>

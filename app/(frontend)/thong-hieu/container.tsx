@@ -41,8 +41,8 @@ function UnderstandingLevelPage() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80  inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">排列含有惯用语的句子</h2>
-                    <p className="text-center opacity-90">Sắp xếp câu có chứa quán dụng ngữ</p>
+                    <h2 className="text-2xl font-bold text-center mb-2">组句</h2>
+                    <p className="text-center opacity-90">Sắp xếp câu có sử dụng quán dụng ngữ</p>
                   </div>
                 </div>
               </CardContent>
