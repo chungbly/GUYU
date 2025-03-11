@@ -77,7 +77,7 @@ function MemorizePage() {
         </div>
 
         <footer className="mt-8 text-center text-sm text-muted-foreground">
-          <p>Chọn một chế độ chơi để bắt đầu.</p>
+          <p>Chọn một chế độ luyện tập để bắt đầu.</p>
         </footer>
       </div>
       <Dialog open={!!destination} onOpenChange={() => setDestination(null)}>
