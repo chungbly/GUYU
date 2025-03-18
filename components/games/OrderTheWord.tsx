@@ -208,7 +208,7 @@ export default function IdiomWordOrderGameDnD({
 
             <div className="flex gap-3 flex-wrap">
               {shuffledWords.map((word) => (
-                <Button key={word.id} variant="outline" onClick={() => handleWordClick(word)}>
+                <Button key={word.id} variant="outline" className='border-primary' onClick={() => handleWordClick(word)}>
                   {word.word}
                 </Button>
               ))}
