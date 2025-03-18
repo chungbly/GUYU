@@ -6,8 +6,8 @@ import { Metadata } from 'next';
 import Lookup from './container';
 
 export const metadata: Metadata = {
-  title: 'Tra cứu quán dụng ngữ',
-  description: 'Tra cứu quán dụng ngữ theo từ khóa',
+  title: 'Tra cứu Quán dụng ngữ',
+  description: 'Tra cứu Quán dụng ngữ theo từ khóa',
 };
 
 const getIdiom = async (search: string) => {

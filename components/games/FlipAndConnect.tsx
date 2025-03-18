@@ -76,9 +76,9 @@ export default function FlipAndConnect({
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <h1 className="text-2xl font-bold mb-6 text-center">找出相同的惯用语片段</h1>
-      <p className="text-muted-foreground text-center mb-2">Tìm mảnh ghép quán dụng ngữ giống nhau</p>
+      <p className="text-muted-foreground text-center mb-2">Tìm mảnh ghép Quán dụng ngữ giống nhau</p>
       <p className="text-muted-foreground text-center mb-6 text-xs">
-        Chọn câu hỏi bất kỳ → Chọn 2 mảnh ghép quán dụng ngữ giống nhau. Nếu đúng 2 mảnh ghép sẽ biến mất. Nếu
+        Chọn câu hỏi bất kỳ → Chọn 2 mảnh ghép Quán dụng ngữ giống nhau. Nếu đúng 2 mảnh ghép sẽ biến mất. Nếu
         chưa đúng, bạn có thể thử lại.
       </p>
       <div className="flex justify-between items-center mb-4">

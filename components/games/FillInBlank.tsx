@@ -71,7 +71,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
         error[index] = true;
       }
     });
-    const newErrors: Record<number,typeof error> = {
+    const newErrors: Record<number, typeof error> = {
       ...errors,
       [currentSentence]: error,
     };
@@ -221,7 +221,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold my-6 text-center">选择恰当的惯用语完成短文</h1>
-      <p className="text-muted-foreground text-center mb-2">Hoàn thành đoạn văn có sử dụng quán dụng ngữ</p>
+      <p className="text-muted-foreground text-center mb-2">Hoàn thành đoạn văn có sử dụng Quán dụng ngữ</p>
       <p className="text-muted-foreground text-center mb-6 text-xs">
         Chọn đáp án đúng để hoàn thành đoạn văn. Nhấn <strong>Kiểm tra</strong> để xem kết quả. Nếu đúng đáp
         án sẽ chuyển màu

@@ -3,7 +3,7 @@ import MemorizePage from './container';
 
 export const metadata: Metadata = {
   title: 'Luyện tập - Ghi nhớ',
-  description: 'Luyện tập và ghi nhớ quán dụng ngữ',
+  description: 'Luyện tập và ghi nhớ Quán dụng ngữ',
 };
 
 const Page = () => {
