@@ -48,10 +48,10 @@ export default function Footer() {
               <Link href="/tra-cuu" className="block hover:underline">
                 Tra cứu
               </Link>
-              <Link href="/luyen-tap" className="block hover:underline">
+              <Link href="/ghi-nho" className="block hover:underline">
                 Luyện tập
               </Link>
-              <Link href="#" className="block hover:underline">
+              <Link href="/flash-cards" className="block hover:underline">
                 Flash Cards
               </Link>
             </nav>
