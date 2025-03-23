@@ -18,7 +18,7 @@ function MemorizePage() {
             Chọn chế độ luyện tập
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Chọn một chế độ để bắt đầu học và luyện tập quán dụng ngữ
+            Chọn một chế độ để bắt đầu học và luyện tập Quán dụng ngữ
           </p>
         </header>
 
@@ -41,8 +41,8 @@ function MemorizePage() {
                   />
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Link className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">连线惯用语与定义</h2>
-                    <p className="text-center ">Nối quán dụng ngữ và định nghĩa</p>
+                    <h2 className="text-2xl font-bold text-center mb-2">把惯用语与相对应的意义连接起来</h2>
+                    <p className="text-center ">Nối Quán dụng ngữ và ngữ nghĩa tương ứng</p>
                   </div>
                 </div>
               </CardContent>
@@ -68,7 +68,7 @@ function MemorizePage() {
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
                     <Puzzle className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">找出相同的惯用语片段</h2>
-                    <p className="text-center drop-shadow-md">Tìm mảnh ghép quán dụng ngữ giống nhau</p>
+                    <p className="text-center drop-shadow-md">Tìm mảnh ghép Quán dụng ngữ giống nhau</p>
                   </div>
                 </div>
               </CardContent>
@@ -77,7 +77,7 @@ function MemorizePage() {
         </div>
 
         <footer className="mt-8 text-center text-sm text-muted-foreground">
-          <p>Chọn một chế độ chơi để bắt đầu.</p>
+          <p>Chọn một chế độ luyện tập để bắt đầu.</p>
         </footer>
       </div>
       <Dialog open={!!destination} onOpenChange={() => setDestination(null)}>

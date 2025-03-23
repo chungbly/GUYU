@@ -6,10 +6,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Nối quán dụng và định nghĩa',
-  description: 'Nối quán dụng ngữ và định nghĩa',
+  description: 'Nối Quán dụng ngữ và định nghĩa',
 };
 
-const getRandomIdioms = async (limit:number) => {
+const getRandomIdioms = async (limit: number) => {
   const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms/random?limit=${limit}`);
   if (res.status === API_STATUS.OK && res.data?.length) {
     return res.data;

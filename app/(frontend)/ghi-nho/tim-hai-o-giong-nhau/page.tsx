@@ -4,8 +4,8 @@ import { API_STATUS } from '@/models/API';
 import { IdiomModel } from '@/models/Idioms';
 import { Metadata } from 'next';
 export const metadata: Metadata = {
-  title: 'Tìm mảnh ghép quán dụng ngữ giống nhau',
-  description: 'Tìm mảnh ghép quán dụng ngữ giống nhau',
+  title: 'Tìm mảnh ghép Quán dụng ngữ giống nhau',
+  description: 'Tìm mảnh ghép Quán dụng ngữ giống nhau',
 };
 
 const getRandomIdioms = async (limit: number) => {

@@ -136,7 +136,7 @@ const Result = ({
   return (
     <>
       <div className="text-2xl font-bold mb-4">
-        Chi tiết câu
+        Chi tiết Quán dụng ngữ
         <span className="font-[Simsun] ml-2">&quot;{thebestResult.simplified}&quot;</span>
       </div>
       <audio crossOrigin="anonymous" id="simplified-audio" hidden />

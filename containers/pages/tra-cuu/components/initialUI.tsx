@@ -14,9 +14,9 @@ const InitialUI = () => {
         <CardContent>
           <ul className="list-disc list-inside">
             <li>
-              <span className='text-green-600'>Ưu điểm</span>: Flashcards là một công cụ hữu ích để học từ vựng nói chung và quán dụng
-              ngữ nói riêng. Bạn có thể viết quán dụng ngữ ở một mặt, mặt còn lại viết phiên âm, ý nghĩa và ví
-              dụ.
+              <span className="text-green-600">Ưu điểm</span>: Flashcards là một công cụ hữu ích để học từ
+              vựng nói chung và Quán dụng ngữ nói riêng. Bạn có thể viết Quán dụng ngữ ở một mặt, mặt còn lại
+              viết phiên âm, ý nghĩa và ví dụ.
             </li>
             <li>
               Ví dụ:

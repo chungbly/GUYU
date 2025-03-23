@@ -123,7 +123,7 @@ export default function Lookup({ search, data }: { search: string; data: IdiomMo
       <Card className="my-6">
         <CardHeader className="p-3 sm:p-6 sm:pb-0">
           <CardTitle>
-            Tìm kiếm quán dụng ngữ bằng cách gõ phiên âm hoặc từ nằm trong quán dụng ngữ đó.
+            Tìm kiếm Quán dụng ngữ bằng cách gõ phiên âm hoặc từ nằm trong Quán dụng ngữ đó.
           </CardTitle>
         </CardHeader>
         <CardContent className="p-3 sm:p-6">

@@ -59,7 +59,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="space-y-4">
-            Bản quyền thuộc về nhóm sinh viên nghiên cứu đề tài &quot;Xây dựng hệ thống bài tập quán dụng ngữ
+            Bản quyền thuộc về nhóm sinh viên nghiên cứu đề tài &quot;Xây dựng hệ thống bài tập Quán dụng ngữ
             trên website GUYU cho sinh viên ngành Ngôn Ngữ Trung Quốc&quot;
           </div>
         </div>
