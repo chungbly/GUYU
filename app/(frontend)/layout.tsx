@@ -3,7 +3,6 @@ import '@fontsource/inter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import '../globals.css';
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: 'Guyu',
@@ -20,7 +19,6 @@ export default function RootLayout({
       <body className={'antialiased'}>
         <GoogleAnalytics gaId="G-J0SGLVPYLS" />
         <Root>{children}</Root>
-        <SpeedInsights/>
       </body>
     </html>
   );

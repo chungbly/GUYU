@@ -47,20 +47,20 @@ function Flashcard({ cards: originalData }: { cards: IdiomModel[] }) {
             onClick={() => toggleFlip(card._id)}
           >
             <div className="relative w-full h-full [backface-visibility:hidden]  ">
-              <CardContent className="flex h-full flex-col items-center justify-center p-6 border rounded-md bg-[#9DBEDF]">
+              <CardContent className="flex h-full flex-col items-center justify-center p-6 border rounded-md bg-[#9FD7F9]">
                 <h2 className="text-2xl font-bold mb-2 font-[Simsun]">{card.simplified}</h2>
               </CardContent>
             </div>
-            <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#9DBEDF] overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#9FD7F9] overflow-hidden">
               <CardContent className="flex flex-col gap-4 items-center sm:items-center sm:justify-center h-full p-2 sm:p-6 border-primary border rounded-md max-h-[300px] sm:max-h-none overflow-auto sm:overflow-hidden">
-                <p className="text-white/70 text-xl">[{card.pinyin}]</p>
+                <p className=" text-xl">[{card.pinyin}]</p>
                 <p className="text-center">{card.meaning}</p>
 
                 <div className="flex flex-col gap-2">
                   <p>Ví dụ: </p>
                   {card.examples.map((example, index) => (
                     <div key={index} className="flex flex-col gap-1">
-                      <p className="text-white/70 text-sm font-[Simsun]">{`${index}. ${example.chinese}`}</p>
+                      <p className=" text-sm font-[Simsun]">{`${index}. ${example.chinese}`}</p>
                     </div>
                   ))}
                 </div>
