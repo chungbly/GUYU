@@ -60,7 +60,7 @@ function Flashcard({ cards: originalData }: { cards: IdiomModel[] }) {
                   <p>Ví dụ: </p>
                   {card.examples.map((example, index) => (
                     <div key={index} className="flex flex-col gap-1">
-                      <p className=" text-sm font-[Simsun]">{`${index}. ${example.chinese}`}</p>
+                      <p className=" text-sm font-[Simsun]">{`${index + 1}. ${example.chinese}`}</p>
                     </div>
                   ))}
                 </div>
