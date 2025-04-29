@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export function removePinyinTones(pinyin: string): string {
+function removePinyinTones(pinyin: string): string {
   // Map of tone marked vowels to their base form
   const toneMap: { [key: string]: string } = {
     // First tone (ā ē ī ō ū ǖ)

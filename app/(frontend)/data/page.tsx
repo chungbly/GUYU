@@ -76,7 +76,12 @@ export default function WordEntryForm() {
     } catch (err) {
       toast({
         title: 'Error',
-        description: 'Word entry submission failed!',
+        description:
+          (
+            err as {
+              message: string;
+            }
+          ).message || 'Word entry submission failed!',
         variant: 'error',
       });
     }
@@ -227,8 +232,8 @@ export default function WordEntryForm() {
                     onChange={(e) => updateExample(index, 'question', e.target.value)}
                   />
                   <span>
-                    Ví dụ question (dùng cho trò sắp xếp câu) : "说过 / 妈妈 / 我 / 考试考满分 / 就 / 带我 /
-                    去 / 旅游一次，/ 可 / 现在 / 海南岛 / 她 / 怎么 / 不认账了 / 呢？/"
+                    Ví dụ question (dùng cho trò sắp xếp câu) : 说过 / 妈妈 / 我 / 考试考满分 / 就 / 带我 / 去
+                    / 旅游一次，/ 可 / 现在 / 海南岛 / 她 / 怎么 / 不认账了 / 呢？/
                   </span>
                 </div>
               </div>
