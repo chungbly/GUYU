@@ -9,6 +9,9 @@ export interface IdiomModel {
   meaning: string;
   explanation: string;
   examples: Example[];
+
+  pinyinTextSearch?: string;
+  simplifiedTextSearch?: string;
 }
 
 export interface Example {
@@ -47,6 +50,14 @@ const IdiomSchema = new mongoose.Schema<IdiomModel>(
     explanationPinyin: {
       type: String,
     },
+    pinyinTextSearch: {
+      type: String,
+      required: true,
+    },
+    simplifiedTextSearch: {
+      type: String,
+      required: true,
+    },
     examples: [
       {
         audioId: {
@@ -63,8 +74,8 @@ const IdiomSchema = new mongoose.Schema<IdiomModel>(
           type: String,
         },
         question: {
-          type: String
-        }
+          type: String,
+        },
       },
     ],
   },
