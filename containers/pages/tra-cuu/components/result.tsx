@@ -161,7 +161,7 @@ const Result = ({
               <li className="font-[Simsun]">{thebestResult.explanation}</li>
               <p className="mt-2 text-sm"> {thebestResult.explanationPinyin} </p>
             </ol>
-            <p className="mt-2 text-sm">{thebestResult.meaning}</p>
+            {/* <p className="mt-2 text-sm">{thebestResult.meaning}</p> */}
           </div>
           <div>
             <h2 className="font-semibold mb-2">Ví dụ:</h2>
@@ -183,7 +183,7 @@ const Result = ({
                     </p>
 
                     <p className="text-gray-600 mt-1 ">{example.pinyin}</p>
-                    <p className="mt-1">{example.vietnamese}</p>
+                    {/* <p className="mt-1">{example.vietnamese}</p> */}
                   </div>
                 </div>
               ))}
