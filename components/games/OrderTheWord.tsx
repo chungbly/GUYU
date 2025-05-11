@@ -213,7 +213,7 @@ export default function IdiomWordOrderGameDnD({
                 </Button>
               ))}
             </div>
-            <p className="my-2 text-xs text-muted-foreground">{questions[currentQuestion].hint}</p>
+            {/* <p className="my-2 text-xs text-muted-foreground">{questions[currentQuestion].hint}</p> */}
             {!showResult && (
               <Button onClick={checkAnswer} className="mt-4 w-full">
                 Kiểm tra đáp án
