@@ -147,7 +147,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
     if (!limit) return;
     if (!sessionId) {
       const now = moment().unix();
-      router.push(`/van-dung?session=${now}&limit=${limit}`);
+      router.push(`/van-dung/hoan-thanh-doan-van?session=${now}&limit=${limit}`);
       return;
     }
 

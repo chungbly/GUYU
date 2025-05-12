@@ -23,7 +23,7 @@ function UnderstandingLevelPage() {
         </header>
 
         <div className="max-w-4xl mx-auto grid gap-6 md:grid-cols-2">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          {/* <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Card
               className="group cursor-pointer overflow-hidden"
               onClick={() => {
@@ -43,6 +43,32 @@ function UnderstandingLevelPage() {
                     <Link className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">组句</h2>
                     <p className="text-center opacity-90">Sắp xếp câu có sử dụng Quán dụng ngữ</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div> */}
+
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Card
+              className="group cursor-pointer overflow-hidden"
+              onClick={() => {
+                setDestination('/thong-hieu/noi-cap');
+              }}
+            >
+              <CardContent className="p-0">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="absolute inset-0 " />
+                  <Image
+                    src="/images/word-connect.jpg"
+                    alt="Word Connect Game"
+                    fill
+                    className="w-full h-full object-stretch transition-transform group-hover:scale-105"
+                  />
+                  <div className="absolute bg-gradient-to-b from-black/5 to-black/80 inset-0 flex flex-col items-center justify-center text-white p-6">
+                    <Link className="w-12 h-12 mb-4" />
+                    <h2 className="text-2xl font-bold text-center mb-2">把惯用语与相对应的意义连接起来</h2>
+                    <p className="text-center ">Nối Quán dụng ngữ và ngữ nghĩa tương ứng</p>
                   </div>
                 </div>
               </CardContent>
