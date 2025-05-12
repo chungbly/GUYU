@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import UnderstandingLevelPage from './container';
 import ApplicationLevelPage from './container';
 
 export const metadata: Metadata = {

@@ -2,7 +2,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { motion } from 'framer-motion';
-import { Link, Puzzle } from 'lucide-react';
+import { Puzzle } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
