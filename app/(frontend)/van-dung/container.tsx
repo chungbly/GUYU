@@ -60,8 +60,8 @@ function ApplicationLevelPage() {
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <div className="absolute inset-0 " />
                   <Image
-                    src="/images/quiz.jpg"
-                    alt="Memory Match Game"
+                    src="/images/fill-in-blank.jpg"
+                    alt="fill in blank game"
                     fill
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
