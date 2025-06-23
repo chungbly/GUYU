@@ -205,7 +205,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80  inset-0 flex flex-col items-center justify-center text-white p-6">
                     <SendToBack className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">选择恰当的惯用语完成短文</h2>
-                    <p className="text-center opacity-90">Hoàn thành đoạn văn có sử dụng Quán dụng ngữ</p>
+                    <p className="text-center opacity-90">Chọn câu có Quán dụng ngữ phù hợp để hoàn thành đoạn văn</p>
                   </div>
                 </div>
               </CardContent>
@@ -238,7 +238,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold my-6 text-center">选择恰当的惯用语完成短文</h1>
-      <p className="text-muted-foreground text-center mb-2">Hoàn thành đoạn văn có sử dụng Quán dụng ngữ</p>
+      <p className="text-muted-foreground text-center mb-2">Chọn câu có Quán dụng ngữ phù hợp để hoàn thành đoạn văn</p>
       <p className="text-muted-foreground text-center mb-6 text-xs">
         Chọn đáp án đúng để hoàn thành đoạn văn. Nhấn <strong>Kiểm tra</strong> để xem kết quả. Nếu đúng đáp
         án sẽ chuyển màu

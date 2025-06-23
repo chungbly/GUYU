@@ -68,7 +68,7 @@ function ApplicationLevelPage() {
                   <div className="absolute bg-gradient-to-b from-black/5 to-black/80  inset-0 flex flex-col items-center justify-center text-white p-6">
                     <SendToBack className="w-12 h-12 mb-4" />
                     <h2 className="text-2xl font-bold text-center mb-2">选择恰当的惯用语完成短文</h2>
-                    <p className="text-center opacity-90">Hoàn thành đoạn văn có sử dụng Quán dụng ngữ</p>
+                    <p className="text-center opacity-90">Chọn câu có Quán dụng ngữ phù hợp để hoàn thành đoạn văn</p>
                   </div>
                 </div>
               </CardContent>
