@@ -18,10 +18,10 @@ export default function Footer() {
                 className="mr-2 object-stretch w-fit h-20"
               />
             </Link>
-            <div className="flex items-start gap-2">
+            {/* <div className="flex items-start gap-2">
               <HomeIcon className="size-5 mt-1 flex-shrink-0" />
               <p>Khoa tiếng Trung trường Đại học Sư phạm Thành phố Hồ Chí Minh</p>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2">
               <MailIcon className="size-5" />
               <a href="mailto:websiteguyu@gmail.com" className="hover:underline">
