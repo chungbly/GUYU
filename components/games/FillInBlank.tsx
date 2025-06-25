@@ -259,7 +259,7 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
           </CardHeader>
           <CardContent className="p-2 pt-0 sm:p-6 sm:pt-0">
             {/* <Progress value={(timeLeft / TIMER_DURATION) * 100} className="mb-4" /> */}
-            <p className="text-lg mb-4">{sentence}</p>
+            <p className="text-lg mb-4 indent-8">{sentence}</p>
             <Controller
               name="answer"
               control={control}
