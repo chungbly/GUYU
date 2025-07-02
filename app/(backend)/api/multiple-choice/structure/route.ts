@@ -7,16 +7,19 @@ import { NextRequest } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
-    const index = Number(request.nextUrl.searchParams.get('index')) || 1;
-    const letter = request.nextUrl.searchParams.get('letter') || 'A';
 
-    const multipleChoices = await MultipleChoice.find({
-      letter,
-    })
-      .skip(index)
-      .limit(10);
+    const multipleChoices = await MultipleChoice.find({}).lean();
+
     if (!multipleChoices) return errorResp('Không tìm thấy dữ liệu', 404);
-    return successResp(multipleChoices);
+    const structure = multipleChoices.reduce((acc, cur) => {
+      if (acc[cur.letter]) {
+        acc[cur.letter] += 1;
+        return acc;
+      }
+      acc[cur.letter] = 1;
+      return acc;
+    }, {} as Record<string, number>);
+    return successResp(structure);
   } catch (e) {
     return errorResp(
       (

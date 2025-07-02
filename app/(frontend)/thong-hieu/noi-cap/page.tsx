@@ -1,7 +1,7 @@
 import { callAPI } from '@/clients/API';
 import TwoColumnConnectFlashcards from '@/components/games/TwoColumnConnectCard';
 import { API_STATUS } from '@/models/API';
-import { IdiomModel } from '@/models/Idioms';
+import { WordMeaningGame } from '@/models/word-meaning-game';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -9,27 +9,25 @@ export const metadata: Metadata = {
   description: 'Nối Quán dụng ngữ và định nghĩa',
 };
 
-const getRandomIdioms = async (limit: number) => {
-  const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms/random?limit=${limit}`);
-  if (res.status === API_STATUS.OK && res.data?.length) {
-    return res.data;
-  }
-  return [];
-};
-
 async function Page({
   searchParams,
 }: {
   searchParams: {
-    limit: number;
+    index: number;
+    letter: string;
   };
 }) {
-  const limit = searchParams.limit || 5;
-  const idioms = await getRandomIdioms(limit);
-  const data = idioms.map((idiom) => ({
-    id: idiom._id,
-    left: idiom.simplified,
-    right: idiom.explanation,
+  const index = searchParams.index || 1;
+  const letter = searchParams.letter || 'A';
+  const res = await callAPI<WordMeaningGame[]>(
+    `${process.env.WEB_URL}/api/word-meaning-game?index=${index}&letter=${letter}`
+  );
+  if (res.status !== API_STATUS.OK) return <div>Không tìm thấy dữ liệu</div>;
+  const games = res.data;
+  const data = games.map((g) => ({
+    id: g._id,
+    left: g.simplified,
+    right: g.meaning,
   }));
   return <TwoColumnConnectFlashcards data={data} />;
 }

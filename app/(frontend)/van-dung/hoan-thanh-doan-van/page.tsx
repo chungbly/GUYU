@@ -14,11 +14,15 @@ async function Page({
   searchParams,
 }: {
   searchParams: {
-    limit: number;
+    index: number;
+    letter: string;
   };
 }) {
-  const limit = searchParams.limit || 10;
-  const res = await callAPI<ParagrahpModel[]>(`${process.env.WEB_URL}/api/paragraph?limit=${limit}`);
+  const index = searchParams.index || 1;
+  const letter = searchParams.letter || 'A';
+  const res = await callAPI<ParagrahpModel[]>(
+    `${process.env.WEB_URL}/api/paragraph?index=${index}&letter=${letter}`
+  );
   if (res.status !== API_STATUS.OK) return <div>Không tìm thấy dữ liệu</div>;
   const paragraphs = res.data;
   return (

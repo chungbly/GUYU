@@ -7,9 +7,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-function UnderstandingLevelPage() {
+function UnderstandingLevelPage({
+  wordMeaningGameStructure,
+  multipleChoiceStructure,
+}: {
+  wordMeaningGameStructure: Record<string, number>;
+  multipleChoiceStructure: Record<string, number>;
+}) {
   const router = useRouter();
   const [destination, setDestination] = useState<string | null>(null);
+  const [letter, setLetter] = useState<string | null>(null);
+  const structure = destination?.includes('noi-cap') ? wordMeaningGameStructure : multipleChoiceStructure;
+
   return (
     <div className="container mx-auto ">
       <div className="min-h-screen  p-4 md:p-8">
@@ -106,27 +115,52 @@ function UnderstandingLevelPage() {
           <p>Chọn một chế độ luyện tập để bắt đầu.</p>
         </footer>
       </div>
-      <Dialog open={!!destination} onOpenChange={() => setDestination(null)}>
+      <Dialog
+        open={!!destination}
+        onOpenChange={() => {
+          setDestination(null);
+          setLetter(null);
+        }}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
-            <DialogDescription>
-              Chọn bộ câu hỏi (Bộ 1, 2, 3, 4, 5) tương ứng với (5, 10, 15, 20, 25 câu).
-            </DialogDescription>
-            <div className="grid grid-cols-5 gap-4">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="p-4 bg-white rounded-md shadow-md cursor-pointer"
-                  onClick={() => {
-                    router.push(`${destination}?limit=${(index + 1) * 5}`);
-                  }}
-                >
-                  <h3 className="text-lg text-center font-bold">Bộ {index + 1}</h3>
-                  <p className="text-sm text-center text-muted-foreground">{(index + 1) * 5} câu hỏi</p>
-                </div>
-              ))}
-            </div>
+            <DialogTitle>Chọn bộ câu hỏi </DialogTitle>
+            <DialogDescription>Chọn bộ câu hỏi theo bảng chữ cái {letter || ''}</DialogDescription>
+            {letter ? (
+              <div className="grid grid-cols-5 gap-4">
+                {Array.from({ length: Math.ceil(structure[letter] / 10) }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="p-4 bg-white rounded-md shadow-md cursor-pointer"
+                    onClick={() => {
+                      router.push(`${destination}?letter=${letter}&index=${index * 10} `);
+                    }}
+                  >
+                    <h3 className="text-lg text-center font-bold">
+                      Bộ {letter}-{index + 1}
+                    </h3>
+                    <p className="text-sm text-center text-muted-foreground">
+                      {(index + 1) * 10 > structure[letter] ? structure[letter] % 10 : 10} câu hỏi
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-5 gap-4">
+                {Object.keys(structure).map((key, index) => (
+                  <div
+                    key={index}
+                    className="p-4 bg-white rounded-md shadow-md cursor-pointer"
+                    onClick={() => {
+                      setLetter(key);
+                    }}
+                  >
+                    <h3 className="text-lg text-center font-bold">Bộ {key}</h3>
+                    <p className="text-sm text-center text-muted-foreground">{structure[key]} câu hỏi</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </DialogHeader>
         </DialogContent>
       </Dialog>

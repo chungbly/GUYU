@@ -18,8 +18,8 @@ export const callAPI = async <T>(
       headers: {
         ...options?.headers,
       },
-      next:{
-        revalidate:60,
+      next: {
+        revalidate: 0,
       },
       body: options?.body instanceof FormData ? options.body : JSON.stringify(options?.body),
     });

@@ -71,6 +71,7 @@ export default function IdiomWordOrderGameDnD({
     hint?: string;
   }[];
 }) {
+  console.log('questions', questions);
   const [userResponses, setUserResponses] = useState<Record<number, Word[]>>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [shuffledWords, setShuffledWords] = useState<Word[]>([]);
@@ -208,7 +209,12 @@ export default function IdiomWordOrderGameDnD({
 
             <div className="flex gap-3 flex-wrap">
               {shuffledWords.map((word) => (
-                <Button key={word.id} variant="outline" className='border-primary' onClick={() => handleWordClick(word)}>
+                <Button
+                  key={word.id}
+                  variant="outline"
+                  className="border-primary"
+                  onClick={() => handleWordClick(word)}
+                >
                   {word.word}
                 </Button>
               ))}

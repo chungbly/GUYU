@@ -7,17 +7,18 @@ import { NextRequest } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
-    const index = Number(request.nextUrl.searchParams.get('index')) || 1;
-    const letter = request.nextUrl.searchParams.get('letter') || 'A';
 
-    const paragraphs = await Paragraph.find({
-      letter,
-    })
-      .skip(index)
-      .limit(10);
-
+    const paragraphs = await Paragraph.find({}).lean();
     if (!paragraphs) return errorResp('Không tìm thấy dữ liệu', 404);
-    return successResp(paragraphs);
+    const structure = paragraphs.reduce((acc, cur) => {
+      if (acc[cur.letter]) {
+        acc[cur.letter] += 1;
+        return acc;
+      }
+      acc[cur.letter] = 1;
+      return acc;
+    }, {} as Record<string, number>);
+    return successResp(structure);
   } catch (e) {
     return errorResp(
       (

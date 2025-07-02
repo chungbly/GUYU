@@ -5,22 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { ParagrahpModel } from '@/models/paragraph';
-import { ArrowRight, CheckIcon, RefreshCw, SendToBack } from 'lucide-react';
+import { ArrowRight, CheckIcon, RefreshCw } from 'lucide-react';
 import moment from 'moment';
-import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { v4 } from 'uuid';
 import { fireWorks } from '../ui/confetti';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '../ui/dialog';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import QuizCompletionModal from './quiz-complete-modal';
@@ -187,58 +178,12 @@ export default function EnhancedFillInTheBlank({ data }: { data: ParagrahpModel[
       })
     );
   };
-  if (!limit) {
-    return (
-      <div className="container mx-auto p-4 max-w-4xl">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Card className="group cursor-pointer overflow-hidden max-w-1/4 max-h-[500px] mt-10">
-              <CardContent className="p-0">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <div className="absolute inset-0 " />
-                  <Image
-                    src="/images/fill-in-blank.jpg"
-                    alt="选择恰当的惯用语完成短文"
-                    fill
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute bg-gradient-to-b from-black/5 to-black/80  inset-0 flex flex-col items-center justify-center text-white p-6">
-                    <SendToBack className="w-12 h-12 mb-4" />
-                    <h2 className="text-2xl font-bold text-center mb-2">选择恰当的惯用语完成短文</h2>
-                    <p className="text-center opacity-90">Chọn câu có Quán dụng ngữ phù hợp để hoàn thành đoạn văn</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Chọn bộ câu hỏi</DialogTitle>
-              <DialogDescription>Chọn bộ câu hỏi phù hợp với bạn</DialogDescription>
-              <div className="grid grid-cols-4 gap-4">
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="p-4 bg-white rounded-md shadow-md cursor-pointer"
-                    onClick={() => {
-                      router.push(`/van-dung?limit=${(index + 1) * 5}`);
-                    }}
-                  >
-                    <h3 className="text-lg text-center font-bold">Bộ {index + 1}</h3>
-                    <p className="text-sm text-center text-muted-foreground">{(index + 1) * 5} câu hỏi</p>
-                  </div>
-                ))}
-              </div>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      </div>
-    );
-  }
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold my-6 text-center">选择恰当的惯用语完成短文</h1>
-      <p className="text-muted-foreground text-center mb-2">Chọn câu có Quán dụng ngữ phù hợp để hoàn thành đoạn văn</p>
+      <p className="text-muted-foreground text-center mb-2">
+        Chọn câu có Quán dụng ngữ phù hợp để hoàn thành đoạn văn
+      </p>
       <p className="text-muted-foreground text-center mb-6 text-xs">
         Chọn đáp án đúng để hoàn thành đoạn văn. Nhấn <strong>Kiểm tra</strong> để xem kết quả. Nếu đúng đáp
         án sẽ chuyển màu

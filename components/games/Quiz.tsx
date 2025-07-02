@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils';
 import { MultipleChoiceModel } from '@/models/multiple-choice';
 import { CheckCircle, Shuffle, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import QuizCompletionModal from './quiz-complete-modal';
 import { fireWorks } from '../ui/confetti';
+import QuizCompletionModal from './quiz-complete-modal';
 
 export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel[] }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -36,7 +36,7 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
     setShowResult(true);
     if (answer === questions[currentQuestion].correctAnswer) {
       setScore(score + 1);
-      fireWorks()
+      fireWorks();
     }
     setAnsweredQuestions([...answeredQuestions, currentQuestion]);
   };
@@ -83,6 +83,7 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
               {questions[currentQuestion].answers.map((answer, index) => (
                 <Button
                   key={index}
+                  disabled={showResult}
                   onClick={() => handleAnswerClick(answer)}
                   variant="secondary"
                   className={cn(

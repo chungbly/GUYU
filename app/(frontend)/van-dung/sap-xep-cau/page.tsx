@@ -1,7 +1,7 @@
 import { callAPI } from '@/clients/API';
 import IdiomWordOrderGameDnD from '@/components/games/OrderTheWord';
 import { API_STATUS } from '@/models/API';
-import { IdiomModel } from '@/models/Idioms';
+import { RearrangeWord } from '@/models/rearrange-word';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -9,8 +9,10 @@ export const metadata: Metadata = {
   description: 'Luyện tập mức độ thông hiểu',
 };
 
-const getRandomIdioms = async (limit: number) => {
-  const res = await callAPI<IdiomModel[]>(`${process.env.WEB_URL}/api/idioms/random?limit=${limit}`);
+const getParagraphs = async (index: number, letter: string) => {
+  const res = await callAPI<RearrangeWord[]>(
+    `${process.env.WEB_URL}/api/rearrange-words?letter=${letter || 'A'}&index=${index || 1}`
+  );
   if (res.status === API_STATUS.OK && res.data?.length) {
     return res.data;
   }
@@ -20,32 +22,19 @@ async function Page({
   searchParams,
 }: {
   searchParams: {
-    limit: number;
+    index: number;
+    letter: string;
   };
 }) {
-  const limit = searchParams.limit || 15;
-  const idioms = await getRandomIdioms(limit);
-  const questions = idioms
-    .map((idiom) => {
-      if (!idiom?.examples?.length) {
-        return [];
-      }
-      return idiom.examples
-        .map((example) => {
-          if (example.question) {
-            return {
-              question: example.question,
-              answer: example.chinese,
-              hint: example.vietnamese,
-            };
-          }
-          return null;
-        })
-        .filter((f) => !!f);
-    })
+  const index = searchParams.index || 1;
+  const letter = searchParams.letter || 'A';
+  const paras = await getParagraphs(index, letter);
+  const questions = paras.map((p) => ({
+    question: p.question,
+    answer: p.answer,
+    hint: p.meaning,
+  }));
 
-    .flat()
-    .filter((_, index) => index < limit);
   return <IdiomWordOrderGameDnD questions={questions!} />;
 }
 

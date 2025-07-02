@@ -96,7 +96,7 @@ export default function TwoColumnConnectFlashcards({
               }`}
               onClick={() => handleCardClick('left', index)}
             >
-              <CardContent className="flex items-center justify-center min-h-16 p-2 h-max">
+              <CardContent className="flex items-center justify-center min-h-20 p-2 h-max">
                 <p className="text-center font-bold">{card.left}</p>
               </CardContent>
             </Card>
@@ -111,7 +111,7 @@ export default function TwoColumnConnectFlashcards({
               }`}
               onClick={() => handleCardClick('right', index)}
             >
-              <CardContent className="flex items-center justify-center min-h-16 p-2 h-max">
+              <CardContent className="flex items-center justify-center min-h-20 p-2 h-max">
                 <p className="text-center font-bold">{card.right}</p>
               </CardContent>
             </Card>

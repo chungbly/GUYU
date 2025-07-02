@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/db-connect';
 import { errorResp, successResp } from '@/lib/server-json';
-import MultipleChoice from '@/models/multiple-choice';
+import wordMeaningGame from '@/models/word-meaning-game';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -10,13 +10,15 @@ export async function GET(request: NextRequest) {
     const index = Number(request.nextUrl.searchParams.get('index')) || 1;
     const letter = request.nextUrl.searchParams.get('letter') || 'A';
 
-    const multipleChoices = await MultipleChoice.find({
-      letter,
-    })
+    const games = await wordMeaningGame
+      .find({
+        letter,
+      })
       .skip(index)
       .limit(10);
-    if (!multipleChoices) return errorResp('Không tìm thấy dữ liệu', 404);
-    return successResp(multipleChoices);
+
+    if (!games) return errorResp('Không tìm thấy dữ liệu', 404);
+    return successResp(games);
   } catch (e) {
     return errorResp(
       (

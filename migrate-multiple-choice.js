@@ -15599,12 +15599,13 @@ function generateChoices(correctAnswer, optionsPool) {
 }
 
 const newData = data
-  .map((d) => {
+  .map((d,index) => {
     return {
-      letter: d['CHỮ'],
+      letter: d['CHỮ'] || data[index-1]['CHỮ'],
+      simplified: d['CỤM'] || data[index-1]['CỤM'],
       index: d['STT'],
       question: d['CÂU HỎI'],
-      pinyin: d['PINYIN'],
+      pinyin: d['PINYIN'] || data[index-1]['PINYIN'],
       answers: generateChoices(d['ĐÁP ÁN'], allAnswers),
       correctAnswer: d['ĐÁP ÁN'],
     };
