@@ -2,9 +2,8 @@ export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/db-connect';
 import { errorResp, successResp } from '@/lib/server-json';
 import matchingGame from '@/models/matching-game';
-import { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     await dbConnect();
 
