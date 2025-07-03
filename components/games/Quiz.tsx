@@ -32,13 +32,15 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
   };
 
   const handleAnswerClick = (answer: string) => {
+    if (!selectedAnswer) {
+      setAnsweredQuestions([...answeredQuestions, currentQuestion]);
+    }
     setSelectedAnswer(answer);
     setShowResult(true);
     if (answer === questions[currentQuestion].correctAnswer) {
       setScore(score + 1);
       fireWorks();
     }
-    setAnsweredQuestions([...answeredQuestions, currentQuestion]);
   };
 
   const handleNextQuestion = () => {
@@ -83,7 +85,6 @@ export default function MultipleChoiceQuiz({ data }: { data: MultipleChoiceModel
               {questions[currentQuestion].answers.map((answer, index) => (
                 <Button
                   key={index}
-                  disabled={showResult}
                   onClick={() => handleAnswerClick(answer)}
                   variant="secondary"
                   className={cn(
